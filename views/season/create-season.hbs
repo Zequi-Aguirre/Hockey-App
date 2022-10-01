@@ -1,0 +1,18 @@
+<h1>Create Season</h1>
+
+<form
+  action="/season/create-season"
+  method="post"
+  {{! enctype="multipart/form-data" }}
+>
+
+  <label for="seasonName">Season Name
+    <input type="text" name="seasonName" />
+  </label>
+
+  {{! <label for="file">Upload Schedule
+    <input type="file" name="file" />
+  </label> }}
+
+  <button>Save</button>
+</form>

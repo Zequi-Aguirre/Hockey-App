@@ -18,7 +18,7 @@ const teamSchema = new Schema(
       type: String,
       // unique: true // -> Ideally, should be unique, but its up to you
     },
-    playersFulltime: {
+    playersFullTime: {
       type: [{ type: Schema.Types.ObjectId, ref: "Player" }],
     },
     playersPartTime: {

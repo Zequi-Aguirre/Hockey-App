@@ -11,6 +11,8 @@ const Team = require("../models/Team.model");
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
-router.get("/signup", isLoggedOut, (req, res) => {
-  res.render("auth/signup");
+router.get("/add-teams/:userID", (req, res) => {
+  res.render("team/add-teams");
 });
+
+module.exports = router;
