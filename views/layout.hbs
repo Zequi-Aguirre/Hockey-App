@@ -7,8 +7,24 @@
     <title>{{appTitle}}</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
-
   <body>
+    <header>
+      <a href="/">
+        <img src="#" alt="logo" />
+      </a>
+      <nav>
+        <ul>
+          {{#if theUser}}
+            <li><a href="/">Your Teams</a></li>
+            <li><a href="/auth/profile">Profile</a></li>
+            <li><a href="/auth/logout">Log Out</a></li>
+          {{else}}
+            <li><a href="/auth/signup">Sign Up</a></li>
+            <li><a href="/auth/login">Log In</a></li>
+          {{/if}}
+        </ul>
+      </nav>
+    </header>
 
     {{{body}}}
 

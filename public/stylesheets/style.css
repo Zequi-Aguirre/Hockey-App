@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 30px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -9,4 +9,23 @@ a {
 
 h1 {
   color: 15px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  background-color: antiquewhite;
+  align-items: center;
+  padding: 10px 30px;
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+
+}
+
+header nav ul li {
+  margin-left: 10px;
+
 }

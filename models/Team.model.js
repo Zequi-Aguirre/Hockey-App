@@ -1,30 +1,28 @@
 const { Schema, model } = require("mongoose");
 
 // TODO: Please make sure you edit the user model to whatever makes sense in this case
-const playerSchema = new Schema(
+const teamSchema = new Schema(
   {
-    name: {
+    teamName: {
       type: String,
       // unique: true // -> Ideally, should be unique, but its up to you
     },
-    lastName: {
+    teamCode: {
       type: String,
       // unique: true // -> Ideally, should be unique, but its up to you
     },
-    phoneNumber: {
+    season: {
+      type: [{ type: Schema.Types.ObjectId, ref: "Season" }],
+    },
+    division: {
       type: String,
       // unique: true // -> Ideally, should be unique, but its up to you
     },
-    emailAddress: {
-      type: String,
-      // unique: true // -> Ideally, should be unique, but its up to you
+    playersFulltime: {
+      type: [{ type: Schema.Types.ObjectId, ref: "Player" }],
     },
-    jerseyNumber: {
-      type: String,
-      // unique: true // -> Ideally, should be unique, but its up to you
-    },
-    teams: {
-      type: [{ type: Schema.Types.ObjectId, ref: "Team" }],
+    playersPartTime: {
+      type: [{ type: Schema.Types.ObjectId, ref: "Player" }],
     },
   },
   {
@@ -33,6 +31,6 @@ const playerSchema = new Schema(
   }
 );
 
-const Player = model("Player", playerSchema);
+const Team = model("Team", teamSchema);
 
-module.exports = Player;
+module.exports = Team;

@@ -15,13 +15,46 @@ const hbs = require("hbs");
 
 const app = express();
 
+// error messages with flash
+
+let flash = require("connect-flash");
+app.use(flash());
+
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
 
 const capitalized = require("./utils/capitalized");
 const projectName = "Hockey-App";
 
-app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
+app.locals.appTitle = `${projectName}`;
+
+// =================== SESSION ==================================
+
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+
+app.use(
+  session({
+    secret: "123secret",
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 600000,
+    }, // ADDED code below !!!
+    store: MongoStore.create({
+      mongoUrl: `mongodb://localhost/${projectName}`,
+    }),
+  })
+);
+
+app.use(function (req, res, next) {
+  // im making a template variable called theUser and imequalling it to
+  // the user object in the session
+  res.locals.theUser = req.session.user;
+  res.locals.errorMessage = req.flash("error");
+  res.locals.successMessage = req.flash("success");
+  next();
+});
 
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");
