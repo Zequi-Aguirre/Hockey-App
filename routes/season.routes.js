@@ -154,6 +154,14 @@ router.post(
         months[fullDateCode.getMonth()]
       } ${fullDateCode.getDate()}, ${fullDateCode.getFullYear()}`;
 
+      if (game.division === "A/B") {
+        game.division = "AB";
+      }
+
+      if (game.division === "40+") {
+        game.division = "Over40";
+      }
+
       const newGame = {
         homeTeam: game.home,
         awayTeam: game.away,

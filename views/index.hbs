@@ -1,2 +1,65 @@
 <h1>{{appTitle}} 🚀</h1>
 <p>Welcome Ironhacker!</p>
+
+{{!-- {{#each division}} --}}
+
+<a href="/">All</a>
+<a href="/40+">40+</a>
+<a href="/AB">A/B</a>
+<a href="/C1">C1</a>
+<a href="/C2Platinum">C2 Platinum</a>
+<a href="/C2Gold">C2 Gold</a>
+<a href="/C2Silver">C2 Silver</a>
+<a href="/C2Bronze">C2 Bronze</a>
+
+{{!-- {{/each}} --}}
+<br />
+<br />
+<input type="text" name="search" id="search" placeholder="Search..." />
+<br />
+
+<table width="90%" border="1" cellspacing="1" cellpadding="3">
+
+  <thead>
+    <tr class="fields">
+      <td width=".10vh" align="left">Div</td>
+      <td width=".25vh" align="left">Home</td>
+      <td width=".25vh" align="left">Away</td>
+      <td width=".30vh">Date</td>
+      <td width=".10vh">Time</td>
+      <td nowrap="" align="right" width=".21vh">Rink/GS</td>
+    </tr>
+  </thead>
+
+  <tbody id="allGames">
+
+    {{#each games}}
+
+      <tr class="game-container {{this.division}}">
+        <td>{{this.division}}</td>
+        <td><a href="#">{{this.homeTeam.teamName}}</a></td>
+        <td><a href="#">{{this.awayTeam.teamName}}</a></td>
+        <td align="center">{{this.date}}</td>
+        <td>{{this.time}}</td>
+        <td>{{this.location}}</td>
+
+      </tr>
+
+      {{!-- <li></li>
+    <div class="game-container {{this.division}}">
+
+      <b>Division: </b>{{this.division}}
+      <br />
+      <b>Game Date: </b>{{this.date}}
+      <br />
+      <b>Game Time: </b>{{this.time}}
+      <br />
+      <b>Home Team: </b>
+      {{this.homeTeam.teamName}}
+      <br />
+      <b>Away Team: </b>
+      {{this.awayTeam.teamName}}
+    </div> --}}
+    {{/each}}
+  </tbody>
+</table>

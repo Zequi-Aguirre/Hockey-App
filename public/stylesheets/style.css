@@ -29,3 +29,16 @@ header nav ul li {
   margin-left: 10px;
 
 }
+
+/* .game-container {
+  display: inline-block;
+  width: 450px;
+  padding: 20px 0;
+  background-color: brown;
+  margin: 20px 15px;
+  text-align: center;
+} */
+
+.hide-container {
+  display: none;
+}
