@@ -18,6 +18,9 @@
             <li><a href="/auth/your-teams/{{theUser._id}}">Your Teams</a></li>
             <li><a href="/auth/profile">Profile</a></li>
             <li><a href="/auth/logout">Log Out</a></li>
+            {{#if theUser.admin}}
+              <li><a href="/team/admin/all-teams">All Teams</a></li>
+            {{/if}}
           {{else}}
             <li><a href="/auth/signup">Sign Up</a></li>
             <li><a href="/auth/login">Log In</a></li>

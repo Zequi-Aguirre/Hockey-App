@@ -1,0 +1,13 @@
+<h1>Your Teams</h1>
+
+{{!-- {{theUser._id}} --}}
+{{#each teams}}
+  <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
+  {{this.teamCode}}
+  <br />
+
+{{/each}}
+<br />
+<br />
+
+<a href="/auth/add-teams/{{theUser._id}}">Add Teams</a>

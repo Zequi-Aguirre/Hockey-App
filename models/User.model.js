@@ -11,6 +11,10 @@ const userSchema = new Schema(
     teams: {
       type: [{ type: Schema.Types.ObjectId, ref: "Team" }],
     },
+    admin: {
+      type: Boolean,
+      // unique: true -> Ideally, should be unique, but its up to you
+    },
   },
 
   {
