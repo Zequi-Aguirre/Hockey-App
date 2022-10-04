@@ -40,10 +40,10 @@ router.get("/", (req, res, next) => {
       //   groupedSeason[game.date].push(game);
       // });
 
-      console.log(groupedSeason);
+      // console.log(groupedSeason);
 
       const data = {
-        games: allGames,
+        allGames: allGames,
         season: groupedSeason,
       };
 

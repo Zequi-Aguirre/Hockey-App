@@ -1,0 +1,58 @@
+<h1>Add Players to {{team.teamName}}</h1>
+
+{{#if theUser}}
+
+  {{!-- {{theUser.teams}}
+  {{ownedTeam}} --}}
+  {{#if ownedTeam}}
+    <br />
+    <form action="/team/add-players/{{team.id}}" method="POST">
+      <label>
+        Name:
+        <input type="text" name="name" />
+      </label>
+      <br />
+      <label style="margin: 2px;">
+        Last Name:
+        <input type="text" name="lastname" />
+      </label>
+      <br />
+      <label style="margin: 2px;">
+        Email Address:
+        <input type="email" name="email" />
+      </label>
+      <br />
+      <label style="margin: 2px;">
+        Phone Number
+        <input type="text" name="phonenumber" />
+      </label>
+      <br />
+      <label style="margin: 2px;">
+        Jersey Number
+        <input type="text" name="jerseynumber" />
+      </label>
+      <br />
+      {{! <select name="fullorpart" id="fullorpart" name="fullorpart">
+    <option value="full-time">Full Time</option>
+    <option value="part-time">Part Time</option>
+  </select> }}
+      <input type="radio" id="full-time" name="fullorpart" value="full-time" />
+      <label for="full-time">Full Time</label><br />
+      <input type="radio" id="part-time" name="fullorpart" value="part-time" />
+      <label for="part-time">Part Time</label><br />
+      <br />
+      <br />
+
+      <button type="submit">Submit</button>
+    </form>
+
+  {{else}}
+    You don't own this team!
+  {{/if}}
+{{else}}
+
+  <h3>Please log in to add players to your team</h3>
+{{/if}}
+
+{{!-- {{team.playersFullTime}}
+{{team.playersPartTime}} --}}

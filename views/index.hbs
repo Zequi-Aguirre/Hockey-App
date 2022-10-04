@@ -17,49 +17,60 @@
 <br />
 <input type="text" name="search" id="search" placeholder="Search..." />
 <br />
+<br />
+<br />
+<div class="full-table">
 
-<table width="90%" border="1" cellspacing="1" cellpadding="3">
+  <div class="table-head">
+    <li class="column-division">Div</li>
+    <li class="column-homeTeam">Home</li>
+    <li class="column-awayTeam">Away</li>
+    <li class="column-date">Date</li>
+    <li class="column-time">Time</li>
+    <li class="column-location">Rink/GS</li>
+  </div>
 
-  <thead>
-    <tr class="fields">
-      <td width=".10vh" align="left">Div</td>
-      <td width=".25vh" align="left">Home</td>
-      <td width=".25vh" align="left">Away</td>
-      <td width=".30vh">Date</td>
-      <td width=".10vh">Time</td>
-      <td nowrap="" align="right" width=".21vh">Rink/GS</td>
-    </tr>
-  </thead>
+  <div id="allGames">
 
-  <tbody id="allGames">
-
-    {{#each games}}
-
-      <tr class="game-container {{this.division}}">
-        <td class="gameInfo">{{this.division}}</td>
-        <td class="gameInfo"><a href="#">{{this.homeTeam.teamName}}</a></td>
-        <td class="gameInfo"><a href="#">{{this.awayTeam.teamName}}</a></td>
-        <td class="gameInfo" align="center">{{this.date}}</td>
-        <td class="gameInfo">{{this.time}}</td>
-        <td class="gameInfo">{{this.location}}</td>
-
+    {{!-- {{#season}}
+      <tr class="date-container">
+        <td class="table-dates">{{gameday}}</td>
       </tr>
+      {{#games}}
+        <tr class="game-container {{this.division}}">
+          <td class="gameInfo">{{this.division}}</td>
+          <td class="gameInfo"><a href="#">{{this.homeTeam.teamName}}</a></td>
+          <td class="gameInfo"><a href="#">{{this.awayTeam.teamName}}</a></td>
+          <td class="gameInfo" align="center">{{this.date}}</td>
+          <td class="gameInfo">{{this.time}}</td>
+          <td class="gameInfo">{{this.location}}</td>
 
-      {{!-- <li></li>
-    <div class="game-container {{this.division}}">
+        </tr>
+      {{/games}}
 
-      <b>Division: </b>{{this.division}}
-      <br />
-      <b>Game Date: </b>{{this.date}}
-      <br />
-      <b>Game Time: </b>{{this.time}}
-      <br />
-      <b>Home Team: </b>
-      {{this.homeTeam.teamName}}
-      <br />
-      <b>Away Team: </b>
-      {{this.awayTeam.teamName}}
-    </div> --}}
-    {{/each}}
-  </tbody>
-</table>
+    {{/season}} --}}
+
+    {{#season}}
+      <div class="date-container">
+        <li class="table-dates">{{gameday}}</li>
+      </div>
+      {{#games}}
+        <div class="game-container {{this.division}}">
+          <li class="game-info column-division">{{this.division}}</li>
+          <li class="game-info column-homeTeam"><a
+              href="/team/team-detail/{{this.homeTeam.id}}"
+            >{{this.homeTeam.teamName}}</a></li>
+          <li class="game-info column-awayTeam"><a
+              href="/team/team-detail/{{this.awayTeam.id}}"
+            >{{this.awayTeam.teamName}}</a></li>
+          <li class="game-info column-date" align="center">{{this.date}}</li>
+          <li class="game-info column-time">{{this.time}}</li>
+          <li class="game-info column-location">{{this.location}}</li>
+
+        </div>
+      {{/games}}
+
+    {{/season}}
+
+  </div>
+</div>

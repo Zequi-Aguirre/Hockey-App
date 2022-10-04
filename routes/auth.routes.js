@@ -9,6 +9,7 @@ const saltRounds = 10;
 
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
+const Team = require("../models/Team.model");
 
 // Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
@@ -112,6 +113,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   // Search the database for a user with the username submitted in the form
   User.findOne({ username })
+    .populate("teams")
+
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
       if (!user) {
@@ -127,7 +130,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
             .status(400)
             .render("auth/login", { errorMessage: "Wrong credentials." });
         }
-
+        console.log(user);
         req.session.user = user;
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
         return res.redirect("/auth/profile");
@@ -181,6 +184,53 @@ router.get("/auth/:userID/addTeams", (req, res, next) => {
           locationID: req.params.locationID,
         });
       });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/add-teams/:userID", (req, res) => {
+  // console.log(
+  //   Team.find().then((teams) => {
+  //     teams.sort();
+  //     teams.forEach((team) => {
+  //       // console.log(team.teamName);
+  //       // console.log(team.teamCode);
+  //     });
+  //   })
+  // );
+  res.render("team/add-teams");
+});
+
+router.post("/add-teams/:userID", (req, res) => {
+  // console.log(req.body.teamcode);
+  Team.find({ teamCode: req.body.teamcode })
+    .then((teamFromDB) => {
+      // console.log(teamFromDB);
+      User.findByIdAndUpdate(req.params.userID, {
+        $addToSet: { teams: teamFromDB },
+      }).then((updatedUser) => {
+        // console.log(updatedUser);
+        // res.send({ updatedUser, teamFromDB });
+        res.redirect(`/auth/your-teams/${req.params.userID}`);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/your-teams/:userID", (req, res) => {
+  User.findById(req.params.userID)
+    .populate("teams")
+    .then((userFromDB) => {
+      // console.log(userFromDB);
+      data = {
+        teams: userFromDB.teams,
+      };
+
+      res.render("team/your-teams", data);
     })
     .catch((err) => {
       console.log(err);

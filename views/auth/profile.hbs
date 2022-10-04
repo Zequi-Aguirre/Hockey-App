@@ -2,4 +2,15 @@
 
 {{theUser.username}}
 
-<a href="/team/add-teams/{{theUser._id}}">Add Teams</a>
+<h1>Your Teams</h1>
+
+{{#each theUser.teams}}
+
+  <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
+
+  <br />
+
+{{/each}}
+<br /><br />
+
+<a href="/auth/add-teams/{{theUser._id}}">Add Teams</a>

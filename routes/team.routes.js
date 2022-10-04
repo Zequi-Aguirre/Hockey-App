@@ -7,77 +7,121 @@ const mongoose = require("mongoose");
 const User = require("../models/User.model");
 const Team = require("../models/Team.model");
 const Game = require("../models/Game.model");
+const Player = require("../models/Player.model");
 
 // Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
-
-router.get("/add-teams/:userID", (req, res) => {
-  // console.log(
-  //   Team.find().then((teams) => {
-  //     teams.sort();
-  //     teams.forEach((team) => {
-  //       // console.log(team.teamName);
-  //       // console.log(team.teamCode);
-  //     });
-  //   })
-  // );
-  res.render("team/add-teams");
-});
-
-router.post("/add-teams/:userID", (req, res) => {
-  console.log(req.body.teamcode);
-  Team.find({ teamCode: req.body.teamcode })
-    .then((teamFromDB) => {
-      console.log(teamFromDB);
-      User.findByIdAndUpdate(req.params.userID, {
-        $addToSet: { teams: teamFromDB },
-      }).then((updatedUser) => {
-        console.log(updatedUser);
-        // res.send({ updatedUser, teamFromDB });
-        res.redirect(`/team/your-teams/${req.params.userID}`);
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-router.get("/your-teams/:userID", (req, res) => {
-  User.findById(req.params.userID)
-    .populate("teams")
-    .then((userFromDB) => {
-      console.log(userFromDB);
-      data = {
-        teams: userFromDB.teams,
-      };
-
-      res.render("team/your-teams", data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+const { Router } = require("express");
 
 router.get("/team-detail/:teamID", (req, res) => {
   Team.findById(req.params.teamID)
+    .populate("playersPartTime")
+    .populate("playersFullTime")
+
     .then((teamFromDB) => {
-      console.log(teamFromDB);
+      // console.log(teamFromDB);
 
       Game.find({
         $or: [{ homeTeam: teamFromDB._id }, { awayTeam: teamFromDB._id }],
       })
         .populate("homeTeam")
         .populate("awayTeam")
-        .then((gamesFromDB) => {
-          console.log(gamesFromDB);
-          data = {
-            games: gamesFromDB,
+        .then((thisTeamAllGames) => {
+          let uniqueDates = [];
+          let groupedSeason = [];
+
+          // get unique dates
+          thisTeamAllGames.forEach((game) => {
+            if (!uniqueDates.includes(game.date)) {
+              uniqueDates.push(game.date);
+            }
+          });
+
+          // console.log(uniqueDates.length);
+
+          uniqueDates.forEach((date) => {
+            let gameDay = {
+              gameday: date,
+              games: [],
+            };
+
+            thisTeamAllGames.forEach((game) => {
+              if (game.date === date) {
+                gameDay.games.push(game);
+              }
+            });
+
+            groupedSeason.push(gameDay);
+          });
+
+          const data = {
+            thisTeam: teamFromDB,
+            allGames: thisTeamAllGames,
+            season: groupedSeason,
           };
 
           // res.send(data);
           res.render("team/team-details", data);
         });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/add-players/:teamID", (req, res) => {
+  let teamID = req.params.teamID;
+  Team.findById(teamID)
+    .populate("playersPartTime")
+    .populate("playersFullTime")
+    .then((team) => {
+      User.findById(req.session.user)
+        .then((user) => {
+          let ownedTeam = user.teams.includes(team._id);
+          console.log(user);
+          let data = {
+            ownedTeam: ownedTeam,
+            team: team,
+          };
+
+          res.render("team/add-players", data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+});
+
+router.post("/add-players/:teamID", (req, res) => {
+  const newPlayer = {
+    name: req.body.name,
+    lastName: req.body.lastname,
+    phoneNumber: req.body.phonenumber,
+    emailAddress: req.body.email,
+    jerseyNumber: req.body.jerseynumber,
+  };
+  Player.create(newPlayer)
+    .then((playerCreated) => {
+      if (req.body.fullorpart === "full-time") {
+        Team.findByIdAndUpdate(req.params.teamID, {
+          $addToSet: { playersFullTime: playerCreated._id },
+        })
+          // .populate("playersPartTime")
+          // .populate("playersFullTime")
+          .then((team) => {
+            res.redirect(`/team/team-detail/${req.params.teamID}`);
+          });
+      } else if (req.body.fullorpart === "part-time") {
+        Team.findByIdAndUpdate(req.params.teamID, {
+          $addToSet: { playersPartTime: playerCreated._id },
+        })
+          // .populate("playersPartTime")
+          // .populate("playersFullTime")
+          .then((team) => {
+            res.redirect(`/team/team-detail/${req.params.teamID}`);
+          });
+      }
     })
     .catch((err) => {
       console.log(err);
