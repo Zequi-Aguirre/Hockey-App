@@ -42,6 +42,12 @@ header nav ul li {
 .date-container {
   display: inline-block;
   text-align: center;
+  border: 1px solid white;
+}
+
+.date-container li {
+  padding: 5px 0;
+  font-weight: bold;
 }
 
 .table-dates {

@@ -1,7 +1,13 @@
 <h1>Your Teams</h1>
 
+{{!-- {{theUser._id}} --}}
 {{#each teams}}
   <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
+
+  <form action="/auth/remove-team/{{this._id}}" method="POST">
+
+    <button type="submit">Remove</button>
+  </form>
 
   <br />
 

@@ -158,37 +158,22 @@ router.get("/logout", isLoggedIn, (req, res) => {
 });
 
 router.get("/profile", (req, res, next) => {
-  res.render("auth/profile");
-});
+  console.log(req.session.user);
 
-// ========================= MANAGE TEAMS IN YOUR ACCOUNT ========================= //
-router.get("/auth/:userID/addTeams", (req, res, next) => {
-  Animal.find()
-    .then((allTheAnimals) => {
-      Location.findById(req.params.locationID).then((theLocation) => {
-        let myAnimals = [];
-        let otherAnimals = [];
-        allTheAnimals.forEach((eachAnimal) => {
-          if (theLocation.animals.includes(eachAnimal.id)) {
-            console.log("its the same");
-            console.log(eachAnimal.name);
-            myAnimals.push(eachAnimal);
-          } else {
-            otherAnimals.push(eachAnimal);
-          }
-        });
-
-        res.render("auth/add-teams", {
-          myAnimals: myAnimals,
-          otherAnimals: otherAnimals,
-          locationID: req.params.locationID,
-        });
-      });
+  User.findById(req.session.user)
+    .populate("teams")
+    .then((user) => {
+      let data = {
+        userTeams: user.teams,
+      };
+      res.render("auth/profile", data);
     })
     .catch((err) => {
       console.log(err);
     });
 });
+
+// ========================= MANAGE TEAMS IN YOUR ACCOUNT ========================= //
 
 router.get("/add-teams/:userID", (req, res) => {
   // console.log(
@@ -211,9 +196,33 @@ router.post("/add-teams/:userID", (req, res) => {
       User.findByIdAndUpdate(req.params.userID, {
         $addToSet: { teams: teamFromDB },
       }).then((updatedUser) => {
+        req.session.user = updatedUser;
         // console.log(updatedUser);
         // res.send({ updatedUser, teamFromDB });
         res.redirect(`/auth/your-teams/${req.params.userID}`);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/remove-team/:teamID", (req, res) => {
+  console.log(req.session.user);
+  let currentUserID = req.session.user._id;
+
+  Team.findById(req.params.teamID)
+    .then((team) => {
+      console.log(team);
+      User.findByIdAndUpdate(req.session.user, {
+        $pull: { teams: team.id },
+      }).then((updatedUser) => {
+        // console.log(updatedUser);
+        // res.send({ updatedUser, teamFromDB });
+        // res.redirect(`/auth/your-teams/${req.params.userID}`);
+        res.redirect(`/auth/your-teams/${updatedUser._id}`);
+
+        // res.render("team/your-teams");
       });
     })
     .catch((err) => {

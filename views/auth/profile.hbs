@@ -1,12 +1,25 @@
-<h1>User Profile</h1>
+<h1>User Profile - {{theUser.username}}</h1>
 
-{{theUser.username}}
+{{!-- {{#each theUser}}
+  {{this}}
+  <br />
+{{/each}} --}}
+
+<hr />
+<hr />
 
 <h1>Your Teams</h1>
 
-{{#each theUser.teams}}
+{{#each userTeams}}
 
   <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
+
+  <br />
+
+  <form action="/auth/remove-team/{{this._id}}" method="POST">
+
+    <button type="submit">Remove</button>
+  </form>
 
   <br />
 

@@ -4,14 +4,26 @@
 <h4>Full Time Players</h4>
 
 {{#each thisTeam.playersFullTime}}
-  {{this}}
+  {{!-- {{this._id}} --}}
+  {{this.name}}
+  {{this.jerseyNumber}}
 {{/each}}
+
+<form action="/team/invite-all/{{thisTeam.id}}" method="POST">
+
+  <button type="submit">Invite All To Next Game</button>
+</form>
 
 <h4>Part Time Players</h4>
 
 {{#each thisTeam.playersPartTime}}
-  {{this}}
+  {{!-- {{this._id}} --}}
+  {{this.name}}
+  {{this.jerseyNumber}}
 {{/each}}
+
+<br />
+<br />
 
 <a href="/team/add-players/{{thisTeam.id}}">Add Players</a>
 
