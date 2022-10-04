@@ -36,12 +36,12 @@
     {{#each games}}
 
       <tr class="game-container {{this.division}}">
-        <td>{{this.division}}</td>
-        <td><a href="#">{{this.homeTeam.teamName}}</a></td>
-        <td><a href="#">{{this.awayTeam.teamName}}</a></td>
-        <td align="center">{{this.date}}</td>
-        <td>{{this.time}}</td>
-        <td>{{this.location}}</td>
+        <td class="gameInfo">{{this.division}}</td>
+        <td class="gameInfo"><a href="#">{{this.homeTeam.teamName}}</a></td>
+        <td class="gameInfo"><a href="#">{{this.awayTeam.teamName}}</a></td>
+        <td class="gameInfo" align="center">{{this.date}}</td>
+        <td class="gameInfo">{{this.time}}</td>
+        <td class="gameInfo">{{this.location}}</td>
 
       </tr>
 
