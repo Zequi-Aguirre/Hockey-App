@@ -152,7 +152,7 @@ router.post(
 
       const gameDate = `${days[fullDateCode.getDay()]}, ${
         months[fullDateCode.getMonth()]
-      } ${fullDateCode.getDate()}, ${fullDateCode.getFullYear()}`;
+      } ${fullDateCode.getDate() + 1}, ${fullDateCode.getFullYear()}`;
 
       if (game.division === "A/B") {
         game.division = "AB";

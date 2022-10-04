@@ -11,6 +11,7 @@ document.addEventListener(
 const searchInput = document.querySelector("#search");
 const allGames = document.querySelectorAll(".game-container");
 const games = document.querySelectorAll("tbody tr");
+const filterLinks = document.querySelectorAll(".filter-buttons");
 
 // console.log(games);
 
@@ -19,30 +20,6 @@ searchInput.addEventListener("keyup", (event) => {
   // console.log(event.target.value);
   // console.log(cellInTable.textContent.includes(searchValue));
 
-  console.log(`
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    validRow
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    `);
   console.log(searchValue);
   //
   //
@@ -62,54 +39,45 @@ searchInput.addEventListener("keyup", (event) => {
     let validRow = columnsArray.some((cellInTable) => {
       // console.log(cellInTable.textContent);
       // console.log(cellInTable.textContent);
-      console.log(`
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    validRow
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    `);
-      console.log(searchValue);
-      console.log(cellInTable.textContent.includes(searchValue));
-      console.log(cellInTable.textContent);
+
       // console.log(cellInTable.textContent.includes(searchValue));
       // console.log(cellInTable.textContent.includes(searchValue));
 
-      if (
-        cellInTable.textContent.toLocaleLowerCase().includes(searchValue) <= 0
-      ) {
-        return false;
-      } else {
-        return true;
-      }
+      return cellInTable.textContent.toLocaleLowerCase().includes(searchValue);
+
       // console.log();
       // console.log(searchValue);
+      // return
     });
 
-    // console.log(validRow);
+    console.log(validRow);
     // console.log(game);
 
     // cellInTable.textContent.toLowerCase().startsWith(searchValue)
     validRow
       ? (game.style.display = "table-row")
       : (game.style.display = "none");
+  });
+});
+
+[...filterLinks].map((link) => {
+  link.addEventListener("click", () => {
+    searchInput.value = link.getAttribute("data-searchdata");
+
+    console.log(link.getAttribute("data-searchdata"));
+
+    allGames.forEach((game) => {
+      game.style.display = "table-row";
+      console.log(game);
+
+      if (searchInput.value === "all") {
+        game.style.display = "table-row";
+      } else if (
+        !game.classList.contains(link.getAttribute("data-searchdata"))
+      ) {
+        game.style.display = "none";
+      }
+    });
   });
 });
 

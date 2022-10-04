@@ -1,44 +1,11 @@
 <h1>Add Teams To Your Account</h1>
 
-{{theUser.teams}}
+<form action="/team/add-teams/{{theUser._id}}" method="post">
 
-<ul>
-  {{#each teams}}
-    <li>all teams</li>
-  {{/each}}
-</ul>
-
-<form action="/locations/{{locationID}}/addAnimals" method="post">
-
-  {{#each myAnimals}}
-    <br />
-    <div>
-
-      <input type="checkbox" value={{id}} name="animalID" checked="checked" />
-
-      {{name}}
-      -
-      {{species}}
-
-    </div>
-    <br />
-    <hr />
-  {{/each}}
-
-  {{#each otherAnimals}}
-    <br />
-    <div>
-
-      <input type="checkbox" value={{id}} name="animalID" />
-
-      {{name}}
-      -
-      {{species}}
-
-    </div>
-    <br />
-    <hr />
-  {{/each}}
+  <label>
+    Team Code
+    <input type="text" name="teamcode" />
+  </label>
 
   <button type="submit">Confirm</button>
 
