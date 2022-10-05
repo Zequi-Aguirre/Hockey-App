@@ -10,6 +10,8 @@ const saltRounds = 10;
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 const Team = require("../models/Team.model");
+const Player = require("../models/Player.model");
+const Game = require("../models/Game.model");
 
 // Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
@@ -245,5 +247,133 @@ router.get("/your-teams/:userID", (req, res) => {
       console.log(err);
     });
 });
+
+// ================================= ADMIN ROUTES ================================= //
+
+// ======================= ALL TEAMS =======================
+
+router.get("/admin/all-teams", (req, res) => {
+  if (!req.session.user.admin) {
+    res.redirect(`/auth/profile`);
+  }
+  Team.find()
+    .populate("season")
+    .populate("playersFullTime")
+    .populate("playersPartTime")
+    .then((allResults) => {
+      // console.log(userFromDB);
+
+      function compare(a, b) {
+        if (a.teamName < b.teamName) {
+          return -1;
+        }
+        if (a.teamName > b.teamName) {
+          return 1;
+        }
+        return 0;
+      }
+
+      allResults.sort(compare);
+      data = {
+        results: allResults,
+      };
+
+      res.render("auth/all-results", data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// ======================= ALL PLAYERS =======================
+
+router.get("/admin/all-players", (req, res) => {
+  console.log(req.session.user);
+  if (!req.session.user.admin) {
+    res.redirect(`/auth/profile`);
+  }
+  Player.find()
+    .populate("teams")
+    .then((allResults) => {
+      function compare(a, b) {
+        if (a.lastName < b.lastName) {
+          return -1;
+        }
+        if (a.lastName > b.lastName) {
+          return 1;
+        }
+        return 0;
+      }
+
+      allResults.sort(compare);
+      // console.log(userFromDB);
+      data = {
+        results: allResults,
+      };
+
+      res.render("auth/all-results", data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// ======================= ALL GAMES =======================
+
+router.get("/admin/all-games", (req, res) => {
+  if (!req.session.user.admin) {
+    res.redirect(`/auth/profile`);
+  }
+  Game.find()
+    .populate("season")
+    .populate("homeTeam")
+    .populate("awayTeam")
+    .then((allResults) => {
+      // console.log(userFromDB);
+      data = {
+        results: allResults,
+      };
+
+      res.render("auth/all-results", data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// ======================= ALL USERS =======================
+
+router.get("/admin/all-users", (req, res) => {
+  if (!req.session.user.admin) {
+    res.redirect(`/auth/profile`);
+  }
+  User.find()
+    .populate("teams")
+    .then((allResults) => {
+      // console.log(userFromDB);
+      function compare(a, b) {
+        if (a.username < b.username) {
+          return -1;
+        }
+        if (a.username > b.username) {
+          return 1;
+        }
+        return 0;
+      }
+
+      allResults.sort(compare);
+
+      data = {
+        results: allResults,
+      };
+
+      res.render("auth/all-results", data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// ================================= ADMIN ROUTES ================================= //
 
 module.exports = router;

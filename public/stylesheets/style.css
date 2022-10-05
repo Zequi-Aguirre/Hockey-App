@@ -124,6 +124,16 @@ input {
   display: none;
 }
 
+.admin-buttons {
+  list-style: none;
+  display: flex;
+  padding-inline-start: 0px;
+}
+
+.admin-buttons li {
+  margin-left: 10px;
+}
+
 .filter-buttons {
   display: inline-block;
   outline: none;

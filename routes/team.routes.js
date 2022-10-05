@@ -197,20 +197,4 @@ router.post("/invite-all/:teamID", (req, res) => {
     });
 });
 
-router.get("/admin/all-teams", (req, res) => {
-  Team.find()
-    // .populate("teams")
-    .then((teamsFromDB) => {
-      // console.log(userFromDB);
-      data = {
-        teams: teamsFromDB,
-      };
-
-      res.render("team/all-teams", data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
 module.exports = router;

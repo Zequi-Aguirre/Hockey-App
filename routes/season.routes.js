@@ -32,49 +32,33 @@ router.get("/create-season", (req, res, next) => {
 
 router.post(
   "/create-season",
-  // uploadFile.single("excelFile"),
+  uploadFile.single("fileupload"),
   (req, res, next) => {
-    // let form = new formidable.IncomingForm();
+    // console.log({ file: req.file });
 
-    // form.parse(req, function (error, fields, file) {
-    //   console.log(file.fileupload.filepath);
-    //   let filepath = file.fileupload.filepath;
-    //   let newpath = "/public/xlsx";
-    //   console.log(process.cwd() + newpath);
-    //   console.log(file.fileupload.originalFilename);
-    //   newpath += file.fileupload.originalFilename;
-    //   fs.rename(filepath, newpath, function () {
-    //     console.log("Done");
-    //     res.end();
-    //   });
-    // });
-    console.log(`req================
-    
-    
-    
-    
-    
-    
-    ============.file`);
+    fs.rename(
+      `./public/xlsx/${req.file.filename}`,
+      `./public/xlsx/${req.file.originalname}`,
+      () => {
+        // console.log("name changed");
+        // List all the filenames after renaming
+        // getCurrentFilenames();
+      }
+    );
 
-    console.log(req.body.file);
+    // console.log(`req================
 
-    console.log(`req================
-    
-  
-    
-    
-    
-    
-    ============.file`);
+    // ============.file`);
 
-    const workBook = xlsx.readFile(`PAHL Fall 2022 Schedule2.xlsx`);
+    console.log(`./public/xlsx/${req.file.originalname}`);
+
+    const workBook = xlsx.readFile(`./public/xlsx/${req.file.originalname}`);
 
     const workSheet = workBook.Sheets["Master"];
 
     const data = xlsx.utils.sheet_to_json(workSheet);
 
-    function generateRandomPassword(length) {
+    function generateRandomCode(length) {
       let result = "";
       let characters = "0123456789";
       let charactersLength = characters.length;
@@ -86,22 +70,22 @@ router.post(
       return result;
     }
 
-    const newSeason = {
-      seasonName: req.body.seasonName,
-    };
+    // const newSeason = {
+    //   seasonName: req.body.seasonName,
+    // };
 
     let allTeams = [];
 
     data.forEach((game) => {
       const homeTeam = {
         teamName: game.home,
-        teamCode: generateRandomPassword(6),
+        teamCode: generateRandomCode(6),
         division: game.division,
       };
 
       const awayTeam = {
         teamName: game.away,
-        teamCode: generateRandomPassword(6),
+        teamCode: generateRandomCode(6),
         division: game.division,
       };
 
@@ -174,14 +158,14 @@ router.post(
       allGames.push(newGame);
     });
 
-    console.log(allGames);
+    // console.log(allGames);
 
     Team.insertMany(allTeamsUnique)
       .then((teamsCreated) => {
-        console.log("teamsCreated");
-        console.log(teamsCreated.length);
-        console.log("allGames");
-        console.log(allGames.length);
+        // console.log("teamsCreated");
+        // console.log(teamsCreated.length);
+        // console.log("allGames");
+        // console.log(allGames.length);
         allGames.map((game) => {
           teamsCreated.forEach((team) => {
             if (team.teamName === game.homeTeam) {
@@ -193,14 +177,37 @@ router.post(
           });
         });
         Game.insertMany(allGames)
-          .then((gamesCreated) => console.log(gamesCreated))
+          .then((gamesCreated) => {
+            console.log(req.body.seasonName);
+            let newSeason = {
+              seasonName: req.body.seasonName,
+              games: gamesCreated,
+            };
+
+            Season.create(newSeason)
+              .then((seasonCreated) => {
+                console.log(seasonCreated);
+                let data = {
+                  teamsCount: allTeamsUnique.length,
+                  gamesCount: gamesCreated.length,
+                };
+                req.flash(
+                  "success",
+                  `New season created ${seasonCreated.seasonName} with a total of ${allTeamsUnique.length} TEAMS and ${gamesCreated.length} GAMES`
+                );
+
+                res.redirect("/");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            // console.log(gamesCreated)
+          })
           .catch((err) => console.log(err));
-        console.log(err);
       })
       .catch();
 
-    console.log(allGames);
-    res.render("season/create-season");
+    // console.log(allGames);
   }
 );
 

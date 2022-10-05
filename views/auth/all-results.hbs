@@ -1,0 +1,49 @@
+<h1>All Results</h1>
+
+{{!-- {{theUser._id}} --}}
+{{#each results}}
+
+  {{!======================= ALL TEAMS =======================}}
+
+  {{#if this.teamName}}
+    <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
+    team code:
+    {{this.teamCode}}
+    <br />
+    <br />
+  {{/if}}
+
+  {{!======================= ALL PLAYERS =======================}}
+
+  {{#if this.name}}
+    <a href="/team/team-detail/{{this._id}}">{{this.name}}
+      {{this.jerseyNumber}}</a>
+    {{!-- {{this}} --}}
+    <br />
+    <br />
+  {{/if}}
+
+  {{!======================= ALL GAMES =======================}}
+
+  {{#if this.homeTeam}}
+    <a href="/team/team-detail/{{this._id}}">{{this.date}}
+      {{this.time}}
+      {{this.homeTeam.teamName}}
+      VS
+      {{this.awayTeam.teamName}}</a>
+    <br />
+  {{/if}}
+
+  {{!======================= ALL USERS =======================}}
+
+  {{#if this.username}}
+    <a href="/team/team-detail/{{this._id}}">{{this.username}}
+    </a>{{#if this.admin}} - ⭐ ADMIN{{/if}}
+    <br />
+  {{/if}}
+
+{{/each}}
+<br />
+<br />
+
+<a href="/auth/add-teams/{{theUser._id}}">Add Teams</a>
