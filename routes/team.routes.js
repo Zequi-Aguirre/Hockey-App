@@ -8,6 +8,7 @@ const User = require("../models/User.model");
 const Team = require("../models/Team.model");
 const Game = require("../models/Game.model");
 const Player = require("../models/Player.model");
+const nodemailer = require("nodemailer");
 
 // Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
@@ -141,55 +142,54 @@ router.post("/invite-all/:teamID", (req, res) => {
     .populate("playersFullTime")
     .then((team) => {
       //=============================================================================
-      // team.playersFullTime.forEach((fullTimePlayer) => {
-      //   console.log(fullTimePlayer.jerseyNumber);
-      //   async function main() {
-      //     // Generate test SMTP service account from ethereal.email
-      //     // Only needed if you don't have a real mail account for testing
-      //     // let testAccount = await nodemailer.createTestAccount();
+      team.playersFullTime.forEach((fullTimePlayer) => {
+        console.log({ player: fullTimePlayer });
+        async function main() {
+          // Generate test SMTP service account from ethereal.email
+          // Only needed if you don't have a real mail account for testing
+          // let testAccount = await nodemailer.createTestAccount();
 
-      //     // create reusable transporter object using the default SMTP transport
-      //     let transporter = nodemailer.createTransport({
-      //       host: "mail.zequi4real.com",
-      //       port: 465,
-      //       secure: true, // true for 465, false for other ports
-      //       auth: {
-      //         user: process.env.CPANELUSER, // generated ethereal user
-      //         pass: process.env.CPANELPASS, // generated ethereal password
-      //       },
-      //       tls: {
-      //         rejectUnauthorized: false,
-      //       },
-      //     });
+          // create reusable transporter object using the default SMTP transport
+          let transporter = nodemailer.createTransport({
+            host: "mail.zequi4real.com",
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            auth: {
+              user: process.env.CPANELUSER, // generated ethereal user
+              pass: process.env.CPANELPASS, // generated ethereal password
+            },
+            tls: {
+              rejectUnauthorized: false,
+            },
+          });
 
-      //     let emailOptions = {
-      //       from: '"Zequi Movies App! 👻" <admin@zequi4real.com>', // sender address
-      //       to: fullTimePlayer.emailAddress, // list of receivers
-      //       subject: "Thanks for joining!", // Subject line
-      //       // text: "Hello world?", // plain text body
+          let emailOptions = {
+            from: '"Zequi Movies App! 👻" <admin@zequi4real.com>', // sender address
+            to: fullTimePlayer.emailAddress, // list of receivers
+            subject: "Thanks for joining!", // Subject line
+            // text: "Hello world?", // plain text body
 
-      //       html: `Hello ${fullTimePlayer.name}, welcome to Zequi Movies App, confirm your email address by clicking <form action="http://localhost:3000/emailconfirmation/${fullTimePlayer._id}" method="post">
+            html: `Hello ${fullTimePlayer.name}, welcome to Zequi Movies App, confirm your email address by clicking <form action="http://localhost:3000/emailconfirmation/${fullTimePlayer._id}" method="post">
 
-      //           <button>HERE</button>
+                <button>HERE</button>
 
-      //              </form>  `, // html body
-      //     };
+                   </form>  `, // html body
+          };
 
-      //     // send mail with defined transport object
-      //     let info = await transporter.sendMail(emailOptions);
+          // send mail with defined transport object
+          let info = await transporter.sendMail(emailOptions);
 
-      //     console.log("Message sent: %s", info.messageId);
-      //     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+          console.log("Message sent: %s", info.messageId);
+          // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-      //     // Preview only available when sending through an Ethereal account
-      //     // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-      //     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-      //   }
-      // });
+          // Preview only available when sending through an Ethereal account
+          // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+          // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+        }
+        res.send(team.playersFullTime);
+      });
 
       //=============================================================================
-      console.log(team.playersFullTime);
-      res.send(team.playersFullTime);
       //
     })
     .catch((err) => {
