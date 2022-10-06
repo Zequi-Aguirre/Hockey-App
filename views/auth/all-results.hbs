@@ -1,48 +1,91 @@
 <h1>All Results</h1>
 
 {{!-- {{theUser._id}} --}}
-{{#each results}}
+<div class="all-results">
+  {{#each results}}
 
-  {{!======================= ALL TEAMS =======================}}
+    {{!======================= ALL TEAMS =======================}}
 
-  {{#if this.teamName}}
-    <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
-    team code:
-    {{this.teamCode}}
-    <br />
-    <br />
-  {{/if}}
+    {{#if this.teamName}}
 
-  {{!======================= ALL PLAYERS =======================}}
+      <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
+      team code:
+      {{this.teamCode}}
+      {{#each playersFullTime}}
 
-  {{#if this.name}}
-    <a href="/team/team-detail/{{this._id}}">{{this.name}}
-      {{this.jerseyNumber}}</a>
-    {{!-- {{this}} --}}
-    <br />
-    <br />
-  {{/if}}
+        <a href="/player/player-details/{{this._id}}">
+          {{this.name}}
+          {{this.lastName}}
+        </a>
+      {{/each}}
 
-  {{!======================= ALL GAMES =======================}}
+      <br />
+      <br />
+    {{/if}}
 
-  {{#if this.homeTeam}}
-    <a href="/team/team-detail/{{this._id}}">{{this.date}}
+    {{!======================= ALL PLAYERS =======================}}
+
+    {{#if this.name}}
+      <a href="/team/team-detail/{{this._id}}">{{this.name}}
+        {{this.jerseyNumber}}</a>
+      {{!-- {{this}} --}}
+      <br />
+      <br />
+    {{/if}}
+
+    {{!======================= ALL GAMES =======================}}
+
+    {{#if this.homeTeam}}
+      <div>
+        <a href="/game/game-details/{{this._id}}">
+          <div class="game-container-details-hover"></div></a>
+
+        <div class="game-container-details">
+
+          <div class="teams-container">
+
+            <div class="team">
+              <img
+                src="https://ssl.gstatic.com/onebox/media/sports/logos/iBFLyMGpOW2Fh5j8s7kYpw_48x48.png"
+                alt=""
+              />
+              <a
+                href="/team/team-detail/{{this.homeTeam._id}}"
+              >{{this.homeTeam.teamName}}</a></div>
+            <div class="team"><img
+                src="https://ssl.gstatic.com/onebox/media/sports/logos/iBFLyMGpOW2Fh5j8s7kYpw_48x48.png"
+                alt=""
+              />
+              <a
+                href="/team/team-detail/{{this.awayTeam._id}}"
+              >{{this.awayTeam.teamName}}</a>
+            </div>
+          </div>
+          <div class="divider-line"></div>
+          <div class="game-date"><img src="" alt="" />{{this.date}}
+            <br />{{this.time}}</div>
+        </div>
+
+        {{!-- <a href="/team/team-detail/{{this._id}}">{{this.date}}
       {{this.time}}
       {{this.homeTeam.teamName}}
       VS
-      {{this.awayTeam.teamName}}</a>
-    <br />
-  {{/if}}
+      {{this.awayTeam.teamName}}</a> --}}
+        {{! <br /> }}
+      </div>
 
-  {{!======================= ALL USERS =======================}}
+    {{/if}}
 
-  {{#if this.username}}
-    <a href="/team/team-detail/{{this._id}}">{{this.username}}
-    </a>{{#if this.admin}} - ⭐ ADMIN{{/if}}
-    <br />
-  {{/if}}
+    {{!======================= ALL USERS =======================}}
 
-{{/each}}
+    {{#if this.username}}
+      <a href="/team/team-detail/{{this._id}}">{{this.username}}
+      </a>{{#if this.admin}} - ⭐ ADMIN{{/if}}
+      <br />
+    {{/if}}
+
+  {{/each}}
+</div>
 <br />
 <br />
 

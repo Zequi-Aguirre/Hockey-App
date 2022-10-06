@@ -63,9 +63,13 @@ app.use("/", index);
 const authRoutes = require("./routes/auth.routes");
 const teamRoutes = require("./routes/team.routes");
 const seasonRoutes = require("./routes/season.routes");
+const playerRoutes = require("./routes/player.routes");
+const gameRoutes = require("./routes/game.routes");
 app.use("/auth", authRoutes);
 app.use("/team", teamRoutes);
 app.use("/season", seasonRoutes);
+app.use("/player", playerRoutes);
+app.use("/game", gameRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

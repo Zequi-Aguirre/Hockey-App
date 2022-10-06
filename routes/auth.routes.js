@@ -329,7 +329,15 @@ router.get("/admin/all-games", (req, res) => {
     .populate("homeTeam")
     .populate("awayTeam")
     .then((allResults) => {
-      // console.log(userFromDB);
+      console.log(allResults[0]);
+
+      allResults.forEach((game) => {
+        let gameDay = game.date.split(", ")[0].substring(0, 3);
+        let gameMonth = game.date.split(", ")[1].split(" ")[0].substring(0, 3);
+        let gameDayNumber = game.date.split(", ")[1].split(" ")[1];
+
+        game.date = `${gameDay}, ${gameMonth} ${gameDayNumber}`;
+      });
       data = {
         results: allResults,
       };
