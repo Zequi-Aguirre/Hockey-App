@@ -2,41 +2,71 @@
 
 {{!-- {{theUser._id}} --}}
 <div class="all-results">
-  {{#each results}}
-
-    {{!======================= ALL TEAMS =======================}}
-
-    {{#if this.teamName}}
+  {{!======================= ALL TEAMS =======================}}
+  <section class="all-teams admin-section">
+    {{#each results}}
 
       <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
       team code:
       {{this.teamCode}}
+      <br />
+      <h4>Full Time Players</h4>
+      <br />
       {{#each playersFullTime}}
 
         <a href="/player/player-details/{{this._id}}">
           {{this.name}}
           {{this.lastName}}
         </a>
+        <br />
+      {{/each}}
+      <br />
+      <h4>Part Time Players</h4>
+      <br />
+      {{#each playersPartTime}}
+
+        <a href="/player/player-details/{{this._id}}">
+          {{this.name}}
+          {{this.lastName}}
+        </a>
+        <br />
       {{/each}}
 
       <br />
       <br />
-    {{/if}}
+    {{/each}}
+  </section>
 
-    {{!======================= ALL PLAYERS =======================}}
+  {{!======================= ALL PLAYERS =======================}}
 
-    {{#if this.name}}
-      <a href="/team/team-detail/{{this._id}}">{{this.name}}
-        {{this.jerseyNumber}}</a>
+  <section class="all-players admin-section">
+    {{#each results}}
+
+      <a href="/player/player-details/{{this._id}}">
+        {{this.name}}
+        {{this.lastName}}
+        {{this.jerseyNumber}}
+      </a>
+      <br />
+      <form action="/auth/admin/delete-player/{{this._id}}" method="POST">
+
+        <button type="submit">Delete</button>
+      </form>
+
+      {{!-- <a href="/team/team-detail/{{this._id}}">{{this.name}}
+        {{this.jerseyNumber}}</a> --}}
       {{!-- {{this}} --}}
       <br />
       <br />
-    {{/if}}
+    {{/each}}
+  </section>
 
-    {{!======================= ALL GAMES =======================}}
+  {{!======================= ALL GAMES =======================}}
 
-    {{#if this.homeTeam}}
-      <div>
+  <section class="all-games admin-section">
+    {{#each results}}
+
+      <div class="game-container-all">
         <a href="/game/game-details/{{this._id}}">
           <div class="game-container-details-hover"></div></a>
 
@@ -74,17 +104,21 @@
         {{! <br /> }}
       </div>
 
-    {{/if}}
+    {{/each}}
 
-    {{!======================= ALL USERS =======================}}
+  </section>
 
-    {{#if this.username}}
-      <a href="/team/team-detail/{{this._id}}">{{this.username}}
+  {{!======================= ALL USERS =======================}}
+
+  <section class="all-users admin-section">
+    {{#each results}}
+
+      <a href="/auth/user-details/{{this._id}}">{{this.username}}
       </a>{{#if this.admin}} - ⭐ ADMIN{{/if}}
       <br />
-    {{/if}}
+    {{/each}}
+  </section>
 
-  {{/each}}
 </div>
 <br />
 <br />

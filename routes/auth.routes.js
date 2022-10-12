@@ -22,11 +22,12 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, password } = req.body;
+  const { firstname, lastname, phonenumber, player, manager, email, password } =
+    req.body;
 
-  if (!username) {
+  if (!email) {
     return res.status(400).render("auth/signup", {
-      errorMessage: "Please provide your username.",
+      errorMessage: "Please provide your email.",
     });
   }
 
@@ -49,12 +50,12 @@ router.post("/signup", isLoggedOut, (req, res) => {
   */
 
   // Search the database for a user with the username submitted in the form
-  User.findOne({ username }).then((found) => {
+  User.findOne({ email }).then((found) => {
     // If the user is found, send the message username is taken
     if (found) {
       return res
         .status(400)
-        .render("auth/signup", { errorMessage: "Username already taken." });
+        .render("auth/signup", { errorMessage: "Email already in use." });
     }
 
     // if user is not found, create a new user - start with hashing the password
@@ -64,7 +65,12 @@ router.post("/signup", isLoggedOut, (req, res) => {
       .then((hashedPassword) => {
         // Create a user and save it in the database
         return User.create({
-          username,
+          firstname,
+          lastname,
+          phonenumber,
+          player,
+          manager,
+          email,
           password: hashedPassword,
         });
       })
@@ -82,7 +88,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         if (error.code === 11000) {
           return res.status(400).render("auth/signup", {
             errorMessage:
-              "Username need to be unique. The username you chose is already in use.",
+              "Email need to be unique. The email you chose is already in use.",
           });
         }
         return res
@@ -97,12 +103,12 @@ router.get("/login", isLoggedOut, (req, res) => {
 });
 
 router.post("/login", isLoggedOut, (req, res, next) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  if (!username) {
+  if (!email) {
     return res
       .status(400)
-      .render("auth/login", { errorMessage: "Please provide your username." });
+      .render("auth/login", { errorMessage: "Please provide your email." });
   }
 
   // Here we use the same logic as above
@@ -114,8 +120,9 @@ router.post("/login", isLoggedOut, (req, res, next) => {
   }
 
   // Search the database for a user with the username submitted in the form
-  User.findOne({ username })
-    .populate("teams")
+  User.findOne({ email })
+    .populate("joinedTeams")
+    .populate("ownedTeams")
 
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
@@ -132,7 +139,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
             .status(400)
             .render("auth/login", { errorMessage: "Wrong credentials." });
         }
-        console.log(user);
+        // console.log(user);
         req.session.user = user;
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
         return res.redirect("/auth/profile");
@@ -163,7 +170,8 @@ router.get("/profile", (req, res, next) => {
   console.log(req.session.user);
 
   User.findById(req.session.user)
-    .populate("teams")
+    .populate("joinedTeams")
+    .populate("ownedTeams")
     .then((user) => {
       let data = {
         userTeams: user.teams,
@@ -318,6 +326,16 @@ router.get("/admin/all-players", (req, res) => {
     });
 });
 
+// ======================= DELETE PLAYERS =======================
+
+router.post("/admin/delete-player/:playerID", (req, res) => {
+  Player.findByIdAndDelete(req.params.playerID)
+    .then(player)
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 // ======================= ALL GAMES =======================
 
 router.get("/admin/all-games", (req, res) => {
@@ -376,6 +394,24 @@ router.get("/admin/all-users", (req, res) => {
       };
 
       res.render("auth/all-results", data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// ============================== ANY USER PROFILE ====================================== //
+
+router.get("/user-details/:userID", (req, res, next) => {
+  console.log(req.session.user);
+
+  User.findById(req.params.userID)
+    .populate("teams")
+    .then((user) => {
+      let data = {
+        user: user,
+      };
+      res.render("auth/user-details", data);
     })
     .catch((err) => {
       console.log(err);

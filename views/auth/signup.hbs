@@ -1,14 +1,47 @@
-<form action="/auth/signup" method="POST">
-   <label> Username
-      <input type="text" name="username">
-   </label>
-   <label> Password
-      <input type="password" name="password">
-   </label>
+<h1>Sign Up</h1>
 
-   <button type="submit">Submit</button>
+<form action="/auth/signup" method="POST">
+  <label>
+    First Name
+    <input type="text" name="firstname" />
+  </label>
+  <br />
+  <label>
+    Last Name
+    <input type="text" name="lastname" />
+  </label>
+  <br />
+  <label>
+    Phone Number
+    <input type="text" name="phonenumber" />
+  </label>
+  <br />
+  <label>
+    Are you a Player?
+    <input type="checkbox" name="player" value="true" />
+  </label>
+  <br />
+  <label>
+    Are you a Team Manage?
+    <input type="checkbox" name="manager" value="true" />
+  </label>
+  <br />
+  <br />
+  <label>
+    Email
+    <input type="email" name="email" />
+  </label>
+  <br />
+
+  <label>
+    Password
+    <input type="password" name="password" />
+  </label>
+  <br />
+
+  <button type="submit">Submit</button>
 </form>
 
 {{#if errorMessage}}
-   {{errorMessage}}
+  {{errorMessage}}
 {{/if}}

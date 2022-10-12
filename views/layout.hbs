@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>{{appTitle}}</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/all-results.css" />
   </head>
   <body>
     <header>
@@ -39,14 +40,32 @@
     {{/if}}
     {{#if theUser.admin}}
 
-      <br /><br />
+      <h3>Admin Routes</h3>
+
       <ul class="admin-buttons">
 
-        <li><a class="filter-buttons" href="/auth/admin/all-teams">All Teams</a></li>
-        <li><a class="filter-buttons" href="/auth/admin/all-players">All Players</a></li>
-        <li><a class="filter-buttons" href="/auth/admin/all-games">All Games</a></li>
-        <li><a class="filter-buttons" href="/auth/admin/all-users">All Users</a></li>
-        <li><a class="filter-buttons" href="/season/create-season">Create Season</a></li>
+        <li><a
+            class="admin-filter-buttons"
+            data-adminfilter="all-teams"
+            href="/auth/admin/all-teams"
+          >All Teams</a></li>
+        <li><a
+            class="admin-filter-buttons"
+            data-adminfilter="all-players"
+            href="/auth/admin/all-players"
+          >All Players</a></li>
+        <li><a
+            class="admin-filter-buttons"
+            data-adminfilter="all-games"
+            href="/auth/admin/all-games"
+          >All Games</a></li>
+        <li><a
+            class="admin-filter-buttons"
+            data-adminfilter="all-users"
+            href="/auth/admin/all-users"
+          >All Users</a></li>
+        <li><a class="admin-filter-buttons" href="/season/create-season">Create
+            Season</a></li>
       </ul>
     {{/if}}
 

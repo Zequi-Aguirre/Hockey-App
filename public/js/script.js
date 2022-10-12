@@ -11,8 +11,10 @@ document.addEventListener(
 const searchInput = document.querySelector("#search");
 const allGames = document.querySelectorAll(".game-container");
 // const games = document.querySelectorAll("tbody tr");
-const filterLinks = document.querySelectorAll(".filter-buttons");
+const filterLinks = document.querySelectorAll(".filter-ul ul li");
+const adminFilterLinks = document.querySelectorAll(".admin-filter-buttons");
 const allDates = document.querySelectorAll(".date-container");
+const adminSections = document.querySelectorAll(".admin-section");
 // console.log(games);
 
 if (searchInput) {
@@ -65,9 +67,12 @@ if (searchInput) {
     });
     allDates.forEach((date) => {
       if (date) {
+        console.log(date);
         let next = date.nextSibling.nextSibling.style.display;
 
         console.log(next);
+
+        console.log({ next: next });
 
         let nextUntil = function (elem, className) {
           // Setup siblings array
@@ -130,6 +135,31 @@ if (searchInput) {
       }
     });
   });
+});
+
+// =================================== ADMIN FILTER ===============================================
+
+adminSections.forEach((section) => {
+  let currentURL = window.location.href;
+  let urlDivider = currentURL.lastIndexOf("/") + 1;
+  currentSection = currentURL.substring(urlDivider);
+  console.log(section);
+  console.log(currentURL);
+  console.log(currentSection);
+
+  if (!section.classList.contains(currentSection)) {
+    section.style.display = "none";
+  } else if (section.classList.contains("all-games")) {
+    section.style.display = "grid";
+    section.style.gridTemplateColumns = "375.5px 375.5px";
+    section.style.justifyContent = "center";
+
+    // grid-template-columns: 375.5px 375.5px;
+    //     justify-content: center;
+  } else {
+    section.style.display = "block";
+  }
+  // console.log(section);
 });
 
 // divisionSelector.addEventListener("change", () => {

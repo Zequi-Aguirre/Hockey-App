@@ -1,6 +1,8 @@
 body {
   padding: 30px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
@@ -134,116 +136,131 @@ input {
   margin-left: 10px;
 }
 
-.filter-buttons {
-  display: inline-block;
-  outline: none;
+.filter-ul ul li:hover {
+
   cursor: pointer;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 600;
-  border-radius: 8px;
-  padding: 13px 23px;
-  border: 1px solid #222222;
-  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
-  background: #fff;
-  color: #222222;
 
 
-}
+  /* sport-tab/active */
 
-.filter-buttons:hover {
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 600;
-  border-radius: 8px;
-  padding: 14px 24px;
-  border: none;
-  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
-  background: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%);
-  color: #fff;
-}
 
-.all-results {
-  display: grid;
-  grid-template-columns: 375.5px 375.5px;
-  justify-content: center;
-  background-color: #fafafa;
-  padding: 30px 0;
-}
+  box-sizing: border-box;
 
-.game-container-details {
-  width: 375px;
-  height: 110px;
-  border: .5px solid grey;
+  /* Auto layout */
+
   display: flex;
-  align-items: center;
-  /* align-items: stretch; */
-  background-color: white;
-}
-
-.game-container-details-hover {
-  width: 375px;
-  height: 110px;
-  background-color: rgba(0, 0, 0, 0);
-  position: absolute;
-}
-
-.game-container-details-hover:hover {
-  cursor: pointer;
-}
-
-.game-container-details-hover:hover {
-  background-color: red;
-}
-
-.teams-container {
-  width: 70%;
-  /* background-color: #00b7ff; */
-  display: flex;
-  justify-content: center;
-  align-items: left;
-  flex-direction: column;
-  padding-left: 25px;
-  height: 60%;
-}
-
-.game-date {
-  width: 30%;
-  /* background-color: aquamarine; */
-  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 11px 10px 10px 16px;
+  gap: 10px;
+
+  width: 120px;
+  height: 44px;
+
+  background: #292929;
+  border: 2px solid #F5620F;
+  border-radius: 29px;
+
+
+}
+
+.filter-ul {
+  /* Frame 44 */
+
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+
+  /* position: absolute; */
+  width: 100%;
+  /* height: 44px; */
+  left: 16px;
+  top: calc(50% - 44px/2);
+  margin-bottom: 30px;
+}
+
+.filter-ul ul li {
+  /* sport-tab/normal */
+
+
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 11px 10px 10px 16px;
+  gap: 10px;
+
+  width: 120px;
+  height: 44px;
+
+  background: #292929;
+  border: 1px solid #4B4B4B;
+  border-radius: 29px;
+}
+
+
+
+.filter-ul ul li a {
+  /* text */
+
+
+  width: 90px;
+  height: 21px;
+
+  /* nav/14px */
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
+
   text-align: center;
-  font-weight: 400;
-  height: 60%;
+
+  color: #FFFFFF;
 }
 
-.team {
+.filter-ul ul li:hover>a {
+  color: #F5620F;
+}
+
+.filter-ul ul {
+  /* Frame 44 */
+
+
+  /* Auto layout */
+
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  /* position: absolute; */
+  width: 100%;
+  /* height: 44px; */
+  left: 16px;
+  top: calc(50% - 44px/2);
 }
 
-.team img {
-  height: 24px;
-  margin-right: 15px;
+.full-table {
+  margin-top: 20px;
 }
 
-.team a {
-  text-decoration: none;
-  color: black;
-}
-
-.team a:hover {
-  /* text-decoration: none; */
-  color: blue;
-}
-
-.divider-line {
-  height: 70%;
-  width: .5px;
-  background-color: gray;
+#search {
+  width: 80%;
   align-self: center;
+  height: 30px;
 }

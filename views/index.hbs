@@ -2,23 +2,22 @@
 <p>Welcome Ironhacker!</p>
 
 {{!-- {{#each division}} --}}
+<div class="filter-ul">
+  <ul>
 
-<a class="filter-buttons" data-searchdata="all">All</a>
-<a class="filter-buttons" data-searchdata="Over40">40+</a>
-<a class="filter-buttons" data-searchdata="AB">A/B</a>
-<a class="filter-buttons" data-searchdata="C1">C1</a>
-<a class="filter-buttons" data-searchdata="Plat">C2 Platinum</a>
-<a class="filter-buttons" data-searchdata="Gold">C2 Gold</a>
-<a class="filter-buttons" data-searchdata="Silver">C2 Silver</a>
-<a class="filter-buttons" data-searchdata="Bronze">C2 Bronze</a>
+    <li data-searchdata="all"> <a>All</a></li>
+    <li data-searchdata="Over40"> <a>40+</a></li>
+    <li data-searchdata="AB"> <a>A/B</a></li>
+    <li data-searchdata="C1"> <a>C1</a></li>
+    <li data-searchdata="Plat"> <a>C2 Platinum</a></li>
+    <li data-searchdata="Gold"> <a>C2 Gold</a></li>
+    <li data-searchdata="Silver"> <a>C2 Silver</a></li>
+    <li data-searchdata="Bronze"> <a>C2 Bronze</a></li>
+  </ul>
+</div>
 
 {{!-- {{/each}} --}}
-<br />
-<br />
 <input type="text" name="search" id="search" placeholder="Search..." />
-<br />
-<br />
-<br />
 <div class="full-table">
 
   <div class="table-head">
@@ -55,6 +54,8 @@
         <li class="table-dates">{{gameday}}</li>
       </div>
       {{#games}}
+
+        {{! OLD CODE KEEP FOR NOW }}
         <div class="game-container {{this.division}}">
           <li class="game-info column-division">{{this.division}}</li>
           <li class="game-info column-homeTeam"><a
@@ -68,6 +69,45 @@
           <li class="game-info column-location">{{this.location}}</li>
 
         </div>
+
+        {{! OLD CODE KEEP FOR NOW }}
+
+        {{! CREATE LOCATION AND DIVISION }}
+
+        {{!-- <div>
+          <a href="/game/game-details/{{this._id}}">
+            <div class="game-container-details-hover"></div></a>
+
+          <div class="game-container-details">
+
+            <div class="teams-container">
+
+              <div class="team game-info column-homeTeam">
+                <img
+                  src="https://ssl.gstatic.com/onebox/media/sports/logos/iBFLyMGpOW2Fh5j8s7kYpw_48x48.png"
+                  alt=""
+                />
+                <a
+                  href="/team/team-detail/{{this.homeTeam._id}}"
+                >{{this.homeTeam.teamName}}</a></div>
+              <div class="team game-info column-awayTeam"><img
+                  src="https://ssl.gstatic.com/onebox/media/sports/logos/iBFLyMGpOW2Fh5j8s7kYpw_48x48.png"
+                  alt=""
+                />
+                <a
+                  href="/team/team-detail/{{this.awayTeam._id}}"
+                >{{this.awayTeam.teamName}}</a>
+              </div>
+            </div>
+            <div class="divider-line"></div>
+            <div class="game-date game-info column-date"><img
+                src=""
+                alt=""
+              />{{this.date}}
+              <br />{{this.time}}</div>
+          </div>
+
+        </div> --}}
       {{/games}}
 
     {{/season}}
