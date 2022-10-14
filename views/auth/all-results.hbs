@@ -7,8 +7,12 @@
     {{#each results}}
 
       <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
-      team code:
-      {{this.teamCode}}
+      <br />
+      manage code:
+      {{this.ownCode}}
+      <br />
+      join code:
+      {{this.joinCode}}
       <br />
       <h4>Full Time Players</h4>
       <br />
@@ -113,7 +117,7 @@
   <section class="all-users admin-section">
     {{#each results}}
 
-      <a href="/auth/user-details/{{this._id}}">{{this.username}}
+      <a href="/auth/user-details/{{this._id}}">{{this.email}}
       </a>{{#if this.admin}} - ⭐ ADMIN{{/if}}
       <br />
     {{/each}}

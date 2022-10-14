@@ -23,8 +23,13 @@ const playerSchema = new Schema(
       type: String,
       // unique: true // -> Ideally, should be unique, but its up to you
     },
-    teams: {
+    joinedTeams: {
       type: [{ type: Schema.Types.ObjectId, ref: "Team" }],
+    },
+    User: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      // unique: true -> Ideally, should be unique, but its up to you
     },
   },
   {

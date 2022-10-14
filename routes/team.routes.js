@@ -80,7 +80,7 @@ router.get("/add-players/:teamID", (req, res) => {
       .then((team) => {
         User.findById(req.session.user._id)
           .then((user) => {
-            let ownedTeam = user.teams.includes(team._id);
+            let ownedTeam = user.ownedTeams.includes(team._id);
             console.log(user);
             let data = {
               ownedTeam: ownedTeam,

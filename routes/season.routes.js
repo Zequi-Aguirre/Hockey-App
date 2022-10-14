@@ -79,13 +79,15 @@ router.post(
     data.forEach((game) => {
       const homeTeam = {
         teamName: game.home,
-        teamCode: generateRandomCode(6),
+        ownCode: generateRandomCode(6),
+        joinCode: generateRandomCode(6),
         division: game.division,
       };
 
       const awayTeam = {
         teamName: game.away,
-        teamCode: generateRandomCode(6),
+        ownCode: generateRandomCode(6),
+        joinCode: generateRandomCode(6),
         division: game.division,
       };
 

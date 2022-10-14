@@ -16,13 +16,11 @@ const userSchema = new Schema(
       // unique: true -> Ideally, should be unique, but its up to you
     },
     player: {
-      type: Boolean,
+      type: Schema.Types.ObjectId,
+      ref: "Player",
       // unique: true -> Ideally, should be unique, but its up to you
     },
-    manager: {
-      type: Boolean,
-      // unique: true -> Ideally, should be unique, but its up to you
-    },
+
     email: {
       type: String,
       // unique: true -> Ideally, should be unique, but its up to you
@@ -35,6 +33,10 @@ const userSchema = new Schema(
       type: [{ type: Schema.Types.ObjectId, ref: "Team" }],
     },
     admin: {
+      type: Boolean,
+      // unique: true -> Ideally, should be unique, but its up to you
+    },
+    master: {
       type: Boolean,
       // unique: true -> Ideally, should be unique, but its up to you
     },

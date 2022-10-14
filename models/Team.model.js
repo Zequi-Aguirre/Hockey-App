@@ -7,7 +7,11 @@ const teamSchema = new Schema(
       type: String,
       // unique: true // -> Ideally, should be unique, but its up to you
     },
-    teamCode: {
+    ownCode: {
+      type: String,
+      // unique: true // -> Ideally, should be unique, but its up to you
+    },
+    joinCode: {
       type: String,
       // unique: true // -> Ideally, should be unique, but its up to you
     },
@@ -15,6 +19,10 @@ const teamSchema = new Schema(
       type: [{ type: Schema.Types.ObjectId, ref: "Season" }],
     },
     division: {
+      type: String,
+      // unique: true // -> Ideally, should be unique, but its up to you
+    },
+    cool: {
       type: String,
       // unique: true // -> Ideally, should be unique, but its up to you
     },

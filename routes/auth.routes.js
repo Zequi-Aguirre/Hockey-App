@@ -22,8 +22,7 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { firstname, lastname, phonenumber, player, manager, email, password } =
-    req.body;
+  const { firstname, lastname, phonenumber, email, password } = req.body;
 
   if (!email) {
     return res.status(400).render("auth/signup", {
@@ -68,8 +67,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
           firstname,
           lastname,
           phonenumber,
-          player,
-          manager,
+
           email,
           password: hashedPassword,
         });
@@ -167,15 +165,16 @@ router.get("/logout", isLoggedIn, (req, res) => {
 });
 
 router.get("/profile", (req, res, next) => {
-  console.log(req.session.user);
+  // console.log(req.session.user);
 
   User.findById(req.session.user)
     .populate("joinedTeams")
     .populate("ownedTeams")
     .then((user) => {
       let data = {
-        userTeams: user.teams,
+        user: user,
       };
+      req.session.user = user;
       res.render("auth/profile", data);
     })
     .catch((err) => {
@@ -200,16 +199,25 @@ router.get("/add-teams/:userID", (req, res) => {
 
 router.post("/add-teams/:userID", (req, res) => {
   // console.log(req.body.teamcode);
-  Team.find({ teamCode: req.body.teamcode })
+  Team.findOne({ ownCode: req.body.owncode })
     .then((teamFromDB) => {
+      // if (!teamFromDB) {
+      //   res.render("team/join-teams", {
+      //     errorMessageManage:
+      //       "No team found to manage, double check your code.",
+      //   });
+      // }
       // console.log(teamFromDB);
       User.findByIdAndUpdate(req.params.userID, {
-        $addToSet: { teams: teamFromDB },
-      }).then((updatedUser) => {
-        req.session.user = updatedUser;
-        // console.log(updatedUser);
-        // res.send({ updatedUser, teamFromDB });
-        res.redirect(`/auth/your-teams/${req.params.userID}`);
+        $addToSet: { ownedTeams: teamFromDB },
+      }).then(() => {
+        if (!teamFromDB) {
+          req.flash(
+            "error",
+            "No team found to manage, double check your code."
+          );
+        }
+        res.redirect(`/auth/profile`);
       });
     })
     .catch((err) => {
@@ -217,20 +225,74 @@ router.post("/add-teams/:userID", (req, res) => {
     });
 });
 
-router.post("/remove-team/:teamID", (req, res) => {
-  console.log(req.session.user);
-  let currentUserID = req.session.user._id;
+router.get("/join-teams/:userID", (req, res) => {
+  // console.log(
+  //   Team.find().then((teams) => {
+  //     teams.sort();
+  //     teams.forEach((team) => {
+  //       // console.log(team.teamName);
+  //       // console.log(team.teamCode);
+  //     });
+  //   })
+  // );
+  res.render("team/join-teams");
+});
 
+router.post("/join-teams/:userID", (req, res) => {
+  console.log(req.body.joincode);
+  Team.findOne({ joinCode: req.body.joincode })
+    .then((teamFromDB) => {
+      // if (!teamFromDB) {
+      //   res.render("team/join-teams", {
+      //     errorMessageJoin: "No team found to join, double check your code.",
+      //   });
+      // }
+      console.log(teamFromDB);
+      User.findByIdAndUpdate(req.params.userID, {
+        $addToSet: { joinedTeams: teamFromDB },
+      }).then(() => {
+        if (!teamFromDB) {
+          req.flash("error", "No team found to join, double check your code.");
+        }
+        res.redirect(`/auth/profile`);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/remove-owned-team/:teamID", (req, res) => {
   Team.findById(req.params.teamID)
     .then((team) => {
-      console.log(team);
+      // console.log(team);
       User.findByIdAndUpdate(req.session.user, {
-        $pull: { teams: team.id },
-      }).then((updatedUser) => {
+        $pull: { ownedTeams: team.id },
+      }).then(() => {
         // console.log(updatedUser);
         // res.send({ updatedUser, teamFromDB });
         // res.redirect(`/auth/your-teams/${req.params.userID}`);
-        res.redirect(`/auth/your-teams/${updatedUser._id}`);
+        res.redirect(`/auth/profile`);
+
+        // res.render("team/your-teams");
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/remove-joined-team/:teamID", (req, res) => {
+  Team.findById(req.params.teamID)
+    .then((team) => {
+      // console.log(team);
+      User.findByIdAndUpdate(req.session.user, {
+        $pull: { joinedTeams: team.id },
+      }).then(() => {
+        // console.log(updatedUser);
+        // res.send({ updatedUser, teamFromDB });
+        // res.redirect(`/auth/your-teams/${req.params.userID}`);
+        res.redirect(`/auth/profile`);
 
         // res.render("team/your-teams");
       });
@@ -242,7 +304,8 @@ router.post("/remove-team/:teamID", (req, res) => {
 
 router.get("/your-teams/:userID", (req, res) => {
   User.findById(req.params.userID)
-    .populate("teams")
+    .populate("joinedTeams")
+    .populate("ownedTeams")
     .then((userFromDB) => {
       // console.log(userFromDB);
       data = {
@@ -296,12 +359,13 @@ router.get("/admin/all-teams", (req, res) => {
 // ======================= ALL PLAYERS =======================
 
 router.get("/admin/all-players", (req, res) => {
-  console.log(req.session.user);
+  // console.log(req.session.user);
   if (!req.session.user.admin) {
     res.redirect(`/auth/profile`);
   }
   Player.find()
-    .populate("teams")
+    .populate("joinedTeams")
+    // .populate("ownedTeams")
     .then((allResults) => {
       function compare(a, b) {
         if (a.lastName < b.lastName) {
@@ -329,8 +393,37 @@ router.get("/admin/all-players", (req, res) => {
 // ======================= DELETE PLAYERS =======================
 
 router.post("/admin/delete-player/:playerID", (req, res) => {
+  let player = req.params.playerID;
   Player.findByIdAndDelete(req.params.playerID)
-    .then(player)
+    .then((player) => {
+      Team.find({
+        $or: [
+          {
+            playersFullTime: player.id,
+            // division: "C1",
+          },
+          {
+            playersPartTime: player.id,
+            // division: "C2 Silver",
+          },
+        ],
+      }).then((teamsFromDB) => {
+        console.log({ teams: { teamsFromDB } });
+        Team.updateMany(teamsFromDB[0], {
+          $pull: [
+            {
+              playersFullTime: player,
+              playersPartTime: player,
+            },
+          ],
+
+          // cool: "cool",
+        }).then(() => {
+          // console.log(teamsFromDB[0]);
+          res.redirect("/auth/admin/all-players");
+        });
+      });
+    })
     .catch((err) => {
       console.log(err);
     });
@@ -347,7 +440,7 @@ router.get("/admin/all-games", (req, res) => {
     .populate("homeTeam")
     .populate("awayTeam")
     .then((allResults) => {
-      console.log(allResults[0]);
+      // console.log(allResults[0]);
 
       allResults.forEach((game) => {
         let gameDay = game.date.split(", ")[0].substring(0, 3);
@@ -374,7 +467,8 @@ router.get("/admin/all-users", (req, res) => {
     res.redirect(`/auth/profile`);
   }
   User.find()
-    .populate("teams")
+    .populate("joinedTeams")
+    .populate("ownedTeams")
     .then((allResults) => {
       // console.log(userFromDB);
       function compare(a, b) {
@@ -406,13 +500,60 @@ router.get("/user-details/:userID", (req, res, next) => {
   console.log(req.session.user);
 
   User.findById(req.params.userID)
-    .populate("teams")
+    .populate("joinedTeams")
+    .populate("ownedTeams")
     .then((user) => {
+      let master = req.session.user.master;
       let data = {
         user: user,
+        master: master,
       };
       res.render("auth/user-details", data);
     })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// ============================== MAKE ADMIN ====================================== //
+
+router.post("/admin-request/:userID", (req, res, next) => {
+  console.log(req.session.user);
+
+  User.findByIdAndUpdate(req.params.userID, { admin: true })
+    // .populate("joinedTeams")
+    // .populate("ownedTeams")
+    .then(() => {
+      res.redirect("/auth/admin/all-users");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// ============================== REMOVE ADMIN ====================================== //
+
+router.post("/admin-removal/:userID", (req, res, next) => {
+  console.log(req.session.user);
+
+  User.findById(req.params.userID)
+    .then((user) => {
+      if (user.master) {
+        req.flash(
+          "error",
+          `You can't remove admin privileges from this user. ${user.email}`
+        );
+        res.redirect("/auth/admin/all-users");
+      } else {
+        User.findByIdAndUpdate(req.params.userID, { admin: false })
+          // .populate("joinedTeams")
+          // .populate("ownedTeams")
+          .then(() => {
+            res.redirect("/auth/admin/all-users");
+          });
+      }
+    })
+
     .catch((err) => {
       console.log(err);
     });

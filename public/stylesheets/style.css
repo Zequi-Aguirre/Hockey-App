@@ -32,6 +32,15 @@ header nav ul li {
 
 }
 
+.error-div {
+  margin-top: 10px;
+  background-color: red;
+  font-size: large;
+  padding: 10px;
+  font-weight: 600;
+  text-align: center;
+}
+
 #allGames {
   text-align: center;
 }

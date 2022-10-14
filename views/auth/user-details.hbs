@@ -1,4 +1,18 @@
-<h1>User Profile - {{user.username}} </h1>
+<h1>User Profile - {{user.firstname}} {{user.lastname}} </h1>
+
+{{#if master}}
+
+  {{#if user.admin}}
+    <form action="/auth/admin-removal/{{user._id}}" method="POST">
+      <button type="submit">Remove Admin</button>
+    </form>
+  {{else}}
+    <form action="/auth/admin-request/{{user._id}}" method="POST">
+      <button type="submit">Make Admin</button>
+    </form>
+  {{/if}}
+
+{{/if}}
 
 {{!-- {{#each theUser}}
   {{this}}
