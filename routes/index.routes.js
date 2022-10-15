@@ -8,6 +8,9 @@ router.get("/", (req, res, next) => {
     .populate("homeTeam")
     .then((allGames) => {
       // console.log(allGames);
+      allGames.forEach((game) => {
+        console.log({ games: game.division });
+      });
       // group games by date
       let uniqueDates = [];
       let groupedSeason = [];

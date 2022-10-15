@@ -1,0 +1,74 @@
+<form action="/admin/update-user/{{userFromDB.id}}" method="post">
+  {{! the method of the form is what determines the request type that is being made (get/post) }}
+
+  <label for="first-name">
+    First Name:
+    <input type="text" name="firstname" value={{userFromDB.firstname}} />
+  </label>
+  <br />
+  <label for="last-name">
+    Last Name:
+    <input type="text" name="lastname" value={{userFromDB.lastname}} />
+  </label>
+  <br />
+  <label for="phonenumber">
+    Phone Number:
+    <input type="text" name="phonenumber" value={{userFromDB.phonenumber}} />
+  </label>
+  <br />
+  <label for="email">
+    Email:
+    <input type="text" name="email" value={{userFromDB.email}} />
+  </label>
+  <br />
+
+  <br />
+  <button>Update</button>
+  {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
+</form>
+
+<br />
+{{#if user.player}}
+  <label for="player">
+    Linked Player:
+    <input type="text" name="player" value={{user.player}} />
+  </label>
+  <br />
+{{/if}}
+<br />
+
+{{#if vaccinated}}
+  <label>
+    Vaccinated?
+    <input type="checkbox" name="vaccinated" value="true" checked="checked" />
+  </label>
+{{else}}
+  <label>
+    Vaccinated?
+    <input type="checkbox" name="vaccinated" value="true" />
+  </label>
+{{/if}}
+
+{{#if aggressive}}
+  <label>
+    Aggressive?
+    <input type="checkbox" name="aggressive" value="true" checked="checked" />
+  </label>
+{{else}}
+  <label>
+    Aggressive?
+    <input type="checkbox" name="aggressive" value="true" />
+  </label>
+{{/if}}
+
+{{#if available}}
+  <label>
+    Available?
+    <input type="checkbox" name="available" value="true" checked="checked" />
+  </label>
+{{else}}
+  <label>
+    Available?
+    <input type="checkbox" name="available" value="true" />
+  </label>
+{{/if}}

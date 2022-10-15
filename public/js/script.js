@@ -139,28 +139,28 @@ if (searchInput) {
 
 // =================================== ADMIN FILTER ===============================================
 
-adminSections.forEach((section) => {
-  let currentURL = window.location.href;
-  let urlDivider = currentURL.lastIndexOf("/") + 1;
-  currentSection = currentURL.substring(urlDivider);
-  console.log(section);
-  console.log(currentURL);
-  console.log(currentSection);
+// adminSections.forEach((section) => {
+//   let currentURL = window.location.href;
+//   let urlDivider = currentURL.lastIndexOf("/") + 1;
+//   currentSection = currentURL.substring(urlDivider);
+//   console.log(section);
+//   console.log(currentURL);
+//   console.log(currentSection);
 
-  if (!section.classList.contains(currentSection)) {
-    section.style.display = "none";
-  } else if (section.classList.contains("all-games")) {
-    section.style.display = "grid";
-    section.style.gridTemplateColumns = "375.5px 375.5px";
-    section.style.justifyContent = "center";
+//   if (!section.classList.contains(currentSection)) {
+//     section.style.display = "none";
+//   } else if (section.classList.contains("all-games")) {
+//     section.style.display = "grid";
+//     section.style.gridTemplateColumns = "375.5px 375.5px";
+//     section.style.justifyContent = "center";
 
-    // grid-template-columns: 375.5px 375.5px;
-    //     justify-content: center;
-  } else {
-    section.style.display = "block";
-  }
-  // console.log(section);
-});
+//     // grid-template-columns: 375.5px 375.5px;
+//     //     justify-content: center;
+//   } else {
+//     section.style.display = "block";
+//   }
+//   // console.log(section);
+// });
 
 // divisionSelector.addEventListener("change", () => {
 //   allGames.forEach((game) => {

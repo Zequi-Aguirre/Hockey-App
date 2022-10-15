@@ -1,0 +1,48 @@
+<h1>All Results</h1>
+
+{{!-- {{theUser._id}} --}}
+<div class="all-results">
+  {{!======================= ALL TEAMS =======================}}
+  <section class="all-teams admin-section">
+    {{#each results}}
+
+      <a href="/admin/team-details/{{this._id}}">{{this.teamName}}</a>
+      <br />
+      manage code:
+      {{this.ownCode}}
+      <br />
+      join code:
+      {{this.joinCode}}
+      <br />
+      <h4>Full Time Players</h4>
+      <br />
+      {{#each playersFullTime}}
+
+        <a href="/player/player-details/{{this._id}}">
+          {{this.name}}
+          {{this.lastName}}
+        </a>
+        <br />
+      {{/each}}
+      <br />
+      <h4>Part Time Players</h4>
+      <br />
+      {{#each playersPartTime}}
+
+        <a href="/player/player-details/{{this._id}}">
+          {{this.name}}
+          {{this.lastName}}
+        </a>
+        <br />
+      {{/each}}
+
+      <br />
+      <br />
+    {{/each}}
+  </section>
+
+</div>
+<br />
+<br />
+
+{{!-- <a href="/auth/add-teams/{{theUser._id}}">Add Teams</a> --}}

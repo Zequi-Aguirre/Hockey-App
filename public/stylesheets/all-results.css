@@ -1,7 +1,10 @@
-.all-games .admin-section {
+.all-games-admin-section {
     display: grid;
     grid-template-columns: 375.5px 375.5px;
     justify-content: center;
+    /* background-color: red; */
+    gap: 10px;
+    padding-top: 50px;
 }
 
 .all-results {

@@ -1,0 +1,21 @@
+<h1>All Results</h1>
+
+{{!-- {{theUser._id}} --}}
+<div class="all-results">
+
+  {{!======================= ALL USERS =======================}}
+
+  <section class="all-users admin-section">
+    {{#each results}}
+
+      <a href="/admin/user-details/{{this._id}}">{{this.email}}
+      </a>{{#if this.admin}} - ⭐ ADMIN{{/if}}
+      <br />
+    {{/each}}
+  </section>
+
+</div>
+<br />
+<br />
+
+{{!-- <a href="/auth/add-teams/{{theUser._id}}">Add Teams</a> --}}

@@ -1,17 +1,24 @@
-<h1>User Profile - {{user.firstname}} {{user.lastname}} </h1>
+<h1>User Details - {{user.firstname}} {{user.lastname}} </h1>
+
+{{user.phonenumber}}
+<br />
+{{user.email}}
+<br />
+<br />
 
 {{#if master}}
 
   {{#if user.admin}}
-    <form action="/auth/admin-removal/{{user._id}}" method="POST">
+    <form action="/admin/admin-removal/{{user._id}}" method="POST">
       <button type="submit">Remove Admin</button>
     </form>
   {{else}}
-    <form action="/auth/admin-request/{{user._id}}" method="POST">
+    <form action="/admin/admin-request/{{user._id}}" method="POST">
       <button type="submit">Make Admin</button>
     </form>
   {{/if}}
 
+  <a href="/admin/update-user/{{user._id}}">Edit User Data</a>
 {{/if}}
 
 {{!-- {{#each theUser}}
@@ -22,7 +29,7 @@
 <hr />
 <hr />
 
-<h1>Your Teams</h1>
+<h1>User's Teams</h1>
 
 {{#each user.teams}}
 
@@ -40,4 +47,4 @@
 {{/each}}
 <br /><br />
 
-<a href="/auth/add-teams/{{theUser._id}}">Add Teams</a>
+{{!-- <a href="/auth/add-teams/{{theUser._id}}">Add Teams</a> --}}

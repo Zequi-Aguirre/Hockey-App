@@ -5,7 +5,7 @@ const teamSchema = new Schema(
   {
     teamName: {
       type: String,
-      // unique: true // -> Ideally, should be unique, but its up to you
+      // unique: true, // -> Ideally, should be unique, but its up to you
     },
     ownCode: {
       type: String,
@@ -22,9 +22,9 @@ const teamSchema = new Schema(
       type: String,
       // unique: true // -> Ideally, should be unique, but its up to you
     },
-    cool: {
-      type: String,
-      // unique: true // -> Ideally, should be unique, but its up to you
+    manager: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     playersFullTime: {
       type: [{ type: Schema.Types.ObjectId, ref: "Player" }],

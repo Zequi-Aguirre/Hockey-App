@@ -15,14 +15,14 @@ const userSchema = new Schema(
       type: String,
       // unique: true -> Ideally, should be unique, but its up to you
     },
-    player: {
-      type: Schema.Types.ObjectId,
-      ref: "Player",
-      // unique: true -> Ideally, should be unique, but its up to you
-    },
 
     email: {
       type: String,
+      // unique: true -> Ideally, should be unique, but its up to you
+    },
+    player: {
+      type: Schema.Types.ObjectId,
+      ref: "Player",
       // unique: true -> Ideally, should be unique, but its up to you
     },
     password: String,
