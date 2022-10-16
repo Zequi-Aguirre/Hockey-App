@@ -23,21 +23,26 @@ const awayTeamSelector = document.querySelector("#awayTeam");
 if (homeTeamSelector) {
   console.log("homeTeamSelector");
   teamsInDivision.forEach((team) => {
+    let idForLI = team.dataset.teamid;
     team = team.innerHTML;
-    console.log(team);
+
+    console.log(idForLI);
     // homeTeamSelector.innerHTML = ``;
-    homeTeamSelector.innerHTML += `<option value='${team}'>${team}</option>`;
+    homeTeamSelector.innerHTML += `<option value='${idForLI}'>${team}</option>`;
   });
   console.log(homeTeamSelector);
-  let teamSelector = homeTeamSelector.querySelectorAll("option");
-  const selectedTeam = locationSelector.dataset.hometeam;
+  let teamSelectorOptionsHome = homeTeamSelector.querySelectorAll("option");
+  const selectedTeam = homeTeamSelector.dataset.hometeam;
 
   // const selectedRink = locationSelector.dataset.rink;
-  console.log(teamSelector);
+  console.log(teamSelectorOptionsHome);
 
-  teamSelector.forEach((option) => {
-    console.log(option.innerHTML);
-    if (option.innerHTML === selectedTeam) {
+  teamSelectorOptionsHome.forEach((option) => {
+    console.log(option.value);
+    console.log(selectedTeam);
+    console.log(option.value === selectedTeam);
+
+    if (option.value === selectedTeam) {
       option.setAttribute("selected", true);
     }
   });
@@ -46,19 +51,21 @@ if (homeTeamSelector) {
 if (awayTeamSelector) {
   console.log("awayTeamSelector");
   teamsInDivision.forEach((team) => {
+    let idForLI2 = team.dataset.teamid;
     team = team.innerHTML;
-    // console.log(team);
+    console.log(idForLI2);
     // homeTeamSelector.innerHTML = ``;
-    awayTeamSelector.innerHTML += `<option value='${team}'>${team}</option>`;
+    awayTeamSelector.innerHTML += `<option value='${idForLI2}'>${team}</option>`;
   });
   console.log(awayTeamSelector);
-  let teamSelector = awayTeamSelector.querySelectorAll("option");
-  const selectedTeam = locationSelector.dataset.awayteam;
-  console.log(teamSelector);
+  let teamSelectorOptionsAway = awayTeamSelector.querySelectorAll("option");
+  const selectedTeam = awayTeamSelector.dataset.awayteam;
+  console.log(teamSelectorOptionsAway);
 
-  teamSelector.forEach((option) => {
-    console.log(option.innerHTML);
-    if (option.innerHTML === selectedTeam) {
+  teamSelectorOptionsAway.forEach((option) => {
+    // console.log(option.innerHTML);
+    // console.log(option.value);
+    if (option.value === selectedTeam) {
       option.setAttribute("selected", true);
     }
   });

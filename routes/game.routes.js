@@ -149,12 +149,11 @@ router.get("/edit-game/:gameID", (req, res, next) => {
 
           res.render("game/edit-game-details", data);
           // res.redirect("/game/edit-game-details", data);
-
-          // ==================================== this in all get Roues ==================================== //
         })
         .catch((err) => {
           console.log(err);
         });
+      // ==================================== this in all get Roues ==================================== //
     });
 });
 
@@ -173,8 +172,8 @@ router.post("/edit-game/:gameID", (req, res, next) => {
   delete updatedGame["newDate"];
 
   Game.findByIdAndUpdate(originalGame, updatedGame).then((updatedGameFrom) => {
-    res.send(updatedGameFrom);
-    // res.redirect(`/game/game-details/${updatedGameFrom.id}`);
+    // res.send(updatedGameFrom);
+    res.redirect(`/game/game-details/${updatedGameFrom.id}`);
   });
 
   // Game.findById(req.params.gameID)

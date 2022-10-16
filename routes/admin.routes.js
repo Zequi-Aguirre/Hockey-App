@@ -214,7 +214,7 @@ router.get("/all-players", (req, res) => {
 
 // ======================= DELETE PLAYERS =======================
 
-router.post("/admin/delete-player/:playerID", (req, res) => {
+router.post("/delete-player/:playerID", (req, res) => {
   let player = req.params.playerID;
   Player.findByIdAndDelete(req.params.playerID)
     .then((player) => {
@@ -230,7 +230,7 @@ router.post("/admin/delete-player/:playerID", (req, res) => {
           },
         ],
       }).then((teamsFromDB) => {
-        console.log({ teams: { teamsFromDB } });
+        console.log({ teamsFromDB });
         Team.updateMany(teamsFromDB[0], {
           $pull: [
             {

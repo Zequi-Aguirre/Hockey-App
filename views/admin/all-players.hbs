@@ -1,4 +1,4 @@
-<h1>All Results</h1>
+<h1>All Players</h1>
 
 {{!-- {{theUser._id}} --}}
 <div class="all-results">
@@ -14,7 +14,7 @@
         {{this.jerseyNumber}}
       </a>
       <br />
-      <form action="/auth/admin/delete-player/{{this._id}}" method="POST">
+      <form action="/admin/delete-player/{{this._id}}" method="POST">
 
         <button type="submit">Delete</button>
       </form>

@@ -5,8 +5,12 @@
 
 {{#each thisTeam.playersFullTime}}
   {{!-- {{this._id}} --}}
-  {{this.name}}
-  {{this.jerseyNumber}}
+  <a href="">
+
+    {{this.name}}
+    {{this.lastName}}
+    {{this.jerseyNumber}}
+  </a>
   <br />
   <br />
 {{/each}}
@@ -21,11 +25,15 @@
 
 {{#each thisTeam.playersPartTime}}
   {{!-- {{this._id}} --}}
-  {{this.name}}
-  {{this.jerseyNumber}}
+  <a href="">
+
+    {{this.name}}
+    {{this.lastName}}
+    {{this.jerseyNumber}}
+  </a>
 {{/each}}
 
 <br />
 <br />
 
-<a href="/team/add-players/{{thisTeam.id}}">Add Players</a>
+{{!-- <a href="/team/add-players/{{thisTeam.id}}">Add Players</a> --}}

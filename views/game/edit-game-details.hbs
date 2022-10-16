@@ -1,10 +1,10 @@
 <h1>Edit Game Details</h1>
 
 {{!-- {{gamesFromDB}} --}}
-<h1>teams here</h1>
+{{! <h1>teams here</h1> }}
 <ul id="teamsInDivision" style="display: none;">
   {{#each data.teamsFromDB}}
-    <li>{{teamName}}</li>
+    <li data-teamid={{id}}>{{teamName}}</li>
   {{/each}}
 </ul>
 
@@ -14,17 +14,17 @@
   <form action="/game/edit-game/{{id}}" method="post">
     {{! the method of the form is what determines the request type that is being made (get/post) }}
 
-    <label for="hometeam" data-hometeam={{homeTeam.teamName}}>
+    <label for="hometeam">
       Home Team:
 
-      <select name="homeTeam" id="homeTeam">
+      <select name="homeTeam" id="homeTeam" data-hometeam="{{homeTeam.id}}">
       </select>
     </label>
     <br />
     <label for="awayteam">
       Away Team:
 
-      <select name="awayTeam" id="awayTeam">
+      <select name="awayTeam" id="awayTeam" data-awayteam="{{awayTeam.id}}">
 
       </select>
     </label>

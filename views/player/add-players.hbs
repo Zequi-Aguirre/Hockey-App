@@ -1,0 +1,29 @@
+<h1>Add Players to {{team.teamName}}</h1>
+
+{{#if theUser}}
+
+  {{!-- {{theUser.teams}}
+  {{ownedTeam}} --}}
+  {{#if ownedTeam}}
+    <br />
+    <form action="/player/add-players/{{team.id}}" method="POST">
+
+      <label style="margin: 2px;">
+        Email Address:
+        <input type="email" name="email" />
+      </label>
+      <br />
+
+      <button type="submit">Find Player</button>
+    </form>
+
+  {{else}}
+    You don't own this team!
+  {{/if}}
+{{else}}
+
+  <h3>Please log in to add players to your team</h3>
+{{/if}}
+
+{{!-- {{team.playersFullTime}}
+{{team.playersPartTime}} --}}

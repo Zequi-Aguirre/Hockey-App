@@ -1,14 +1,26 @@
 <h1>Player Details</h1>
 
-<h3 class="player-name">
-  {{player.name}}
-</h3>
-<br />
-{{player.lastName}}
-<br />
-{{player.jerseyNumber}}
-<br />
-{{player.emailAddress}}
-<br />
-<br />
-<br />
+{{#each data.playersFromDB}}
+  {{this.name}}
+  {{this.lastName}}
+  <br />
+  {{this.jerseyNumber}}
+  <br />
+  {{this.emailAddress}}
+  <br />
+  {{this.phoneNumber}}
+  <br />
+  {{#each this.joinedTeams}}
+    <a href="/admin/team-details/{{this.id}}">{{this.teamName}}</a>
+    <br />
+  {{/each}}
+  {{!-- {{this}} --}}
+{{/each}}
+{{!-- {{data.currentlyLoggedInUser.admin}} --}}
+{{#if data.currentlyLoggedInUser.admin}}
+
+  <h1>ADMIN</h1>
+  <a href="/player/edit-player/{{this}}">Edit Player</a>
+{{else}}
+  <h1>NO ADMIN</h1>
+{{/if}}

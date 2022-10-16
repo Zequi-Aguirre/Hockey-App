@@ -16,12 +16,20 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 const { Router } = require("express");
 
 router.get("/team-detail/:teamID", (req, res) => {
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
   Team.findById(req.params.teamID)
     .populate("playersPartTime")
     .populate("playersFullTime")
 
     .then((teamFromDB) => {
       // console.log(teamFromDB);
+      // teamsFromDbResults.push(teamFromDB);
 
       Game.find({
         $or: [{ homeTeam: teamFromDB._id }, { awayTeam: teamFromDB._id }],
@@ -56,81 +64,30 @@ router.get("/team-detail/:teamID", (req, res) => {
             groupedSeason.push(gameDay);
           });
 
-          const data = {
-            thisTeam: teamFromDB,
-            allGames: thisTeamAllGames,
-            season: groupedSeason,
+          gamesFromDbResults = thisTeamAllGames;
+          teamsFromDbResults.push(teamFromDB);
+
+          // ==================================== this in all get Roues ==================================== //
+
+          data = {
+            // game: gameForViewReady,
+            teamsFromDB: teamsFromDbResults,
+            playersFromDB: playersFromDbResults,
+            gamesFromDB: gamesFromDbResults,
+            usersFromDB: usersFromDbResults,
+            currentlyLoggedInUser: currentlyLoggedInUser,
           };
 
-          // res.send(data);
+          data = { data };
+
           res.render("team/team-details", data);
+        })
+        .catch((err) => {
+          console.log(err);
+          // ==================================== this in all get Roues ==================================== //
+
+          // res.send(data);
         });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-router.get("/add-players/:teamID", (req, res) => {
-  if (req.session.user) {
-    let teamID = req.params.teamID;
-    Team.findById(teamID)
-      .populate("playersPartTime")
-      .populate("playersFullTime")
-      .then((team) => {
-        User.findById(req.session.user._id)
-          .then((user) => {
-            let ownedTeam = user.ownedTeams.includes(team._id);
-            console.log(user);
-            let data = {
-              ownedTeam: ownedTeam,
-              team: team,
-            };
-
-            res.render("team/add-players", data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
-  } else {
-    res.redirect("/auth/login");
-  }
-});
-
-router.post("/add-players/:teamID", (req, res) => {
-  const newPlayer = {
-    name: req.body.name,
-    lastName: req.body.lastname,
-    phoneNumber: req.body.phonenumber,
-    emailAddress: req.body.email,
-    jerseyNumber: req.body.jerseynumber,
-  };
-  Player.create(newPlayer)
-    .then((playerCreated) => {
-      if (req.body.fullorpart === "full-time") {
-        Team.findByIdAndUpdate(req.params.teamID, {
-          $addToSet: { playersFullTime: playerCreated._id },
-        })
-          // .populate("playersPartTime")
-          // .populate("playersFullTime")
-          .then((team) => {
-            Player.findByIdAndUpdate(playerCreated, {
-              $addToSet: { teams: team },
-            }).then((playerUpdated) => {
-              res.redirect(`/team/team-detail/${req.params.teamID}`);
-            });
-          });
-      } else if (req.body.fullorpart === "part-time") {
-        Team.findByIdAndUpdate(req.params.teamID, {
-          $addToSet: { playersPartTime: playerCreated._id },
-        })
-          // .populate("playersPartTime")
-          // .populate("playersFullTime")
-          .then((team) => {
-            res.redirect(`/team/team-detail/${req.params.teamID}`);
-          });
-      }
     })
     .catch((err) => {
       console.log(err);
@@ -196,5 +153,52 @@ router.post("/invite-all/:teamID", (req, res) => {
       console.log(err);
     });
 });
+
+router.get("/edit-team/:teamID", (req, res) => {
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+  Team.findById(req.params.teamID)
+    .populate("playersPartTime")
+    .populate("playersFullTime")
+
+    .then((teamFromDB) => {
+      // console.log(teamFromDB);
+      // teamsFromDbResults.push(teamFromDB);
+
+      // gamesFromDbResults = thisTeamAllGames;
+      teamsFromDbResults.push(teamFromDB);
+
+      // ==================================== this in all get Roues ==================================== //
+
+      data = {
+        // game: gameForViewReady,
+        teamsFromDB: teamsFromDbResults,
+        playersFromDB: playersFromDbResults,
+        gamesFromDB: gamesFromDbResults,
+        usersFromDB: usersFromDbResults,
+        currentlyLoggedInUser: currentlyLoggedInUser,
+      };
+
+      data = { data };
+
+      res.render("team/edit-team", data);
+    })
+    .catch((err) => {
+      console.log(err);
+      // ==================================== this in all get Roues ==================================== //
+
+      // res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/invite-player/:teamID", (req, res) => {});
 
 module.exports = router;

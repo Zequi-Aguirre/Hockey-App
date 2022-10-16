@@ -1,0 +1,21 @@
+<h1>Add Players to {{#each data.teamsFromDB}}{{this.teamName}}{{/each}}</h1>
+
+<h3>this player already exists</h3>
+
+<h2>{{data.playersFromDB.emailAddress}}</h2>
+{{!-- {{data.playersFromDB}} --}}
+<br />
+<form action="/player/invite-player/{{data.playersFromDB._id}}/{{#each data.teamsFromDB}}{{this._id}}{{/each}}" method="POST">
+
+<p>Add</p>
+
+<input type="radio" id="full-time" name="fullorpart" value="playersFullTime" />
+  <label for="full-time">Full Time</label><br />
+  <input type="radio" id="part-time" name="fullorpart" value="playersPartTime" />
+  <label for="part-time">Part Time</label><br />
+  <br />
+  <br />
+
+
+  <button type="submit">Invite Player</button>
+</form>

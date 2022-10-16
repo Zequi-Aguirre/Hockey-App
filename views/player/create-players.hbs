@@ -1,0 +1,42 @@
+<h1>Create new player and invite to
+  {{#each data.teamsFromDB}} {{this.teamName}} {{/each}}</h1>
+
+<br />
+<form action="/player/create-players/{{#each data.teamsFromDB}}{{this.id}}{{/each}}" method="POST">
+  {{#each data.playersFromDB}}
+    <label style="margin: 2px;">
+      Email Address:
+      <input type="email" name="email" value={{this}} />
+    </label>
+    <br />
+  {{/each}}
+  <label>
+    Name:
+    <input type="text" name="name" />
+  </label>
+  <br />
+  <label style="margin: 2px;">
+    Last Name:
+    <input type="text" name="lastname" />
+  </label>
+  <br />
+  <label style="margin: 2px;">
+    Phone Number
+    <input type="text" name="phonenumber" />
+  </label>
+  <br />
+  <label style="margin: 2px;">
+    Jersey Number
+    <input type="text" name="jerseynumber" />
+  </label>
+  <br />
+
+  <input type="radio" id="full-time" name="fullorpart" value="playersFullTime" />
+  <label for="full-time">Full Time</label><br />
+  <input type="radio" id="part-time" name="fullorpart" value="playersPartTime" />
+  <label for="part-time">Part Time</label><br />
+  <br />
+  <br />
+
+  <button type="submit">Invite Player</button>
+</form>

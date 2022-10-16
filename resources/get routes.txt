@@ -1,0 +1,31 @@
+// ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+
+
+
+
+  // ==================================== this in all get Roues ==================================== //
+
+            data = {
+              // game: gameForViewReady,
+              teamsFromDB: teamsFromDbResults,
+              playersFromDB: playersFromDbResults,
+              gamesFromDB: gamesFromDbResults,
+              usersFromDB: usersFromDbResults,
+              currentlyLoggedInUser: currentlyLoggedInUser,
+            };
+
+            data = { data };
+
+            // res.render("player/create-players", data);
+            res.redirect(`/team/team-detail/${req.params.teamID}`);
+          })
+          .catch((err) => {
+            console.log(err);
+            // ==================================== this in all get Roues ==================================== //
+          });
