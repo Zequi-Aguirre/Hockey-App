@@ -34,13 +34,13 @@
 
     </label>
     <br />
-    <label for="division">
+    {{!-- <label for="division">
       division:
 
       <input type="text" name="division" value={{division}} />
 
     </label>
-    <br />
+    <br /> --}}
     <label for="manager">
       manager:
 
@@ -51,14 +51,33 @@
     <label for="playersFullTime">
       playersFullTime:
 
-      <input type="text" name="playersFullTime" value={{playersFullTime}} />
+      {{!-- <input type="text" name="playersFullTime" value={{playersFullTime}} /> --}}
+
+      {{#each playersFullTime}}
+
+        <a href="/player/player-details/{{this._id}}">
+          {{this.name}}
+          {{this.lastName}}
+          {{this.jerseyNumber}}
+        </a>
+        <br />
+      {{/each}}
 
     </label>
     <br />
     <label for="playersPartTime">
       playersPartTime:
 
-      <input type="text" name="playersPartTime" value={{playersPartTime}} />
+      {{#each playersPartTime}}
+
+        <a href="/player/player-details/{{this._id}}">
+          {{this.name}}
+          {{this.lastName}}
+          {{this.jerseyNumber}}
+        </a>
+        <br />
+      {{/each}}
+      <br />
 
     </label>
     <br />

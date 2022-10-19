@@ -3,18 +3,66 @@
 const router = require("express").Router();
 const Game = require("../models/Game.model");
 const Team = require("../models/Team.model");
+const Player = require("../models/Player.model");
 
 /* GET home page */
 router.get("/game-details/:gameID", (req, res, next) => {
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
   Game.findById(req.params.gameID)
     .populate("homeTeam")
     .populate("awayTeam")
     .then((gameFromDB) => {
-      data = {
-        game: gameFromDB,
-      };
+      console.log({ game: gameFromDB.homeTeam.id });
+      console.log({ game: gameFromDB.awayTeam.id });
+      Team.find({
+        $or: [
+          { teamName: gameFromDB.homeTeam.teamName },
+          { teamName: gameFromDB.awayTeam.teamName },
+        ],
+      })
+        .populate("playersFullTime")
+        .populate("playersPartTime")
+        .then((teamsFromDB) => {
+          console.log(teamsFromDB);
+          let homeTeam;
+          let awayTeam;
+          teamsFromDB.forEach((team) => {
+            if (team.teamName === gameFromDB.homeTeam.teamName) {
+              homeTeam = team;
+            } else if (team.teamName === gameFromDB.awayTeam.teamName) {
+              awayTeam = team;
+            }
+          });
 
-      res.render("game/game-details", data);
+          teamsFromDB = {
+            hometeam: homeTeam,
+            awayteam: awayTeam,
+          };
+
+          console.log(teamsFromDB);
+          teamsFromDbResults = teamsFromDB;
+          gamesFromDbResults.push(gameFromDB);
+          data = {
+            // game: gameForViewReady,
+            teamsFromDB: teamsFromDbResults,
+            playersFromDB: playersFromDbResults,
+            gamesFromDB: gamesFromDbResults,
+            usersFromDB: usersFromDbResults,
+            currentlyLoggedInUser: currentlyLoggedInUser,
+          };
+
+          data = { data };
+
+          console.log(data);
+
+          res.render("game/game-details", data);
+        });
     })
     .catch((err) => {
       console.log(err);

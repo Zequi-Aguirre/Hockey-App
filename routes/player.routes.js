@@ -310,4 +310,100 @@ router.post("/invite-player/:playerID/:teamID", (req, res) => {
   });
 });
 
+router.get("/edit-player/:playerID", (req, res) => {
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+  Player.findById(req.params.playerID)
+    .populate("joinedTeams")
+    // .populate("playersFullTime")
+
+    .then((playerFromDB) => {
+      // console.log(teamFromDB);
+      // teamsFromDbResults.push(teamFromDB);
+
+      // gamesFromDbResults = thisTeamAllGames;
+      playersFromDbResults.push(playerFromDB);
+
+      // ==================================== this in all get Roues ==================================== //
+
+      data = {
+        // game: gameForViewReady,
+        teamsFromDB: teamsFromDbResults,
+        playersFromDB: playersFromDbResults,
+        gamesFromDB: gamesFromDbResults,
+        usersFromDB: usersFromDbResults,
+        currentlyLoggedInUser: currentlyLoggedInUser,
+      };
+
+      data = { data };
+
+      res.render("player/edit-player", data);
+    })
+    .catch((err) => {
+      console.log(err);
+      // ==================================== this in all get Roues ==================================== //
+
+      // res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/edit-player/:playerID", (req, res) => {
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+  let newPlayerInformation = req.body;
+  console.log(newPlayerInformation);
+  Player.findByIdAndUpdate(req.params.playerID, newPlayerInformation)
+    .populate("joinedTeams")
+    // .populate("playersFullTime")
+
+    .then((playerFromDB) => {
+      // console.log(teamFromDB);
+      // teamsFromDbResults.push(teamFromDB);
+
+      // gamesFromDbResults = thisTeamAllGames;
+      playersFromDbResults.push(playerFromDB);
+
+      // ==================================== this in all get Roues ==================================== //
+
+      data = {
+        // game: gameForViewReady,
+        teamsFromDB: teamsFromDbResults,
+        playersFromDB: playersFromDbResults,
+        gamesFromDB: gamesFromDbResults,
+        usersFromDB: usersFromDbResults,
+        currentlyLoggedInUser: currentlyLoggedInUser,
+      };
+
+      data = { data };
+
+      // res.send(playerFromDB);
+
+      res.redirect(`/player/player-details/${playerFromDB.id}`);
+
+      // res.render("player/edit-player", data);
+    })
+    .catch((err) => {
+      console.log(err);
+      // ==================================== this in all get Roues ==================================== //
+
+      // res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 module.exports = router;

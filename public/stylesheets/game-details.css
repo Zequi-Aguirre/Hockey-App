@@ -1,0 +1,28 @@
+.background {
+    background-image: url(/images/hockey-rink.png);
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relaive;
+
+}
+
+.game-teams-container {
+    border: 2px solid red;
+}
+
+.game-time-place {
+    border: 2px solid green;
+
+}
+
+.all-players {
+    display: flex;
+    border: 2px solid blue;
+}
+
+.all-players div {
+    border: 2px solid orange;
+    flex: 1;
+}

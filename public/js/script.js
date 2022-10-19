@@ -11,112 +11,172 @@ document.addEventListener(
 const searchInput = document.querySelector("#search");
 const allGames = document.querySelectorAll(".game-container");
 // const games = document.querySelectorAll("tbody tr");
-const filterLinks = document.querySelectorAll(".filter-ul ul li");
 const adminFilterLinks = document.querySelectorAll(".admin-filter-buttons");
 const allDates = document.querySelectorAll(".date-container");
 const adminSections = document.querySelectorAll(".admin-section");
 // console.log(games);
 
+// -=-=-=--=--=-=-=-=-=-=--=-=-=-==-==-=--==-=-==-=-=
+
+const gamesFilter = document.querySelector("#gamesFilter");
+const gameDayContainers = document.querySelectorAll(".game-day-container");
+
+// -=-=-=--=--=-=-=-=-=-=--=-=-=-==-==-=--==-=-==-=-=
+
+gamesFilter.addEventListener("change", () => {
+  console.log(gamesFilter.value);
+  if (gamesFilter.value === "all") {
+    gameDayContainers.forEach((gameDay) => {
+      gameDay.style.display = "block";
+      let dayGames = gameDay.querySelectorAll(".game-container");
+      dayGames.forEach((game) => {
+        game.style.display = "flex";
+      });
+    });
+  } else {
+    gameDayContainers.forEach((gameDay) => {
+      gameDay.style.display = "block";
+      let dayGames = gameDay.querySelectorAll(".game-container");
+      dayGames.forEach((game) => {
+        game.style.display = "flex";
+      });
+      let count = 0;
+      dayGames.forEach((game) => {
+        if (!game.classList.contains(gamesFilter.value)) {
+          game.style.display = "none";
+          count++;
+        }
+      });
+      if (count === dayGames.length) {
+        gameDay.style.display = "none";
+      }
+      console.log(dayGames.length);
+    });
+  }
+});
+
 if (searchInput) {
   searchInput.addEventListener("keyup", (event) => {
     const searchValue = event.target.value.toLowerCase();
+
+    if (searchValue.length < 1) {
+      gameDayContainers.forEach((gameDay) => {
+        gameDay.style.display = "block";
+        let dayGames = gameDay.querySelectorAll(".game-container");
+        dayGames.forEach((game) => {
+          game.style.display = "flex";
+        });
+      });
+      console.log(searchValue);
+    } else {
+      // -=--=-==-=-=-=--=-=-=--=-==-=-=-=--=-= new start
+
+      gameDayContainers.forEach((gameDay) => {
+        gameDay.style.display = "block";
+        let dayGames = gameDay.querySelectorAll(".game-container");
+        dayGames.forEach((game) => {
+          game.style.display = "flex";
+        });
+        let count = 0;
+        dayGames.forEach((game) => {
+          console.log(typeof game.textContent);
+          console.log(game.textContent);
+          console.log(searchInput.value);
+          console.log(game.textContent.includes(searchInput.value));
+
+          if (!game.textContent.toLowerCase().includes(searchInput.value)) {
+            game.style.display = "none";
+            count++;
+          }
+        });
+        if (count === dayGames.length) {
+          gameDay.style.display = "none";
+        }
+        // console.log(dayGames.length);
+      });
+
+      // -=--=-==-=-=-=--=-=-=--=-==-=-=-=--=-= new start
+      // allDates.forEach((date) => {
+      //   date.style.display = "inline-block";
+      // });
+      // //
+      // //
+      // //
+      // //
+      // //
+      // //
+      // //
+      // allGames.forEach((game) => {
+      //   // let nameColumn = game.querySelectorAll(".gameInfo")[0];
+      //   let allColumns = game.querySelectorAll(".game-info");
+      //   game.style.display = "flex";
+      //   // console.log(allColumns);
+      //   let columnsArray = [...allColumns];
+      //   let validRow = columnsArray.some((cellInTable) => {
+      //     // console.log(cellInTable.textContent);
+      //     // console.log(cellInTable.textContent);
+      //     // console.log(cellInTable.textContent.includes(searchValue));
+      //     // console.log(cellInTable.textContent.includes(searchValue));
+      //     return cellInTable.textContent
+      //       .toLocaleLowerCase()
+      //       .includes(searchValue);
+      //     // console.log();
+      //     // console.log(searchValue);
+      //     // return
+      //   });
+      //   // console.log(validRow);
+      //   // console.log(game);
+      //   // cellInTable.textContent.toLowerCase().startsWith(searchValue)
+      //   validRow
+      //     ? (game.style.display = "flex")
+      //     : (game.style.display = "none");
+      // });
+      // allDates.forEach((date) => {
+      //   if (date) {
+      //     console.log(date);
+      //     let next = date.nextSibling.nextSibling.style.display;
+      //     console.log(next);
+      //     console.log({ next: next });
+      //     let nextUntil = function (elem, className) {
+      //       // Setup siblings array
+      //       let siblings = [];
+      //       // Get the next sibling element
+      //       elem = elem.nextElementSibling;
+      //       // As long as a sibling exists
+      //       while (elem) {
+      //         // If we've reached our match, bail
+      //         if (!elem.classList.contains(className)) break;
+      //         // Otherwise, push it to the siblings array
+      //         siblings.push(elem);
+      //         // Get the next sibling element
+      //         elem = elem.nextElementSibling;
+      //       }
+      //       return siblings;
+      //     };
+      //     let nextnext = nextUntil(date, "game-container").some((game) => {
+      //       return game.style.display === "flex";
+      //     });
+      //     // while (
+      //     //   date.nextSibling.nextSibling.nextSibling.nextSibling.classList.contains(
+      //     //     "game-container"
+      //     //   )
+      //     // ) {
+      //     //   console.log("ok");
+      //     // }
+      //     if (next === "none" && !nextnext) {
+      //       date.style.display = "none";
+      //     }
+      //   }
+      // });
+    }
     // console.log(event.target.value);
     // console.log(cellInTable.textContent.includes(searchValue));
 
     // console.log(searchValue);
-
-    allDates.forEach((date) => {
-      date.style.display = "inline-block";
-    });
-    //
-    //
-    //
-    //
-
-    //
-    //
-    //
-
-    allGames.forEach((game) => {
-      // let nameColumn = game.querySelectorAll(".gameInfo")[0];
-      let allColumns = game.querySelectorAll(".game-info");
-      game.style.display = "flex";
-      // console.log(allColumns);
-      let columnsArray = [...allColumns];
-      let validRow = columnsArray.some((cellInTable) => {
-        // console.log(cellInTable.textContent);
-        // console.log(cellInTable.textContent);
-
-        // console.log(cellInTable.textContent.includes(searchValue));
-        // console.log(cellInTable.textContent.includes(searchValue));
-
-        return cellInTable.textContent
-          .toLocaleLowerCase()
-          .includes(searchValue);
-
-        // console.log();
-        // console.log(searchValue);
-        // return
-      });
-
-      // console.log(validRow);
-      // console.log(game);
-
-      // cellInTable.textContent.toLowerCase().startsWith(searchValue)
-      validRow ? (game.style.display = "flex") : (game.style.display = "none");
-    });
-    allDates.forEach((date) => {
-      if (date) {
-        console.log(date);
-        let next = date.nextSibling.nextSibling.style.display;
-
-        console.log(next);
-
-        console.log({ next: next });
-
-        let nextUntil = function (elem, className) {
-          // Setup siblings array
-          let siblings = [];
-
-          // Get the next sibling element
-          elem = elem.nextElementSibling;
-
-          // As long as a sibling exists
-          while (elem) {
-            // If we've reached our match, bail
-            if (!elem.classList.contains(className)) break;
-
-            // Otherwise, push it to the siblings array
-            siblings.push(elem);
-
-            // Get the next sibling element
-            elem = elem.nextElementSibling;
-          }
-
-          return siblings;
-        };
-
-        let nextnext = nextUntil(date, "game-container").some((game) => {
-          return game.style.display === "flex";
-        });
-
-        // while (
-        //   date.nextSibling.nextSibling.nextSibling.nextSibling.classList.contains(
-        //     "game-container"
-        //   )
-        // ) {
-        //   console.log("ok");
-        // }
-
-        if (next === "none" && !nextnext) {
-          date.style.display = "none";
-        }
-      }
-    });
   });
 }
 
-[...filterLinks].map((link) => {
+[...gamesFilter].map((link) => {
   link.addEventListener("click", () => {
     searchInput.value = link.getAttribute("data-searchdata");
 

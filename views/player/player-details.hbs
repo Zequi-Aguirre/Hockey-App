@@ -19,8 +19,11 @@
 {{!-- {{data.currentlyLoggedInUser.admin}} --}}
 {{#if data.currentlyLoggedInUser.admin}}
 
-  <h1>ADMIN</h1>
-  <a href="/player/edit-player/{{this}}">Edit Player</a>
+  {{#each data.playersFromDB}}
+
+    <h1>ADMIN</h1>
+    <a href="/player/edit-player/{{this.id}}">Edit Player</a>
+  {{/each}}
 {{else}}
   <h1>NO ADMIN</h1>
 {{/if}}

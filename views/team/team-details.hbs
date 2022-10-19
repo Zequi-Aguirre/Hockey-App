@@ -47,6 +47,7 @@
 
   <a href="/player/add-players/{{this.id}}">Add Players</a>
 
+{{/each}}
   <h3>=== Schedule ===</h3>
   <input type="text" name="search" id="search" placeholder="Search..." />
   <br />
@@ -83,10 +84,12 @@
 
     {{/season}} --}}
 
-      {{#season}}
-        {{!-- <div class="date-container">
-        <li class="table-dates">{{gameday}}</li>
-      </div> --}}
+
+      {{#each data.gamesFromDB}}
+        <div class="date-container">
+        <li class="table-dates">{{this.gameday}}</li>
+      </div>
+      {{!-- {{this.gameday}} --}}
         {{#games}}
           <div class="game-container {{this.division}}">
             <li class="game-info column-division">{{this.division}}</li>
@@ -103,8 +106,6 @@
           </div>
         {{/games}}
 
-      {{/season}}
-
+      {{/each}}
     </div>
   </div>
-{{/each}}

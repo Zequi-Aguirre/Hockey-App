@@ -64,7 +64,7 @@ router.get("/team-detail/:teamID", (req, res) => {
             groupedSeason.push(gameDay);
           });
 
-          gamesFromDbResults = thisTeamAllGames;
+          gamesFromDbResults = groupedSeason;
           teamsFromDbResults.push(teamFromDB);
 
           // ==================================== this in all get Roues ==================================== //

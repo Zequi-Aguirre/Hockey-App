@@ -1,17 +1,63 @@
-<h1>Game Details</h1>
+{{! <h1>Game Details</h1> }}
 
-<a href="/game/edit-game/{{game._id}}">Edit Game</a>
-<br />
+{{!-- {{currentlyLoggedInUser}} --}}
+<div class="background">
 
-{{game.homeTeam.teamName}}
-<br />
-{{game.awayTeam.teamName}}
-<br />
-{{game.date}}
-<br />
-{{game.time}}
-<br />
-{{game.location}}
-<br />
-{{game.division}}
+  {{#if data.currentlyLoggedInUser.admin}}
+
+    {{#each data.gamesFromDB}}
+      <a href="/game/edit-game/{{game._id}}">Edit Game</a>
+    {{/each}}
+  {{else}}
+  {{/if}}
+  <br />
+
+  {{#each data.gamesFromDB}}
+
+    <div class="game-time-place">
+      <h3>{{this.date}}
+        Time:
+        {{this.time}}
+        <br />
+        Location:
+        {{this.location}}
+        Division
+        {{this.division}}</h3>
+    </div>
+
+    <div class="game-teams-container">
+
+      <h1>
+
+        {{this.homeTeam.teamName}}
+        vs
+        {{this.awayTeam.teamName}}
+      </h1>
+    </div>
+
+  {{/each}}
+
+  <div class="all-players">
+    <div class="home-players">
+      {{#each data.teamsFromDB.hometeam.playersFullTime}}
+        {{this.jerseyNumber}}
+        {{this.name}}
+      {{/each}}
+      {{#each data.teamsFromDB.hometeam.playersPartTime}}
+        {{this.jerseyNumber}}
+        {{this.name}}
+      {{/each}}
+    </div>
+    <div class="away-players">
+      {{#each data.teamsFromDB.awayteam.playersFullTime}}
+        {{this.jerseyNumber}}
+        {{this.name}}
+      {{/each}}
+      {{#each data.teamsFromDB.awayteam.playersPartTime}}
+        {{this.jerseyNumber}}
+        {{this.name}}
+      {{/each}}
+    </div>
+  </div>
+</div>
 <br />

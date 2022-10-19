@@ -1,0 +1,52 @@
+<h1>Edit Player Details</h1>
+
+{{#each data.playersFromDB}}
+  {{!-- {{data.teamsFromDB}} --}}
+
+  <form action="/player/edit-player/{{id}}" method="post">
+    {{! the method of the form is what determines the request type that is being made (get/post) }}
+
+    <label for="name">
+      name:
+
+      <input type="text" name="name" value={{name}} />
+
+    </label>
+    <br />
+    <label for="lastName">
+      lastName:
+
+      <input type="text" name="lastName" value={{lastName}} />
+
+    </label>
+    <br />
+    <label for="phoneNumber">
+      phoneNumber:
+
+      <input type="text" name="phoneNumber" value={{phoneNumber}} />
+
+    </label>
+    <br />
+    <label for="emailAddress">
+      emailAddress:
+
+      <input type="text" name="emailAddress" value={{emailAddress}} />
+
+    </label>
+    <br />
+    <label for="jerseyNumber">
+      jerseyNumber:
+
+      <input type="text" name="jerseyNumber" value={{jerseyNumber}} />
+
+    </label>
+    <br />
+
+    <br />
+
+    <br />
+    <button>Save Changes</button>
+    {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
+  </form>
+
+{{/each}}
