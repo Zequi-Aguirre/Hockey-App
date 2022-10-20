@@ -1,6 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 
+
+#admin-routes-button {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  text-decoration: none;
+  color: white;
+  background-color: black;
+  padding: 5px 10px;
+  font-weight: 400;
+}
+
+.admin-routes-hide {
+  display: none;
+}
+
+
+
 body {
   padding: 5px;
   font: 14px "Roboto", Helvetica, Arial, sans-serif;
@@ -108,15 +126,8 @@ header nav ul li {
   justify-content: space-around;
 }
 
-.game-description-teams {
-  height: 100px;
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  justify-content: center;
-  border-right: 1px solid black;
-}
+
+
 
 .game-description-teams h3 {
   margin: 10px 0 10px 20px;
@@ -141,14 +152,23 @@ header nav ul li {
 
 }
 
+
+
 .date-container h3 {
-  color: rgb(7, 25, 221);
+  color: #fff;
   margin: 10px 0;
   padding: 16px 0;
+  font-weight: 400;
 }
 
 .date-container {
-  background-color: rgb(39, 150, 229);
+
+  background-color: rgb(11, 47, 227);
+  transform: skew(9deg, 0deg);
+  font-style: italic;
+  text-align: center;
+  color: white;
+  font-weight: 400;
 }
 
 .game-container-link {
@@ -159,7 +179,10 @@ header nav ul li {
 }
 
 .game-container:hover {
-  background-color: rgba(0, 0, 0, .2);
+  background-image: url(/images/hockey-rink-horizontal.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 hr {

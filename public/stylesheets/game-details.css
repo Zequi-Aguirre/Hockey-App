@@ -1,28 +1,236 @@
+.game-details-page-container {
+    /* align-items: center; */
+    text-align: center;
+    /* align-content: center; */
+    height: 100%;
+    margin-top: 30px;
+}
+
 .background {
     background-image: url(/images/hockey-rink.png);
-    height: 500px;
+    width: 90vw;
+    height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     position: relaive;
+    display: inline-block;
 
+}
+
+
+
+ul {
+    padding: 0;
 }
 
 .game-teams-container {
-    border: 2px solid red;
+    /* border: 2px solid red; */
 }
+
+.game-teams-container h1 {
+    margin: 3px;
+    background-color: rgb(36, 36, 36);
+    transform: skew(-9deg, 0deg);
+    /* font-style: italic; */
+    text-align: center;
+    color: white;
+    padding: 5px;
+    font-weight: 400;
+    margin: 50px 0 20px 0;
+}
+
+@media (max-width: 430px) {
+    .game-teams-container h1 {
+        font-size: 18px;
+    }
+
+    .home-players h1,
+    .away-players h1 {
+        font-size: 28px;
+    }
+
+    .home-players li,
+    .away-players li {
+        font-size: 14px;
+    }
+
+    .game-time-place h3 {
+        font-size: 16px;
+    }
+
+    .game-time-place h3 {
+        font-size: 14px;
+    }
+
+    .game-teams-container h1 {
+        margin: 30px 0 20px 0;
+    }
+}
+
+@media only screen and (min-width: 430px) and (max-width: 767px) {
+
+
+    .game-teams-container h1 {
+        font-size: 22px;
+        /* color: red; */
+    }
+
+    .home-players h1,
+    .away-players h1 {
+        font-size: 36px;
+    }
+
+    .home-players li,
+    .away-players li {
+        font-size: 16px;
+    }
+
+    .game-time-place h3 {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 767px) {
+    .game-teams-container h1 {
+        font-size: 24px;
+    }
+
+    .home-players h1,
+    .away-players h1 {
+        font-size: 36px;
+    }
+
+    .home-players li,
+    .away-players li {
+        font-size: 18px;
+    }
+
+    .game-time-place h3 {
+        font-size: 24px;
+    }
+
+
+}
+
+
+
 
 .game-time-place {
-    border: 2px solid green;
+    /* border: 2px solid green; */
+    margin-top: 50px;
+
 
 }
 
-.all-players {
+.game-time-place h3 {
+    margin: 3px;
+    background-color: rgb(11, 47, 227);
+    transform: skew(9deg, 0deg);
+    font-style: italic;
+    text-align: center;
+    color: white;
+    padding: 5px;
+    font-weight: 400;
+
+}
+
+.all-players-game-details {
+    /* border: 2px solid blue; */
     display: flex;
-    border: 2px solid blue;
 }
 
-.all-players div {
-    border: 2px solid orange;
+.all-players-game-details div {
+    /* border: 2px solid orange; */
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.home-players h1,
+.away-players h1 {
+    transform: skew(9deg, 0deg);
+    font-style: italic;
+    text-align: center;
+    color: white;
+    font-weight: 400;
+    margin: 5px;
+    padding: 2px;
+}
+
+.home-players h1 {
+    width: 90%;
+    background-color: rgb(11, 47, 227);
+}
+
+
+.away-players h1 {
+    width: 90%;
+    background-color: #cc0000;
+}
+
+.all-players-game-details ul {
+    list-style: none;
+}
+
+.all-players-game-details a {
+    text-decoration: none;
+}
+
+.home-players li:hover {
+    color: rgba(11, 47, 227, 1);
+    background-color: white;
+    border: 1px solid rgba(11, 47, 227, 1);
+    font-weight: 500;
+}
+
+.home-players li {
+    background-color: rgba(11, 47, 227, 1);
+
+}
+
+.home-players li,
+.away-players li {
+    transform: skew(9deg, 0deg);
+    font-style: italic;
+    text-align: center;
+    color: white;
+    font-weight: 400;
+    margin: 5px;
+    /* width: 100%; */
+    padding: 2px 15px;
+}
+
+.away-players li {
+    background-color: #cc0000;
+
+}
+
+.away-players li:hover {
+    color: #cc0000;
+    background-color: white;
+    border: 1px solid #cc0000;
+    font-weight: 500;
+}
+
+.game-description-teams {
+    height: 100px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: center;
+    border-right: 1px solid black;
+}
+
+.game-teams-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.game-teams-container h1 {
+    /* background-color: #32324e; */
 }

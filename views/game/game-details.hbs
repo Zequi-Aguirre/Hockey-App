@@ -1,63 +1,101 @@
 {{! <h1>Game Details</h1> }}
 
 {{!-- {{currentlyLoggedInUser}} --}}
-<div class="background">
 
-  {{#if data.currentlyLoggedInUser.admin}}
+<div class="game-details-page-container">
+
+  <div class="background">
+
+    {{!-- {{#if data.currentlyLoggedInUser.admin}}
+
+      {{#each data.gamesFromDB}}
+        <a href="/game/edit-game/{{game._id}}">Edit Game</a>
+      {{/each}}
+    {{else}}
+    {{/if}} --}}
+    <br />
 
     {{#each data.gamesFromDB}}
-      <a href="/game/edit-game/{{game._id}}">Edit Game</a>
+
+      <div class="game-time-place">
+        <h3>{{this.date}}
+          Time:
+          {{this.time}}
+          <br />
+          Location:
+          {{this.location}}
+          - Division:
+          {{this.division}}</h3>
+      </div>
+
+      <div class="game-teams-container">
+
+        <h1>
+
+          Home Team
+        </h1>
+        <h1>Away Team</h1>
+      </div>
+
     {{/each}}
-  {{else}}
-  {{/if}}
-  <br />
 
-  {{#each data.gamesFromDB}}
+    <div class="all-players-game-details">
+      <div class="home-players">
+        {{! <p>Home Team</p> }}
+        <h1>
 
-    <div class="game-time-place">
-      <h3>{{this.date}}
-        Time:
-        {{this.time}}
-        <br />
-        Location:
-        {{this.location}}
-        Division
-        {{this.division}}</h3>
-    </div>
+          {{data.teamsFromDB.hometeam.teamName}}
+        </h1>
 
-    <div class="game-teams-container">
+        <ul>
+          {{! <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a>
+          <a href="#"><li>24 Dummy Data</li></a> }}
+          {{#each data.teamsFromDB.hometeam.playersFullTime}}
+            <a href="/player/player-details/{{this._id}}"><li>
+                {{this.jerseyNumber}}
+                {{this.name}}</li></a>
+          {{/each}}
+          {{#each data.teamsFromDB.hometeam.playersPartTime}}
+            <a href="/player/player-details/{{this._id}}"><li>
+                {{this.jerseyNumber}}
+                {{this.name}}</li></a>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="away-players">
+        <h1>
 
-      <h1>
+          {{data.teamsFromDB.awayteam.teamName}}
+        </h1>
+        <ul>
 
-        {{this.homeTeam.teamName}}
-        vs
-        {{this.awayTeam.teamName}}
-      </h1>
-    </div>
-
-  {{/each}}
-
-  <div class="all-players">
-    <div class="home-players">
-      {{#each data.teamsFromDB.hometeam.playersFullTime}}
-        {{this.jerseyNumber}}
-        {{this.name}}
-      {{/each}}
-      {{#each data.teamsFromDB.hometeam.playersPartTime}}
-        {{this.jerseyNumber}}
-        {{this.name}}
-      {{/each}}
-    </div>
-    <div class="away-players">
-      {{#each data.teamsFromDB.awayteam.playersFullTime}}
-        {{this.jerseyNumber}}
-        {{this.name}}
-      {{/each}}
-      {{#each data.teamsFromDB.awayteam.playersPartTime}}
-        {{this.jerseyNumber}}
-        {{this.name}}
-      {{/each}}
+          {{#each data.teamsFromDB.awayteam.playersFullTime}}
+            <a href="/player/player-details/{{this._id}}"><li>
+                {{this.jerseyNumber}}
+                {{this.name}}
+              </li></a>
+          {{/each}}
+          {{#each data.teamsFromDB.awayteam.playersPartTime}}
+            <a href="/player/player-details/{{this._id}}"><li
+              >{{this.jerseyNumber}}
+                {{this.name}}</li></a>
+          {{/each}}
+        </ul>
+      </div>
     </div>
   </div>
+  <br />
 </div>
-<br />

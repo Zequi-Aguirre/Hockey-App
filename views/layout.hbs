@@ -41,37 +41,45 @@
     {{/if}}
     {{#if theUser.admin}}
 
-      <h3>Admin Routes</h3>
+      <div class="admin-routes-hide" id="admin-routes">
 
-      <ul class="admin-buttons">
+        <h3>Admin Routes</h3>
 
-        <li><a
-            class="admin-filter-buttons"
-            data-adminfilter="all-teams"
-            href="/admin/all-teams"
-          >All Teams</a></li>
-        <li><a
-            class="admin-filter-buttons"
-            data-adminfilter="all-players"
-            href="/admin/all-players"
-          >All Players</a></li>
-        <li><a
-            class="admin-filter-buttons"
-            data-adminfilter="all-games"
-            href="/admin/all-games"
-          >All Games</a></li>
-        <li><a
-            class="admin-filter-buttons"
-            data-adminfilter="all-users"
-            href="/admin/all-users"
-          >All Users</a></li>
-        <li><a class="admin-filter-buttons" href="/season/create-season">Create
-            Season</a></li>
-      </ul>
+        <ul class="admin-buttons">
+
+          <li><a
+              class="admin-filter-buttons"
+              data-adminfilter="all-teams"
+              href="/admin/all-teams"
+            >All Teams</a></li>
+          <li><a
+              class="admin-filter-buttons"
+              data-adminfilter="all-players"
+              href="/admin/all-players"
+            >All Players</a></li>
+          <li><a
+              class="admin-filter-buttons"
+              data-adminfilter="all-games"
+              href="/admin/all-games"
+            >All Games</a></li>
+          <li><a
+              class="admin-filter-buttons"
+              data-adminfilter="all-users"
+              href="/admin/all-users"
+            >All Users</a></li>
+          <li><a
+              class="admin-filter-buttons"
+              href="/season/create-season"
+            >Create Season</a></li>
+        </ul>
+
+      </div>
     {{/if}}
 
     {{{body}}}
-
+    {{#if theUser.admin}}
+      <a href="#" id="admin-routes-button">Admin Routes</a>
+    {{/if}}
     <script src="/js/script.js"></script>
     <script src="/js/all-games.js"></script>
 
