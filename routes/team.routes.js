@@ -94,6 +94,68 @@ router.get("/team-detail/:teamID", (req, res) => {
     });
 });
 
+router.get("/create-team", (req, res) => {
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+
+  // ==================================== this in all get Roues ==================================== //
+
+  data = {
+    // game: gameForViewReady,
+    teamsFromDB: teamsFromDbResults,
+    playersFromDB: playersFromDbResults,
+    gamesFromDB: gamesFromDbResults,
+    usersFromDB: usersFromDbResults,
+    currentlyLoggedInUser: currentlyLoggedInUser,
+  };
+
+  data = { data };
+  res.render("team/create-team", data);
+});
+
+router.post("/create-team", (req, res) => {
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+  console.log(req.body);
+
+  let newTeam = req.body;
+
+  Team.create(newTeam)
+    .then((teamFromDB) => {
+      teamsFromDbResults.push(teamFromDB);
+      // ==================================== this in all get Roues ==================================== //
+
+      data = {
+        // game: gameForViewReady,
+        teamsFromDB: teamsFromDbResults,
+        playersFromDB: playersFromDbResults,
+        gamesFromDB: gamesFromDbResults,
+        usersFromDB: usersFromDbResults,
+        currentlyLoggedInUser: currentlyLoggedInUser,
+      };
+
+      req.flash(
+        `success`,
+        `Team Created: ${teamFromDB.teamName}.
+        Division: ${teamFromDB.division}`
+      );
+      res.redirect("/admin/all-teams");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.post("/invite-all/:teamID", (req, res) => {
   Team.findById(req.params.teamID)
     .populate("playersFullTime")
@@ -187,6 +249,49 @@ router.get("/edit-team/:teamID", (req, res) => {
       data = { data };
 
       res.render("team/edit-team", data);
+    })
+    .catch((err) => {
+      console.log(err);
+      // ==================================== this in all get Roues ==================================== //
+
+      // res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/delete-team/:teamID", (req, res) => {
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+  Team.findByIdAndDelete(req.params.teamID)
+
+    .then((teamFromDB) => {
+      // console.log(teamFromDB);
+      // teamsFromDbResults.push(teamFromDB);
+
+      // gamesFromDbResults = thisTeamAllGames;
+      teamsFromDbResults.push(teamFromDB);
+
+      // ==================================== this in all get Roues ==================================== //
+
+      data = {
+        // game: gameForViewReady,
+        teamsFromDB: teamsFromDbResults,
+        playersFromDB: playersFromDbResults,
+        gamesFromDB: gamesFromDbResults,
+        usersFromDB: usersFromDbResults,
+        currentlyLoggedInUser: currentlyLoggedInUser,
+      };
+
+      data = { data };
+      req.flash("success", `Team Deleted: ${teamFromDB.teamName}`);
+      res.redirect("/admin/all-teams");
     })
     .catch((err) => {
       console.log(err);

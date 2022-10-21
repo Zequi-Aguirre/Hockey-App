@@ -1,11 +1,15 @@
 <h1>All Teams</h1>
 
+{{#if data.currentlyLoggedInUser.admin}}
+  <a class="admin" href="/team/create-team">Create Team</a>
+{{/if}}
+
 {{!-- {{theUser._id}} --}}
 <div class="all-results">
   {{!======================= ALL TEAMS =======================}}
   <section class="all-teams admin-section">
-    {{#each results}}
-
+    {{#each data.teamsFromDB}}
+      {{!-- {{#each results}} --}}
       <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
       <br />
       manage code:
@@ -38,6 +42,7 @@
 
       <br />
       <br />
+      {{!-- {{/each}} --}}
     {{/each}}
   </section>
 

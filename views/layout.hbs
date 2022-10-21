@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>{{appTitle}}</title>
+    <title>Bench Buddy</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <link rel="stylesheet" href="/stylesheets/all-results.css" />
     <link rel="stylesheet" href="/stylesheets/game-details.css" />
   </head>
   <body>
     <header>
-      <a href="/">
-        <img src="#" alt="logo" />
+      <a class="logo" href="/">
+        <span>Bench Buddy</span>
       </a>
       <nav>
         <ul>
@@ -41,7 +41,7 @@
     {{/if}}
     {{#if theUser.admin}}
 
-      <div class="admin-routes-hide" id="admin-routes">
+      <div class="admin" id="admin-routes">
 
         <h3>Admin Routes</h3>
 

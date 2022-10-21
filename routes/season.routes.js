@@ -2,6 +2,7 @@ const router = require("express").Router();
 const xlsx = require("xlsx");
 const express = require("express");
 const Season = require("../models/Season.model");
+const Player = require("../models/Player.model");
 const Team = require("../models/Team.model");
 const Game = require("../models/Game.model");
 const fs = require("fs");
@@ -9,18 +10,6 @@ const formidable = require("formidable");
 // const uploadMiddleware = require("../config/multer-file-upload");
 
 const multer = require("multer");
-
-let fileStorageEngine = multer.diskStorage({
-  destination: (req, file, cb) => {
-    console.log("path------------------------------");
-    cb(null, "./xlsx");
-  },
-  filename: (req, file, cb) => {
-    console.log("file------------------------------");
-    console.log(file);
-    cb(null, file.originalname);
-  },
-});
 
 // const uploadFile = multer({ storage: fileStorageEngine });
 const uploadFile = multer({ dest: "public/xlsx" });
@@ -35,6 +24,17 @@ router.post(
   uploadFile.single("fileupload"),
   (req, res, next) => {
     // console.log({ file: req.file });
+    let fileStorageEngine = multer.diskStorage({
+      destination: (req, file, cb) => {
+        console.log("path------------------------------");
+        cb(null, "./xlsx");
+      },
+      filename: (req, file, cb) => {
+        console.log("file------------------------------");
+        console.log(file);
+        cb(null, file.originalname);
+      },
+    });
 
     fs.rename(
       `./public/xlsx/${req.file.filename}`,
@@ -210,6 +210,102 @@ router.post(
       .catch();
 
     // console.log(allGames);
+  }
+);
+
+router.post(
+  "/add-players-to-all",
+  uploadFile.single("fileupload"),
+  (req, res, next) => {
+    // console.log({ file: req.file });
+    let fileStorageEngine = multer.diskStorage({
+      destination: (req, file, cb) => {
+        console.log("path------------------------------");
+        cb(null, "./xlsx");
+      },
+      filename: (req, file, cb) => {
+        console.log("file------------------------------");
+        console.log(file);
+        cb(null, file.originalname);
+      },
+    });
+
+    fs.rename(
+      `./public/xlsx/${req.file.filename}`,
+      `./public/xlsx/${req.file.originalname}`,
+      () => {
+        // console.log("name changed");
+        // List all the filenames after renaming
+        // getCurrentFilenames();
+      }
+    );
+
+    // console.log(`req================
+
+    // ============.file`);
+
+    console.log(`./public/xlsx/${req.file.originalname}`);
+
+    const workBook = xlsx.readFile(`./public/xlsx/${req.file.originalname}`);
+
+    const workSheet = workBook.Sheets["AllPlayers"];
+
+    const data = xlsx.utils.sheet_to_json(workSheet);
+
+    console.log({ allPlayers: data });
+
+    allPlayers = data;
+
+    allPlayers.forEach((player) => {
+      player = {
+        name: player.name,
+        lastName: player.lastName,
+        phoneNumber: player.phoneNumber,
+        emailAddress: player.emailAddress,
+        jerseyNumber: player.jerseyNumber,
+      };
+    });
+
+    let uniquePlayers = [
+      ...new Map(
+        allPlayers.map((item) => [item["emailAddress"], item])
+      ).values(),
+    ];
+
+    console.log(allPlayers.length);
+    console.log(uniquePlayers.length);
+
+    Player.insertMany(uniquePlayers)
+      .then((playersFromDB) => {
+        allPlayers.forEach((player) => {
+          Player.findOne({ emailAddress: player.emailAddress }).then(
+            (playerFromDB) => {
+              console.log(playerFromDB);
+              Team.updateMany(
+                { teamName: player.teamName },
+                { $addToSet: { playersFullTime: playerFromDB } }
+              ).then((team) => {
+                console.log({ player: playerFromDB });
+                let playerById = playerFromDB.id;
+                Player.findByIdAndUpdate(playerById, {
+                  $addToSet: { joinedTeams: team.id },
+                }).then((player) => {
+                  // res.send(player);
+                });
+              });
+            }
+          );
+          // res.send(playersFromDB);
+        });
+      })
+      .then((data) => {
+        req.flash("success", `All Players Added to Teams`);
+
+        res.redirect("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 );
 

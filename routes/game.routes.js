@@ -195,7 +195,7 @@ router.get("/edit-game/:gameID", (req, res, next) => {
 
           console.log({ data: data });
 
-          res.render("game/edit-game-details", data);
+          res.render("game/create-game", data);
           // res.redirect("/game/edit-game-details", data);
         })
         .catch((err) => {
@@ -223,20 +223,63 @@ router.post("/edit-game/:gameID", (req, res, next) => {
     // res.send(updatedGameFrom);
     res.redirect(`/game/game-details/${updatedGameFrom.id}`);
   });
+});
 
-  // Game.findById(req.params.gameID)
-  //   .populate("homeTeam")
-  //   .populate("awayTeam")
-  //   .then((gameFromDB) => {
-  //     //  format date to this "2018-07-22";
-  //     data = {
-  //       game: gameFromDB,
-  //     };
-  //     res.render("game/edit-game-details", data);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+router.post("/create-game", (req, res, next) => {
+  // const originalGame = req.params.gameID;
+  let newGame = req.body;
+
+  // console.log({ newGame: newGame });
+
+  newGame.time = `${newGame.hour}:${newGame.minutes}${newGame["am-pm"]}`;
+  newGame.date = formatDateFuctionOnWrite(newGame.newDate);
+
+  delete newGame["hour"];
+  delete newGame["minutes"];
+  delete newGame["am-pm"];
+  delete newGame["newDate"];
+
+  Game.create(newGame).then((newGameFrom) => {
+    // res.send(newGameFrom);
+    res.redirect(`/game/game-details/${newGameFrom.id}`);
+  });
+});
+
+router.get("/create-game", (req, res, next) => {
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+  // const originalGame = req.params.gameID;
+  // ==================================== this in all get Roues ==================================== //
+  Team.find()
+    .then((teamsFromDB) => {
+      teamsFromDbResults = teamsFromDB;
+      data = {
+        // game: gameForViewReady,
+        teamsFromDB: teamsFromDbResults,
+        playersFromDB: playersFromDbResults,
+        gamesFromDB: gamesFromDbResults,
+        usersFromDB: usersFromDbResults,
+        currentlyLoggedInUser: currentlyLoggedInUser,
+      };
+
+      data = { data };
+
+      console.log({ data: data });
+      res.render(`game/create-game`, data);
+
+      // res.render("game/create-game", data);
+      // res.redirect("/game/edit-game-details", data);
+    })
+
+    .catch((err) => {
+      console.log(err);
+    });
+  // ==================================== this in all get Roues ==================================== //
 });
 
 module.exports = router;

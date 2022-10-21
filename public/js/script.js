@@ -9,7 +9,7 @@ document.addEventListener(
 // console.log();
 
 const searchInput = document.querySelector("#search");
-const allGames = document.querySelectorAll(".game-container");
+const allGames = document.querySelectorAll(".game-container-link");
 // const games = document.querySelectorAll("tbody tr");
 const adminFilterLinks = document.querySelectorAll(".admin-filter-buttons");
 const allDates = document.querySelectorAll(".date-container");
@@ -29,21 +29,24 @@ if (gamesFilter) {
     if (gamesFilter.value === "all") {
       gameDayContainers.forEach((gameDay) => {
         gameDay.style.display = "block";
-        let dayGames = gameDay.querySelectorAll(".game-container");
+        let dayGames = gameDay.querySelectorAll("a");
         dayGames.forEach((game) => {
-          game.style.display = "flex";
+          game.style.display = "inline-block";
         });
       });
     } else {
       gameDayContainers.forEach((gameDay) => {
+        // console.log({ gameDayContainers });
         gameDay.style.display = "block";
-        let dayGames = gameDay.querySelectorAll(".game-container");
+        let dayGames = gameDay.querySelectorAll("a");
         dayGames.forEach((game) => {
-          game.style.display = "flex";
+          console.log({ game });
+          game.style.display = "inline-block";
         });
         let count = 0;
         dayGames.forEach((game) => {
-          if (!game.classList.contains(gamesFilter.value)) {
+          let gameDiv = game.querySelector("div");
+          if (!gameDiv.classList.contains(gamesFilter.value)) {
             game.style.display = "none";
             count++;
           }
@@ -64,9 +67,11 @@ if (searchInput) {
     if (searchValue.length < 1) {
       gameDayContainers.forEach((gameDay) => {
         gameDay.style.display = "block";
-        let dayGames = gameDay.querySelectorAll(".game-container");
+        console.log(gameDay);
+        let dayGames = gameDay.querySelectorAll("a");
+        console.log(dayGames);
         dayGames.forEach((game) => {
-          game.style.display = "flex";
+          game.style.display = "inline-block";
         });
       });
       console.log(searchValue);
@@ -75,9 +80,9 @@ if (searchInput) {
 
       gameDayContainers.forEach((gameDay) => {
         gameDay.style.display = "block";
-        let dayGames = gameDay.querySelectorAll(".game-container");
+        let dayGames = gameDay.querySelectorAll("a");
         dayGames.forEach((game) => {
-          game.style.display = "flex";
+          game.style.display = "inline-block";
         });
         let count = 0;
         dayGames.forEach((game) => {
@@ -114,11 +119,11 @@ if (gamesFilter) {
       console.log(link.getAttribute("data-searchdata"));
 
       allGames.forEach((game) => {
-        game.style.display = "flex";
+        game.style.display = "inline-block";
         // console.log(game);
 
         if (searchInput.value === "all") {
-          game.style.display = "flex";
+          game.style.display = "inline-block";
         } else if (
           !game.classList.contains(link.getAttribute("data-searchdata"))
         ) {
@@ -129,11 +134,22 @@ if (gamesFilter) {
   });
 }
 
-const adminRoutesDiv = document.querySelector("#admin-routes");
-const adminRoutesButton = document.querySelector("#admin-routes-button");
-adminRoutesDiv.classList.add("admin-routes-hide");
+let adminOptions = document.querySelectorAll(".admin");
 
-adminRoutesButton.addEventListener("click", () => {
-  // console.log(adminRoutesDiv);
-  adminRoutesDiv.classList.toggle("admin-routes-hide");
-});
+if (adminOptions.length > 0) {
+  // const adminRoutesDiv = document.querySelector("#admin-routes");
+  const adminRoutesButton = document.querySelector("#admin-routes-button");
+
+  adminOptions.forEach((option) => {
+    option.classList.add("admin-routes-hide");
+  });
+
+  adminRoutesButton.addEventListener("click", () => {
+    // console.log(adminRoutesDiv);
+
+    adminOptions.forEach((option) => {
+      option.classList.toggle("admin-routes-hide");
+    });
+    // adminRoutesDiv.classList.toggle("admin-routes-hide");
+  });
+}

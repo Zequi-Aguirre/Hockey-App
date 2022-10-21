@@ -1,8 +1,9 @@
-<h1>Bench Buddy</h1>
+<h1>Bench Buddy - Home</h1>
 {{! <p>Welcome Ironhacker!</p> }}
 
 {{!-- {{#each division}} --}}
 <div class="games-filter">
+  <hr />
 
   <h3>Select Division</h3>
   <select name="games-filter" id="gamesFilter">
@@ -46,14 +47,16 @@
                   <h3
                     class="game-info column-homeTeam"
                   >{{this.homeTeam.teamName}}</h3>
-                  {{! <h5>VS</h5> }}
+                  <h3 class="vs">VS</h3>
                   <h3
                     class="game-info column-awayTeam"
                   >{{this.awayTeam.teamName}}</h3>
                 </div>
                 <div class="game-description-datetime">
-                  <h4 class="game-info column-date">{{this.date}}</h4>
-                  <h4 class="game-info column-time">{{this.time}}</h4>
+                  <h4 class="game-info">{{this.date}}
+                    -
+                    {{this.time}}</h4>
+
                 </div>
               </div>
 

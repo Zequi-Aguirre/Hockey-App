@@ -92,6 +92,19 @@ router.post("/admin-removal/:userID", (req, res, next) => {
     });
 });
 
+router.post("/delete-user/:userID", (req, res, next) => {
+  console.log(req.session.user);
+
+  User.findByIdAndDelete(req.params.userID)
+    .then((user) => {
+      res.redirect("/admin/all-users");
+    })
+
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.get("/update-user/:userID", (req, res, next) => {
   // console.log(req.session.user);
 
@@ -149,6 +162,14 @@ router.get("/all-teams", (req, res) => {
   if (!req.session.user.admin) {
     res.redirect(`/auth/profile`);
   }
+
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
   Team.find()
     .populate("season")
     .populate("playersFullTime")
@@ -167,12 +188,32 @@ router.get("/all-teams", (req, res) => {
       }
 
       allResults.sort(compare);
+
+      // ==================================== this in all get Roues ==================================== //
+
       data = {
-        results: allResults,
+        // game: gameForViewReady,
+        teamsFromDB: allResults,
+        playersFromDB: playersFromDbResults,
+        gamesFromDB: gamesFromDbResults,
+        usersFromDB: usersFromDbResults,
+        currentlyLoggedInUser: currentlyLoggedInUser,
       };
 
+      data = { data };
+
+      console.log({ data: data });
+
       res.render("admin/all-teams", data);
+
+      // res.render("game/edit-game-details", data);
+      // res.redirect("/game/edit-game-details", data);
     })
+    .catch((err) => {
+      console.log(err);
+    })
+    // ==================================== this in all get Roues ==================================== //
+
     .catch((err) => {
       console.log(err);
     });
@@ -257,25 +298,98 @@ router.get("/all-games", (req, res) => {
   if (!req.session.user.admin) {
     res.redirect(`/auth/profile`);
   }
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
   Game.find()
-    .populate("season")
-    .populate("homeTeam")
     .populate("awayTeam")
-    .then((allResults) => {
-      // console.log(allResults[0]);
-
-      allResults.forEach((game) => {
-        let gameDay = game.date.split(", ")[0].substring(0, 3);
-        let gameMonth = game.date.split(", ")[1].split(" ")[0].substring(0, 3);
-        let gameDayNumber = game.date.split(", ")[1].split(" ")[1];
-
-        game.date = `${gameDay}, ${gameMonth} ${gameDayNumber}`;
+    .populate("homeTeam")
+    .then((allGames) => {
+      // console.log(allGames);
+      allGames.forEach((game) => {
+        // console.log({ games: game.division });
       });
+      // group games by date
+      let uniqueDates = [];
+      let groupedSeason = [];
+
+      // get unique dates
+      allGames.forEach((game) => {
+        if (!uniqueDates.includes(game.date)) {
+          uniqueDates.push(game.date);
+        }
+      });
+
+      console.log(uniqueDates.length);
+
+      uniqueDates.forEach((date) => {
+        let gameDay = {
+          gameday: date,
+          games: [],
+        };
+
+        allGames.forEach((game) => {
+          if (game.date === date) {
+            gameDay.games.push(game);
+          }
+        });
+
+        groupedSeason.push(gameDay);
+      });
+
+      groupedSeason.forEach((gameday) => {
+        gameday.games.forEach((game) => {
+          let gameDay = game.date.split(", ")[0].substring(0, 3);
+          let gameMonth = game.date
+            .split(", ")[1]
+            .split(" ")[0]
+            .substring(0, 3);
+          let gameDayNumber = game.date.split(", ")[1].split(" ")[1];
+
+          game.date = `${gameDay}, ${gameMonth} ${gameDayNumber}`;
+
+          if (game.homeTeam.teamName.length > 17) {
+            game.homeTeam.teamName =
+              game.homeTeam.teamName.substring(0, 16) + "...";
+          }
+
+          if (game.awayTeam.teamName.length > 17) {
+            game.awayTeam.teamName =
+              game.awayTeam.teamName.substring(0, 16) + "...";
+          }
+        });
+      });
+
+      // allGames.forEach((game) => {
+      //   groupedSeason[game.date].push(game);
+      // });
+
+      // console.log(groupedSeason);
+
+      gamesFromDbResults = groupedSeason;
+
       data = {
-        results: allResults,
+        // game: gameForViewReady,
+        teamsFromDB: teamsFromDbResults,
+        playersFromDB: playersFromDbResults,
+        gamesFromDB: gamesFromDbResults,
+        usersFromDB: usersFromDbResults,
+        currentlyLoggedInUser: currentlyLoggedInUser,
       };
 
+      data = { data };
+
+      // const data = {
+      //   allGames: allGames,
+      //   season: groupedSeason,
+      // };
+
       res.render("admin/all-games", data);
+      // res.send(data);
     })
     .catch((err) => {
       console.log(err);

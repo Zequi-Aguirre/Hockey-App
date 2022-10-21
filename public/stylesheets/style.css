@@ -20,7 +20,7 @@
 
 
 body {
-  padding: 5px;
+  padding: 15px;
   font: 14px "Roboto", Helvetica, Arial, sans-serif;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@ h1 {
 header {
   display: flex;
   justify-content: space-between;
-  background-color: antiquewhite;
+  background-color: #cc0000;
   align-items: center;
   padding: 10px 30px;
 }
@@ -54,7 +54,16 @@ header nav ul {
 }
 
 header nav ul li {
-  margin-left: 10px;
+  /* margin-left: 10px; */
+
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: white;
+  border-right: 1px solid white;
+  padding: 0 10px;
+
 
 }
 
@@ -69,19 +78,27 @@ header nav ul li {
 
 /* =-=-=-=-==-=-=-=-=--=-= All Games Div */
 
-#allGames {
+#allGames .games-of-day-container {
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   /* max-width: 950px; */
   /* background-color: aqua; */
 }
 
 /* =-=-=-=-==-=-=-=-=--=-= All Games Div */
 
+.games-filter {
+  text-align: center;
+  /* align-items: center;
+  align-content: center; */
+}
+
 @media (min-width: 830px) {
   .games-of-day-container {
-    display: grid;
-    grid-template-columns: 420px 420px;
-    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
   }
 
 
@@ -116,29 +133,50 @@ header nav ul li {
 
 }
 
+
+
 /* .game-container div {
   border: 1px dotted green;
   margin: 2px;
 } */
 
 .game-description {
-  display: flex;
-  justify-content: space-around;
+  /* display: flex;
+  justify-content: space-around; */
+  /* border: 1px solid red; */
 }
 
 
 
 
-.game-description-teams h3 {
+.game-description-teams .vs {
   margin: 10px 0 10px 20px;
+  display: inline;
+  width: 10%;
+  /* padding: 0; */
+  /* margin: 0; */
+}
+
+.game-description-teams .game-info {
+  font-size: 16px;
+  /* margin: 10px 0 10px 20px; */
+  display: inline;
+  /* padding: 0; */
+  /* margin: 0; */
 }
 
 .game-description-datetime {
   display: flex;
-  flex-direction: column;
-  width: 25%;
-  align-items: center;
+  /* flex-direction: column; */
+  /* width: 25%; */
+  /* align-items: center; */
   justify-content: center;
+}
+
+.game-description-datetime h4 {
+  display: inline;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .division-location {
@@ -183,11 +221,24 @@ header nav ul li {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
+
+
+}
+
+.game-container:hover .game-description-datetime h4 {
+  background-color: #cc0000;
+  transform: skew(9deg, 0deg);
+  font-style: italic;
+  text-align: center;
+  color: white;
+  font-weight: 400;
+  /* padding: 5px 10px; */
 }
 
 hr {
   width: 100%;
-  border-top: 1px solid red;
+  border-top: 2px solid #cc0000;
 }
 
 

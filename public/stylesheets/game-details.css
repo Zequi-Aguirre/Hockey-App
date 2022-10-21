@@ -40,7 +40,41 @@ ul {
     margin: 50px 0 20px 0;
 }
 
-@media (max-width: 430px) {
+.logo {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-style: italic;
+}
+
+@media (max-width: 445px) {
+
+    #search {
+        font-size: 20px;
+
+    }
+
+    .games-filter {
+        font-size: 24px;
+    }
+
+    .games-filter select {
+        font-size: 20px;
+        /* color: red; */
+    }
+
+    header {
+        padding: 10px 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .game-container-link {
+        width: 95%;
+    }
+
     .game-teams-container h1 {
         font-size: 18px;
     }
@@ -66,9 +100,77 @@ ul {
     .game-teams-container h1 {
         margin: 30px 0 20px 0;
     }
+
+    .playerTeamDetailsView {
+        width: 200px;
+    }
+
+    .playersFullTimeDiv h4,
+    .playersPartTimeDiv h4 {
+        font-size: 16px;
+        margin: 20px 0;
+    }
+
+    .allPlayers h3 {
+        font-size: 20px;
+    }
+
+    .teamDetailsName {
+        font-size: 32px;
+    }
 }
 
-@media only screen and (min-width: 430px) and (max-width: 767px) {
+@media only screen and (min-width: 445px) and (max-width: 767px) {
+
+    #search {
+        font-size: 20px;
+
+    }
+
+    .games-filter {
+        font-size: 24px;
+    }
+
+    .games-filter select {
+        font-size: 20px;
+        /* color: red; */
+    }
+
+    header {
+        padding: 10px 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+
+
+
+
+    .games-filter {
+        font-size: 24px;
+    }
+
+    .allPlayers {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .allPlayers div {
+        width: 50%;
+    }
+
+    .allPlayers>div:first-of-type {
+        width: 100%;
+        margin-bottom: 30px;
+        text-align: center;
+
+    }
+
+    .allPlayersTeamDetails {
+        display: inline;
+    }
 
 
     .game-teams-container h1 {
@@ -91,7 +193,61 @@ ul {
     }
 }
 
-@media (min-width: 767px) {
+@media (min-width: 770px) {
+
+    .allPlayers {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .allPlayers div {
+        width: 50%;
+    }
+
+    .allPlayers>div:first-of-type {
+        width: 100%;
+        margin-bottom: 30px;
+        text-align: center;
+
+    }
+
+    .allPlayersTeamDetails {
+        display: inline;
+    }
+
+    #search {
+        font-size: 20px;
+
+    }
+
+    .games-filter {
+        font-size: 24px;
+    }
+
+    .games-filter select {
+        font-size: 20px;
+        /* color: red; */
+    }
+
+    header {
+        padding: 10px 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+
+
+    header nav ul li a {
+        font-size: 18px;
+    }
+
+
+
+
+
+
     .game-teams-container h1 {
         font-size: 24px;
     }
@@ -110,7 +266,21 @@ ul {
         font-size: 24px;
     }
 
+    #allGames .games-of-day-container {
+        /* padding: 0 250px; */
+    }
 
+
+}
+
+
+.teamDetailsName {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.allPlayers h3 {
+    display: inline;
 }
 
 
@@ -148,8 +318,9 @@ ul {
     align-items: center;
 }
 
-
-
+.teamDetailsName,
+.column-hometeam,
+.column-awayteam,
 .home-players h1,
 .away-players h1 {
     transform: skew(9deg, 0deg);
@@ -157,8 +328,24 @@ ul {
     text-align: center;
     color: white;
     font-weight: 400;
-    margin: 5px;
     padding: 2px;
+}
+
+.column-hometeam,
+.column-awayteam,
+.home-players h1,
+.away-players h1 {
+
+    margin: 5px;
+}
+
+.teamDetailsName,
+.column-hometeam {
+    background-color: rgb(11, 47, 227);
+}
+
+.column-awayteam {
+    background-color: #cc0000;
 }
 
 .home-players h1 {
@@ -172,14 +359,19 @@ ul {
     background-color: #cc0000;
 }
 
+.playerTeamDetailsView,
 .all-players-game-details ul {
     list-style: none;
 }
 
+
+.playerTeamDetailsView,
 .all-players-game-details a {
     text-decoration: none;
+    color: white;
 }
 
+.playerTeamDetailsView:hover,
 .home-players li:hover {
     color: rgba(11, 47, 227, 1);
     background-color: white;
@@ -187,11 +379,13 @@ ul {
     font-weight: 500;
 }
 
+.playerTeamDetailsView,
 .home-players li {
     background-color: rgba(11, 47, 227, 1);
 
 }
 
+.playerTeamDetailsView,
 .home-players li,
 .away-players li {
     transform: skew(9deg, 0deg);
@@ -217,13 +411,15 @@ ul {
 }
 
 .game-description-teams {
-    height: 100px;
-    width: 70%;
+    height: 80%;
+    /* width: 70%; */
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     text-align: left;
     justify-content: center;
-    border-right: 1px solid black;
+    align-items: center;
+    /* padding: 0 20px; */
+    /* border-right: 1px solid black; */
 }
 
 .game-teams-container {
@@ -233,4 +429,11 @@ ul {
 
 .game-teams-container h1 {
     /* background-color: #32324e; */
+}
+
+.playersFullTimeDiv,
+.playersFullTimeDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

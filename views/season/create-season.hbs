@@ -20,6 +20,28 @@
 
   <button>Save</button>
 </form>
+
+<h1>Add Players to All Teams</h1>
+<form
+  action="/season/add-players-to-all"
+  method="post"
+  enctype="multipart/form-data"
+>
+
+  {{! <label for="seasonName">Season Name
+    <input type="text" name="seasonName" />
+  </label> }}
+
+  <label for="file">Upload Players List
+    <input type="file" id="fileupload" name="fileupload" />
+  </label>
+
+  {{! <label for="jsonstring">Upload Schedule
+    <input type="text" name="jsonstring" />
+  </label> }}
+
+  <button>Save</button>
+</form>
 {{! <script type="module">
 
 

@@ -182,6 +182,24 @@ router.get("/profile", (req, res, next) => {
     });
 });
 
+router.get("/update-profile", (req, res, next) => {
+  // console.log(req.session.user);
+
+  User.findById(req.session.user)
+    .populate("joinedTeams")
+    .populate("ownedTeams")
+    .then((user) => {
+      let data = {
+        user: user,
+      };
+      req.session.user = user;
+      res.render("auth/profile", data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 // ========================= MANAGE TEAMS IN YOUR ACCOUNT ========================= //
 
 router.get("/add-teams/:userID", (req, res) => {

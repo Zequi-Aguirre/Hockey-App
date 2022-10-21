@@ -1,34 +1,41 @@
 {{#if data.currentlyLoggedInUser.admin}}
-  <a href="/team/edit-team/{{#each data.teamsFromDB}}{{this.id}}{{/each}}">Edit Team</a>
+  <a class="admin" href="/team/edit-team/{{#each data.teamsFromDB}}{{this.id}}{{/each}}">Edit Team</a>
 {{else}}
 
 {{/if}}
 {{#each data.teamsFromDB}}
 
 
-  <h1>{{this.teamName}} - Team Details</h1>
+  <h1 class="teamDetailsName">{{this.teamName}} - Team Details</h1>
 
-  <h3>All Players</h3>
+  <div class="allPlayers">
+<div>
+  <h3>All Players</h3> -  <a href="/player/add-players/{{this.id}}">Add Players</a>
+  </div>
+
+
+
+  <div class="playersFullTimeDiv">
 
   <h4>Full Time Players</h4>
 
   {{#each this.playersFullTime}}
     {{!-- {{this._id}} --}}
-    <a href="/player/player-details/{{this.id}}">
-
-      {{this.name}}
-      {{this.lastName}}
-      {{this.jerseyNumber}}
-    </a>
-    <br />
-    <br />
+    <a href="/player/player-details/{{this._id}}" class="playerTeamDetailsView"><li>
+                {{this.jerseyNumber}}
+                {{this.name}}
+                {{this.lastName}}</li></a>
+    
   {{/each}}
 
   <br />
-  <form action="/team/invite-all/{{thisTeam.id}}" method="POST">
+  {{!-- <form action="/team/invite-all/{{thisTeam.id}}" method="POST">
 
     <button type="submit">Invite All To Next Game</button>
-  </form>
+  </form> --}}
+  </div>
+
+  <div class="playersFullTimeDiv">
 
   <h4>Part Time Players</h4>
 
@@ -41,71 +48,74 @@
       {{this.jerseyNumber}}
     </a>
   {{/each}}
+  </div>
+  </div>
 
   <br />
   <br />
 
-  <a href="/player/add-players/{{this.id}}">Add Players</a>
 
 {{/each}}
+
+
   <h3>=== Schedule ===</h3>
-  <input type="text" name="search" id="search" placeholder="Search..." />
   <br />
-  <br />
-  <br />
-  <div class="full-table">
 
-    <div class="table-head">
-      <li class="column-division">Div</li>
-      <li class="column-homeTeam">Home</li>
-      <li class="column-awayTeam">Away</li>
-      <li class="column-date">Date</li>
-      <li class="column-time">Time</li>
-      <li class="column-location">Rink/GS</li>
-    </div>
+{{!-- {{/each}} --}}
+<input type="text" name="search" id="search" placeholder="Search..." />
+<br />
+<hr />
+<br />
 
-    <div id="allGames">
+<div id="allGames">
 
-      {{!-- {{#season}}
-      <tr class="date-container">
-        <td class="table-dates">{{gameday}}</td>
-      </tr>
-      {{#games}}
-        <tr class="game-container {{this.division}}">
-          <td class="gameInfo">{{this.division}}</td>
-          <td class="gameInfo"><a href="#">{{this.homeTeam.teamName}}</a></td>
-          <td class="gameInfo"><a href="#">{{this.awayTeam.teamName}}</a></td>
-          <td class="gameInfo" align="center">{{this.date}}</td>
-          <td class="gameInfo">{{this.time}}</td>
-          <td class="gameInfo">{{this.location}}</td>
+  {{#each data.gamesFromDB}}
 
-        </tr>
-      {{/games}}
+    <div class="game-day-container" data-gamedaydate="{{gameday}}">
 
-    {{/season}} --}}
-
-
-      {{#each data.gamesFromDB}}
-        <div class="date-container">
-        <li class="table-dates">{{this.gameday}}</li>
+      <div class="date-container">
+        <h3>{{gameday}}</h3>
       </div>
-      {{!-- {{this.gameday}} --}}
-        {{#games}}
-          <div class="game-container {{this.division}}">
-            <li class="game-info column-division">{{this.division}}</li>
-            <li class="game-info column-homeTeam"><a
-                href="/team/team-detail/{{this.homeTeam.id}}"
-              >{{this.homeTeam.teamName}}</a></li>
-            <li class="game-info column-awayTeam"><a
-                href="/team/team-detail/{{this.awayTeam.id}}"
-              >{{this.awayTeam.teamName}}</a></li>
-            <li class="game-info column-date" align="center">{{this.date}}</li>
-            <li class="game-info column-time">{{this.time}}</li>
-            <li class="game-info column-location">{{this.location}}</li>
+      <div class="games-of-day-container">
+        {{#each games}}
 
-          </div>
-        {{/games}}
+          <a href="/game/game-details/{{this._id}}" class="game-container-link">
 
-      {{/each}}
+            <div class="game-container {{this.division}}">
+
+              <div class="game-description">
+                <div class="game-description-teams">
+                  <h3
+                    class="game-info column-homeTeam"
+                  >{{this.homeTeam.teamName}}</h3>
+                  <h3 class="vs">VS</h3>
+                  <h3
+                    class="game-info column-awayTeam"
+                  >{{this.awayTeam.teamName}}</h3>
+                </div>
+                <div class="game-description-datetime">
+                  <h4 class="game-info">{{this.date}}
+                    -
+                    {{this.time}}</h4>
+
+                </div>
+              </div>
+
+              <div class="division-location">
+
+                <h4 class="game-info">Division: {{this.division}}</h4>
+
+                <h4 class="game-info">Rink: {{this.location}}</h4>
+              </div>
+
+            </div>
+          </a>
+
+        {{/each}}
+      </div>
     </div>
+
+  {{/each}}
+
+</div>
   </div>

@@ -1,0 +1,71 @@
+<h1>Create New Team</h1>
+
+{{!-- {{data.teamsFromDB}} --}}
+
+<form action="/team/create-team/{{id}}" method="post">
+  {{! the method of the form is what determines the request type that is being made (get/post) }}
+
+  <label for="teamName">
+    Team Name:
+
+    <input type="text" name="teamName" placeholder="teamName" />
+
+  </label>
+  <br />
+  {{! <label for="ownCode">
+    ownCode:
+
+    <input type="text" name="ownCode" placeholder="ownCode" />
+
+  </label>
+  <br />
+  <label for="joinCode">
+    joinCode:
+
+    <input type="text" name="joinCode" placeholder="joinCode" />
+
+  </label>
+  <br /> }}
+  {{! <label for="season">
+    season:
+
+    <input type="text" name="season" placeholder="season" />
+
+  </label>
+  <br /> }}
+  {{! <label for="division">
+      division:
+
+      <input type="text" name="division" placeholder="division" />
+
+    </label>
+    <br /> }}
+  {{! <label for="manager">
+    manager:
+
+    <input type="text" name="manager" placeholder="manager" />
+
+  </label>
+  <br /> }}
+
+  <br />
+
+  <label for="division">
+    Division:
+    <select name="division" id="division" data-division="{{division}}">
+      <option value="none" selected disabled hidden>Select Division</option>
+      <option value="Over40">40+</option>
+      <option value="AB">AB</option>
+      <option value="C1">C1</option>
+      <option value="C2 Plat">C2 Plat</option>
+      <option value="C2 Gold">C2 Gold</option>
+      <option value="C2 Silver">C2 Silver</option>
+      <option value="C2 Bronze">C2 Bronze</option>
+    </select>
+  </label>
+  <br />
+
+  <br />
+  <button>Update</button>
+  {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
+</form>

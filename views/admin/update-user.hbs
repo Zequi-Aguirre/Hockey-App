@@ -27,6 +27,15 @@
   {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
 </form>
 
+{{#if master}}
+
+  <form action="/admin/delete-user/{{userFromDB.id}}" method="POST">
+    <button type="submit">Delete User</button>
+  </form>
+
+  {{!-- <a href="/admin/update-user/{{userFromDB.id}}">Edit User Data</a> --}}
+{{/if}}
+
 <br />
 {{#if user.player}}
   <label for="player">

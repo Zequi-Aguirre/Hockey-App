@@ -1,57 +1,84 @@
-<h1>All Games</h1>
+<h1>All Games ADMIN VIEW</h1>
+{{#if data.currentlyLoggedInUser.admin}}
+  <a class="admin" href="/game/create-game">Create Game</a>
+{{/if}}
 
 {{!-- {{theUser._id}} --}}
-<div class="all-results">
+{{! <p>Welcome Ironhacker!</p> }}
 
-  {{!======================= ALL GAMES =======================}}
+{{!-- {{#each division}} --}}
+<div class="games-filter">
+  <hr />
 
-  <section class="all-games-admin-section">
-    {{#each results}}
-
-      <div class="game-container-all">
-        <a href="/game/game-details/{{this._id}}">
-          <div class="game-container-details-hover"></div></a>
-
-        <div class="game-container-details">
-
-          <div class="teams-container">
-
-            <div class="team">
-              <img
-                src="https://ssl.gstatic.com/onebox/media/sports/logos/iBFLyMGpOW2Fh5j8s7kYpw_48x48.png"
-                alt=""
-              />
-              <a
-                href="/team/team-detail/{{this.homeTeam._id}}"
-              >{{this.homeTeam.teamName}}</a></div>
-            <div class="team"><img
-                src="https://ssl.gstatic.com/onebox/media/sports/logos/iBFLyMGpOW2Fh5j8s7kYpw_48x48.png"
-                alt=""
-              />
-              <a
-                href="/team/team-detail/{{this.awayTeam._id}}"
-              >{{this.awayTeam.teamName}}</a>
-            </div>
-          </div>
-          <div class="divider-line"></div>
-          <div class="game-date"><img src="" alt="" />{{this.date}}
-            <br />{{this.time}}</div>
-        </div>
-
-        {{!-- <a href="/team/team-detail/{{this._id}}">{{this.date}}
-      {{this.time}}
-      {{this.homeTeam.teamName}}
-      VS
-      {{this.awayTeam.teamName}}</a> --}}
-        {{! <br /> }}
-      </div>
-
-    {{/each}}
-
-  </section>
-
+  <h3>Select Division</h3>
+  <select name="games-filter" id="gamesFilter">
+    <option value="all">All</option>
+    <option value="Over40">40+</option>
+    <option value="AB">A/B</option>
+    <option value="C1">C1</option>
+    <option value="Plat">C2 Platinum</option>
+    <option value="Gold">C2 Gold</option>
+    <option value="Silver">C2 Silver</option>
+    <option value="Bronze">C2 Bronze</option>
+  </select>
 </div>
 <br />
 <br />
 
-{{!-- <a href="/auth/add-teams/{{theUser._id}}">Add Teams</a> --}}
+{{!-- {{/each}} --}}
+<input type="text" name="search" id="search" placeholder="Search..." />
+<br />
+<hr />
+<br />
+
+<div id="allGames">
+
+  {{#each data.gamesFromDB}}
+
+    <div class="game-day-container" data-gamedaydate="{{gameday}}">
+
+      <div class="date-container">
+        <h3>{{gameday}}</h3>
+      </div>
+      <div class="games-of-day-container">
+        {{#each games}}
+
+          <a href="/game/game-details/{{this._id}}" class="game-container-link">
+
+            <div class="game-container {{this.division}}">
+
+              <div class="game-description">
+                <div class="game-description-teams">
+                  <h3
+                    class="game-info column-homeTeam"
+                  >{{this.homeTeam.teamName}}</h3>
+                  <h3 class="vs">VS</h3>
+                  <h3
+                    class="game-info column-awayTeam"
+                  >{{this.awayTeam.teamName}}</h3>
+                </div>
+                <div class="game-description-datetime">
+                  <h4 class="game-info">{{this.date}}
+                    -
+                    {{this.time}}</h4>
+
+                </div>
+              </div>
+
+              <div class="division-location">
+
+                <h4 class="game-info">Division: {{this.division}}</h4>
+
+                <h4 class="game-info">Rink: {{this.location}}</h4>
+              </div>
+
+            </div>
+          </a>
+
+        {{/each}}
+      </div>
+    </div>
+
+  {{/each}}
+
+</div>
