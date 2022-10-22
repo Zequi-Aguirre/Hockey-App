@@ -43,7 +43,8 @@ app.use(
     }, // ADDED code below !!!
     store: MongoStore.create({
       // mongoUrl: `mongodb://localhost/${projectName}`,
-      mongoUrl: process.env.MONGODB_URI || `mongodb://localhost/${projectName}`,
+      // mongoUrl: process.env.MONGODB_URI || `mongodb://localhost/${projectName}`,
+      mongoUrl: process.env.MONGODB_URI,
       // mongoUrl: `mongodb://localhost/${projectName}`,
     }),
   })
