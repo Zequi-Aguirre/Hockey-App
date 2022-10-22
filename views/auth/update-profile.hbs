@@ -1,57 +1,39 @@
-<h1>User Profile - {{user.firstname}} {{user.lastname}}</h1>
-
-<a href="/auth/update-profile">Edit Profile</a>
+<h1>Edit Profile - {{user.firstname}} {{user.lastname}}</h1>
 
 {{!-- {{#each theUser}}
   {{this}}
   <br />
 {{/each}} --}}
 
-<hr />
-<hr />
-
-<h1>Teams you Manage</h1>
-
-{{#each user.ownedTeams}}
-
-  <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
-
+<form action="/auth/update-profile" method="POST">
+  <label>
+    First Name
+    <input type="text" name="firstname" value={{user.firstname}} />
+  </label>
+  <br />
+  <label>
+    Last Name
+    <input type="text" name="lastname" value={{user.lastname}} />
+  </label>
+  <br />
+  <label>
+    Phone Number
+    <input type="text" name="phonenumber" value={{user.phonenumber}} />
+  </label>
   <br />
 
-  <form action="/auth/remove-owned-team/{{this._id}}" method="POST">
-
-    <button type="submit">Remove</button>
-  </form>
-
+  <br />
+  <label>
+    Email
+    <input type="email" name="email" value={{user.email}} />
+  </label>
   <br />
 
-{{/each}}
-<br />
-{{#if errorMessageManage}}
-  {{errorMessageManage}}
-{{/if}}
-<a href="/auth/add-teams/{{theUser._id}}">Add Team to manage</a>
+  {{! <label>
+    Password
+    <input type="password" name="password" />
+  </label>
+  <br /> }}
 
-<br /><br />
-<h1>Teams you Joined</h1>
-
-{{#each user.joinedTeams}}
-
-  <a href="/team/team-detail/{{this._id}}">{{this.teamName}}</a>
-
-  <br />
-
-  <form action="/auth/remove-joined-team/{{this._id}}" method="POST">
-
-    <button type="submit">Remove</button>
-  </form>
-
-  <br />
-
-{{/each}}
-<br />
-{{#if errorMessageJoin}}
-  {{errorMessageJoin}}
-{{/if}}
-<a href="/auth/join-teams/{{theUser._id}}">Join a Team</a>
-<br />
+  <button type="submit">Update User</button>
+</form>

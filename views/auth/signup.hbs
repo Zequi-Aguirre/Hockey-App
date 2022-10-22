@@ -1,34 +1,34 @@
 <h1>Sign Up</h1>
 
 <form action="/auth/signup" method="POST">
-  <label>
+  {{! <label>
     First Name
     <input type="text" name="firstname" />
   </label>
-  <br />
+  <br /> }}
   <label>
-    Last Name
-    <input type="text" name="lastname" />
+    Your Name
+    <input type="text" name="fullname" placeholder="Alexander Ovechkin" />
   </label>
   <br />
-  <label>
+  {{! <label>
     Phone Number
     <input type="text" name="phonenumber" />
   </label>
-  <br />
+  <br /> }}
 
   <br />
   <label>
     Email
-    <input type="email" name="email" />
+    <input type="email" name="email" placeholder="alex.ovechkin@capitals.com" />
   </label>
   <br />
 
   <label>
     Password
-    <input type="password" name="password" />
+    <input type="password" name="password" placeholder="Crosbysucks123$$" />
   </label>
   <br />
 
-  <button type="submit">Submit</button>
+  <button type="submit">Signup</button>
 </form>

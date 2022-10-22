@@ -23,7 +23,6 @@ router.get("/signup", isLoggedOut, (req, res) => {
 
 router.post("/signup", isLoggedOut, (req, res) => {
   const { firstname, lastname, phonenumber, email, password } = req.body;
-
   if (!email) {
     return res.status(400).render("auth/signup", {
       errorMessage: "Please provide your email.",
@@ -185,15 +184,35 @@ router.get("/profile", (req, res, next) => {
 router.get("/update-profile", (req, res, next) => {
   // console.log(req.session.user);
 
-  User.findById(req.session.user)
-    .populate("joinedTeams")
-    .populate("ownedTeams")
+  User.findByIdAndUpdate(req.session.user)
+    // .populate("joinedTeams")
+    // .populate("ownedTeams")
     .then((user) => {
       let data = {
         user: user,
       };
       req.session.user = user;
-      res.render("auth/profile", data);
+      res.render("auth/update-profile", data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/update-profile", (req, res, next) => {
+  console.log(req.session.user);
+  let updatedUser = req.body;
+
+  console.log(updatedUser);
+
+  User.findByIdAndUpdate(req.session.user._id, updatedUser)
+    .then((updatedUser) => {
+      console.log(updatedUser);
+      let data = {
+        user: updatedUser,
+      };
+      req.session.user = updatedUser;
+      res.redirect("/auth/profile");
     })
     .catch((err) => {
       console.log(err);

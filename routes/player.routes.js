@@ -20,6 +20,7 @@ router.get("/player-details/:playerID", (req, res, next) => {
       playersFromDbResults.push(playerFromDB);
 
       console.log({ currentUser: currentlyLoggedInUser });
+
       // ==================================== this in all get Roues ==================================== //
 
       data = {

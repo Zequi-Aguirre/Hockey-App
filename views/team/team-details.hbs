@@ -21,33 +21,67 @@
 
   {{#each this.playersFullTime}}
     {{!-- {{this._id}} --}}
-    <a href="/player/player-details/{{this._id}}" class="playerTeamDetailsView"><li>
+    <a href="/player/player-details/{{this._id}}" class="playerTeamDetailsView"
+    
+      data-jerseyNumber={{this.jerseyNumber}}
+      data-name={{this.name}}
+      data-lastName={{this.lastName}}
+      data-emailAddress={{this.emailAddress}}
+      data-phoneNumber={{this.phoneNumber}}
+
+
+
+><li>
                 {{this.jerseyNumber}}
                 {{this.name}}
-                {{this.lastName}}</li></a>
+                {{this.lastName}} - Full Time</li></a>
     
   {{/each}}
 
-  <br />
-  {{!-- <form action="/team/invite-all/{{thisTeam.id}}" method="POST">
-
-    <button type="submit">Invite All To Next Game</button>
-  </form> --}}
-  </div>
-
-  <div class="playersFullTimeDiv">
-
+  
   <h4>Part Time Players</h4>
 
   {{#each this.playersPartTime}}
     {{!-- {{this._id}} --}}
-    <a href="/player/player-details/{{this.id}}">
+    <a href="/player/player-details/{{this._id}}" class="playerTeamDetailsView"
+    
+      data-jerseyNumber={{this.jerseyNumber}}
+      data-name={{this.name}}
+      data-lastName={{this.lastName}}
+      data-emailAddress={{this.emailAddress}}
+      data-phoneNumber={{this.phoneNumber}}
 
-      {{this.name}}
-      {{this.lastName}}
-      {{this.jerseyNumber}}
-    </a>
+
+
+><li>
+                {{this.jerseyNumber}}
+                {{this.name}}
+                {{this.lastName}} - Part Time</li></a>
   {{/each}}
+  </div>
+  <div>
+    <div id="playerDataCardTeamPage">
+
+    <div id="playerNamePic">
+      <h1>Wayne Gretzky</h1>
+      <img id="profile-picture" src="" alt="" />
+    </div>
+
+    <div id="playerData">
+      <br />
+      <h1 id="jerseyNumber">#99</h1>
+      <br />
+      <h3 id="emailAddress">WallyGretzky@gmail.com</h3>
+      <br>
+      <h3 id="phoneNumber">8001234567</h3>
+
+      <br />
+
+      <br />
+
+      {{!-- {{this}} --}}
+    </div>
+  </div>
   </div>
   </div>
 

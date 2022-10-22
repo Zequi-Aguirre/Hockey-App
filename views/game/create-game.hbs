@@ -4,99 +4,106 @@
 {{! <h1>teams here</h1> }}
 <ul id="allTeams" style="display: none;">
   {{#each data.teamsFromDB}}
-    <li data-teamid={{id}}>{{teamName}}</li>
+    <li data-teamid="{{id}}" data-teamdivision="{{division}}">{{teamName}}</li>
   {{/each}}
 </ul>
 
-  {{!-- {{data.teamsFromDB}} --}}
+{{!-- {{data.teamsFromDB}} --}}
 
-  <form action="/game/create-game" method="post">
-    {{! the method of the form is what determines the request type that is being made (get/post) }}
+<form id="create-game-form" action="/game/create-game" method="post">
+  {{! the method of the form is what determines the request type that is being made (get/post) }}
 
-    <label for="hometeam">
-      Home Team:
+  <label for="division">
+    Division:
+    <select name="division" id="division">
+      <option value="none" selected disabled hidden>Select Division</option>
+      <option value="Over40">40+</option>
+      <option value="AB">AB</option>
+      <option value="C1">C1</option>
+      <option value="C2 Plat">C2 Plat</option>
+      <option value="C2 Gold">C2 Gold</option>
+      <option value="C2 Silver">C2 Silver</option>
+      <option value="C2 Bronze">C2 Bronze</option>
+    </select>
+  </label>
+  <br />
 
-      <input type="text" name="homeTeam" id="homeTeam">
-      </input >
-    </label>
-    <br />
-    <label for="awayteam">
-      Away Team:
+  <label for="date">
+    Date:
+    <input type="date" name="newDate" />
+  </label>
+  <br />
+  <label for="time" id="time">
+    Time:
+    <label for="hour">
+      <select name="hour" id="hour">
 
-      <input type="text" name="awayTeam" id="awayTeam">
-
-      </input >
-    </label>
-
-    <br />
-    <label for="date">
-      Date:
-      <input type="date" name="newDate" />
-    </label>
-    <br />
-    <label for="time" id="time" >
-      Time:
-      <label for="hour">
-        <select name="hour" id="hour">
-
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
-      </label>
-      <label for="minutes">
-        <select name="minutes" id="minutes">
-
-          <option value="00">00</option>
-          <option value="15">15</option>
-          <option value="30">30</option>
-          <option value="45">45</option>
-        </select>
-      </label>
-      <label for="minutes">
-        <select name="am-pm" id="am-pm">
-          <option value="none" selected disabled hidden>AM/PM</option>
-          <option value="am">AM</option>
-          <option value="pm">PM</option>
-        </select>
-      </label>
-    </label>
-    <br />
-    <label for="location">
-      Location:
-      <select name="location" id="location">
-        <option value="none" selected disabled hidden>Select Rink</option>
-        <option value="Den">Den</option>
-        <option value="Mezz">Mezz</option>
-        <option value="Stadium">Stadium</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
       </select>
     </label>
-    <br />
-    <label for="division">
-      Division:
-      <select name="division" id="division" >
-        <option value="none" selected disabled hidden>Select Division</option>
-        <option value="Over40">40+</option>
-        <option value="AB">AB</option>
-        <option value="C1">C1</option>
-        <option value="C2 Plat">C2 Plat</option>
-        <option value="C2 Gold">C2 Gold</option>
-        <option value="C2 Silver">C2 Silver</option>
-        <option value="C2 Bronze">C2 Bronze</option>
+    <label for="minutes">
+      <select name="minutes" id="minutes">
+
+        <option value="00">00</option>
+        <option value="15">15</option>
+        <option value="30">30</option>
+        <option value="45">45</option>
       </select>
     </label>
-    <br />
+    <label for="minutes">
+      <select name="am-pm" id="am-pm">
+        <option value="none" selected disabled hidden>AM/PM</option>
+        <option value="am">AM</option>
+        <option value="pm">PM</option>
+      </select>
+    </label>
+  </label>
+  <br />
+  <label for="location">
+    Location:
+    <select name="location" id="location">
+      <option value="none" selected disabled hidden>Select Rink</option>
+      <option value="Den">Den</option>
+      <option value="Mezz">Mezz</option>
+      <option value="Stadium">Stadium</option>
+    </select>
+  </label>
+  <br />
 
-    <br />
-    <button>Create New Game</button>
-    {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
-  </form>
+  <label for="hometeam" id="homeTeamLabel">
+    Home Team:
+
+    <select name="homeTeam" id="homeTeam">
+      <option value="none" selected disabled hidden>Select Home Team</option>
+
+    </select>
+  </label>
+  <br />
+  <label for="awayteam" id="awayTeamLabel">
+    Away Team:
+
+    <select name="awayTeam" id="awayTeam">
+      <option value="none" selected disabled hidden>Select Away Team</option>
+
+    </select>
+  </label>
+
+  <br />
+
+  <br />
+
+  <p style="color: red;">Teams can't be the same</p>
+  <button>Create New Game</button>
+  {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
+</form>

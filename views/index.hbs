@@ -1,79 +1,122 @@
-<h1>Bench Buddy - Home</h1>
+<h1>Welcome to Bench Buddy</h1>
 {{! <p>Welcome Ironhacker!</p> }}
 
+<div class="homebody">
+
+  <div class="app-description">
+    <h1>We take the headache out of managing your hockey team.</h1>
+
+    <p>Bench Buddy is a Schedule and Team Management app designed for Hockey.</p>
+  </div>
+
+  <div class="signup-form">
+    {{#if data.currentlyLoggedInUser}}
+      <div class="form-backfround">
+
+        <h1>We hope you are enjoying the app.</h1>
+        <p>Invite your friends. </p>
+
+        <form action="/auth/invite-friend" method="POST">
+          {{! <label>
+    First Name
+    <input type="text" name="firstname" />
+  </label>
+  <br /> }}
+          <label>
+            Friend Name
+            <br />
+            <input
+              type="text"
+              name="fullname"
+              placeholder="Alexander Ovechkin"
+            />
+          </label>
+          <br />
+          {{! <label>
+    Phone Number
+    <br> <input type="text" name="phonenumber" />
+  </label>
+  <br /> }}
+
+          <label>
+            Friend Email
+            <br />
+            <input
+              type="email"
+              name="email"
+              placeholder="alex.ovechkin@capitals.com"
+            />
+          </label>
+          <br />
+
+          {{! <label>
+            Password
+            <br />
+            <input
+              type="password"
+              name="password"
+              placeholder="Crosbysucks123$$"
+            />
+          </label>
+          <br /> }}
+
+          <button type="submit">Send Invite</button>
+        </form>
+      </div>{{else}}
+      <div class="form-backfround">
+
+        <h1>Create your FREE account in one click</h1>
+        <p>Free to use. No credit card required. </p>
+
+        <form action="/auth/signup" method="POST">
+          {{! <label>
+    First Name
+    <input type="text" name="firstname" />
+  </label>
+  <br /> }}
+          <label>
+            Your Name
+            <br />
+            <input
+              type="text"
+              name="fullname"
+              placeholder="Alexander Ovechkin"
+            />
+          </label>
+          <br />
+          {{! <label>
+    Phone Number
+    <br> <input type="text" name="phonenumber" />
+  </label>
+  <br /> }}
+
+          <label>
+            Email
+            <br />
+            <input
+              type="email"
+              name="email"
+              placeholder="alex.ovechkin@capitals.com"
+            />
+          </label>
+          <br />
+
+          <label>
+            Password
+            <br />
+            <input
+              type="password"
+              name="password"
+              placeholder="Crosbysucks123$$"
+            />
+          </label>
+          <br />
+
+          <button type="submit">Signup</button>
+        </form>
+      </div>
+    {{/if}}
+  </div>
+</div>
+
 {{!-- {{#each division}} --}}
-<div class="games-filter">
-  <hr />
-
-  <h3>Select Division</h3>
-  <select name="games-filter" id="gamesFilter">
-    <option value="all">All</option>
-    <option value="Over40">40+</option>
-    <option value="AB">A/B</option>
-    <option value="C1">C1</option>
-    <option value="Plat">C2 Platinum</option>
-    <option value="Gold">C2 Gold</option>
-    <option value="Silver">C2 Silver</option>
-    <option value="Bronze">C2 Bronze</option>
-  </select>
-</div>
-<br />
-<br />
-
-{{!-- {{/each}} --}}
-<input type="text" name="search" id="search" placeholder="Search..." />
-<br />
-<hr />
-<br />
-
-<div id="allGames">
-
-  {{#each data.gamesFromDB}}
-
-    <div class="game-day-container" data-gamedaydate="{{gameday}}">
-
-      <div class="date-container">
-        <h3>{{gameday}}</h3>
-      </div>
-      <div class="games-of-day-container">
-        {{#each games}}
-
-          <a href="/game/game-details/{{this._id}}" class="game-container-link">
-
-            <div class="game-container {{this.division}}">
-
-              <div class="game-description">
-                <div class="game-description-teams">
-                  <h3
-                    class="game-info column-homeTeam"
-                  >{{this.homeTeam.teamName}}</h3>
-                  <h3 class="vs">VS</h3>
-                  <h3
-                    class="game-info column-awayTeam"
-                  >{{this.awayTeam.teamName}}</h3>
-                </div>
-                <div class="game-description-datetime">
-                  <h4 class="game-info">{{this.date}}
-                    -
-                    {{this.time}}</h4>
-
-                </div>
-              </div>
-
-              <div class="division-location">
-
-                <h4 class="game-info">Division: {{this.division}}</h4>
-
-                <h4 class="game-info">Rink: {{this.location}}</h4>
-              </div>
-
-            </div>
-          </a>
-
-        {{/each}}
-      </div>
-    </div>
-
-  {{/each}}
-
-</div>

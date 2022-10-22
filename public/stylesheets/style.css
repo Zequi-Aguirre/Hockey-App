@@ -1,5 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav div {
+  color: white;
+  font-size: 50px;
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+
+}
+
+@media (max-width: 580px) {
+
+  header nav ul {
+    display: none;
+  }
+
+}
+
+@media (max-width: 1134px) {
+
+  #playerDataCardTeamPage {
+    display: none;
+  }
+
+}
+
+@media (min-width: 580px) {
+
+  nav div {
+    display: none;
+  }
+
+
+}
+
 
 
 #admin-routes-button {
@@ -47,11 +88,7 @@ header {
   padding: 10px 30px;
 }
 
-header nav ul {
-  display: flex;
-  list-style: none;
 
-}
 
 header nav ul li {
   /* margin-left: 10px; */
@@ -114,6 +151,8 @@ header nav ul li a {
 
   }
 }
+
+
 
 
 
@@ -387,4 +426,205 @@ input {
   width: 80%;
   align-self: center;
   height: 30px;
+}
+
+.homebody {
+  background-image: url('/images/homebackground70.jpg');
+  width: 90vw;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relaive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  flex-wrap: wrap;
+}
+
+.form-backfround {
+  width: 90%;
+  height: 90%;
+  background-color: #242424;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.form-backfround form {
+  margin: 0;
+
+}
+
+
+
+.homebody div {
+  /* border: 1px dotted red; */
+  width: 500px;
+  /* height: 400px; */
+  margin: 20px;
+}
+
+.app-description {
+  height: 300px;
+}
+
+.signup-form {
+  height: 400px;
+}
+
+.homebody .app-description h1 {
+  font-size: 3rem;
+}
+
+.homebody .app-description p {
+  font-size: 1.7rem;
+}
+
+.homebody .signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.homebody .signup-form h1 {
+  font-size: 1.7rem;
+  display: inline;
+  margin: 0 0 10px;
+  color: #cc0000;
+  font-weight: 500;
+}
+
+.homebody .signup-form p {
+  font-size: 1.2rem;
+  display: inline;
+  margin: 0 0 10px;
+  color: rgb(11, 47, 227);
+}
+
+.homebody .signup-form label {
+  font-size: 1rem;
+  display: inline;
+  margin: 0 0 10px;
+  color: white;
+}
+
+.homebody .signup-form input {
+  text-align: center;
+  font-size: 1rem;
+  width: 280px;
+  margin: 5px 0;
+
+}
+
+.homebody .signup-form button {
+
+  margin: 15px 0 0 0;
+  background-color: #cc0000;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+
+
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .6);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#side-menu {
+  width: 150px;
+  background-color: black;
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin: 23px;
+  /* height: 200px; */
+  display: none;
+}
+
+#side-menu ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+}
+
+#side-menu ul a {
+  text-decoration: none;
+  color: white;
+  margin: 8px;
+}
+
+#side-menu ul li {
+  margin: 10px;
+}
+
+#close-side-menu {
+  color: white;
+  margin: 20px 0 5px 0;
+}
+
+#side-menu ul hr {
+  width: 80%;
+  border: 1px solid #cc0000;
+
+}
+
+#profile-picture {
+  width: 250px;
+  height: 250px;
+  border: 4px solid black;
+}
+
+#playerDataCardTeamPage,
+#playerDataCard {
+  display: flex;
+  border: 2px solid black;
+  margin: 20px;
+  padding: 20px;
+  width: 600px;
+}
+
+#playerDataCard div {
+  /* border: 2px dotted red; */
+}
+
+#playerData {
+  width: 400px;
+  margin-left: 20px;
+}
+
+#playerData h1 {
+  font-size: 52px;
+  margin: 50px 0 0 0;
+}
+
+#playerData h3 {
+  font-size: 20px;
+  margin: 0 0 5px;
+}
+
+#joined-teams {
+  /* display: flex; */
+  padding-left: 20px;
 }

@@ -136,6 +136,33 @@ if (gamesFilter) {
 
 let adminOptions = document.querySelectorAll(".admin");
 
+const menuButton = document.querySelector("#menu-button");
+const closeMenuButton = document.querySelector("#close-side-menu");
+const overlayDiv = document.querySelector(".overlay");
+
+overlayDiv.style.display = "none";
+
+if (overlayDiv) {
+  overlayDiv.addEventListener("click", (event) => {
+    console.log(event.target);
+    overlayDiv.style.display = "none";
+    document.querySelector("#side-menu").style.display = "none";
+  });
+}
+
+menuButton.addEventListener("click", (event) => {
+  console.log(event.target);
+  overlayDiv.style.display = "block";
+
+  document.querySelector("#side-menu").style.display = "block";
+});
+
+closeMenuButton.addEventListener("click", (event) => {
+  console.log(event.target);
+  document.querySelector("#side-menu").style.display = "none";
+  overlayDiv.style.display = "none";
+});
+
 if (adminOptions.length > 0) {
   // const adminRoutesDiv = document.querySelector("#admin-routes");
   const adminRoutesButton = document.querySelector("#admin-routes-button");
@@ -153,3 +180,41 @@ if (adminOptions.length > 0) {
     // adminRoutesDiv.classList.toggle("admin-routes-hide");
   });
 }
+
+const profilePicture = document.querySelector("#profile-picture");
+
+let profilePictureList = ["/images/blue-player.jpg", "/images/red-player.jpg"];
+
+let randomPicture =
+  profilePictureList[Math.floor(Math.random() * profilePictureList.length)];
+
+profilePicture.src = randomPicture;
+
+let playersInTeam = document.querySelectorAll(".playerTeamDetailsView");
+
+const playerDataCard = document.querySelector("#playerDataCardTeamPage");
+const playerData = document.querySelector("#playerData");
+
+const playerJerseyNumber = document.querySelector("#jerseyNumber");
+const playerEmailAddress = document.querySelector("#emailAddress");
+const playerPhoneNumber = document.querySelector("#phoneNumber");
+
+const playerName = playerDataCard
+  .querySelector("#playerNamePic")
+  .querySelector("h1");
+
+playersInTeam.forEach((player) => {
+  // console.log(player);
+  player.addEventListener("mouseover", (event) => {
+    let hoverPlayer = event.target.dataset;
+
+    // console.log({ data: hoverPlayer });
+    if (hoverPlayer.name) {
+      playerName.innerText = `${hoverPlayer.name} ${hoverPlayer.lastname}`;
+      playerJerseyNumber.innerText = `#${hoverPlayer.jerseynumber}`;
+      playerEmailAddress.innerText = `${hoverPlayer.emailaddress}`;
+      playerPhoneNumber.innerText = `${hoverPlayer.phonenumber}`;
+    }
+    // console.log(hoverPlayer.jerseynumber);
+  });
+});

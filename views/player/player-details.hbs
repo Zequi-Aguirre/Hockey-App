@@ -1,28 +1,59 @@
 <h1>Player Details</h1>
 
 {{#each data.playersFromDB}}
-  {{this.name}}
-  {{this.lastName}}
-  <br />
-  {{this.jerseyNumber}}
-  <br />
-  {{this.emailAddress}}
-  <br />
-  {{this.phoneNumber}}
-  <br />
-  {{#each this.joinedTeams}}
-    <a href="/admin/team-details/{{this.id}}">{{this.teamName}}</a>
-    <br />
-  {{/each}}
-  {{!-- {{this}} --}}
+  <div id="playerDataCard">
+
+    <div id="playerNamePic">
+      <h1>{{this.name}}
+        {{this.lastName}}</h1>
+      <img id="profile-picture" src="" alt="" />
+    </div>
+
+    <div id="playerData">
+      <br />
+      <h1>#{{this.jerseyNumber}}</h1>
+      <br />
+      <h3>{{this.emailAddress}}</h3>
+      <h3>{{this.phoneNumber}}</h3>
+
+      <br />
+
+      <br />
+
+      {{!-- {{this}} --}}
+    </div>
+  </div>
+  <div id="joined-teams">
+    <h2>Joined Teams</h2>
+
+    <ul>
+      {{! <li><a href="#">Dummy Team</a></li>
+      <li><a href="#">Dummy Team</a></li>
+      <li><a href="#">Dummy Team</a></li>
+      <li><a href="#">Dummy Team</a></li>
+      <li><a href="#">Dummy Team</a></li>
+      <li><a href="#">Dummy Team</a></li>
+      <li><a href="#">Dummy Team</a></li>
+      <li><a href="#">Dummy Team</a></li> }}
+
+      <br />
+      {{#each this.joinedTeams}}
+        <li>
+          <a href="/team/team-detail/{{this.id}}">{{this.teamName}}</a></li>
+        <br />
+      {{/each}}
+    </ul>
+  </div>
+
 {{/each}}
 {{!-- {{data.currentlyLoggedInUser.admin}} --}}
 {{#if data.currentlyLoggedInUser.admin}}
 
   {{#each data.playersFromDB}}
-
-    <h1>ADMIN</h1>
-    <a href="/player/edit-player/{{this.id}}">Edit Player</a>
+    <div class="admin">
+      <h1>ADMIN</h1>
+      <a href="/player/edit-player/{{this.id}}">Edit Player</a>
+    </div>
   {{/each}}
 {{else}}
   <h1>NO ADMIN</h1>

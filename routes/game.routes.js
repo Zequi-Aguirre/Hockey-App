@@ -14,6 +14,11 @@ router.get("/game-details/:gameID", (req, res, next) => {
   let usersFromDbResults = [];
   let currentlyLoggedInUser = req.session.user;
   // ==================================== this in all get Roues ==================================== //
+
+  if (!currentlyLoggedInUser) {
+    req.flash("error", "Login or Create a FREE ACOUNT to see game details");
+    res.redirect("/auth/login");
+  }
   Game.findById(req.params.gameID)
     .populate("homeTeam")
     .populate("awayTeam")
@@ -93,8 +98,6 @@ function formatDateFuctionOnRead(gameDate) {
 function formatDateFuctionOnWrite(gameDate) {
   let date = new Date(gameDate);
 
-  console.log(date);
-
   let weekday = new Array(7);
   weekday[0] = "Sunday";
   weekday[1] = "Monday";
@@ -103,10 +106,6 @@ function formatDateFuctionOnWrite(gameDate) {
   weekday[4] = "Thursday";
   weekday[5] = "Friday";
   weekday[6] = "Saturday";
-
-  let selectedDay = date.getDate() + 1;
-
-  let day = weekday[date.getDay() + 1];
 
   let months = [
     "January",
@@ -122,9 +121,63 @@ function formatDateFuctionOnWrite(gameDate) {
     "November",
     "December",
   ];
-  month = months[date.getMonth()];
 
+  let monthIndex = date.getMonth();
   year = date.getFullYear();
+  let selectedDay = date.getDate() + 1;
+
+  switch (monthIndex) {
+    case 0:
+    case 2:
+    case 4:
+    case 6:
+    case 7:
+    case 9:
+    case 11:
+      if (selectedDay > 31) {
+        selectedDay = 1;
+        monthIndex = monthIndex + 1;
+      }
+      break;
+
+    case 3:
+    case 5:
+    case 8:
+    case 10:
+      if (selectedDay > 30) {
+        selectedDay = 1;
+        monthIndex = monthIndex + 1;
+      }
+      break;
+
+    case 1:
+      if ((0 == year % 4 && 0 != year % 100) || 0 == year % 400) {
+        console.log(year + " is a leap year");
+        if (selectedDay > 29) {
+          selectedDay = 1;
+          monthIndex = monthIndex + 1;
+        }
+      } else {
+        console.log(year + " is not a leap year");
+        if (selectedDay > 28) {
+          selectedDay = 1;
+          monthIndex = monthIndex + 1;
+        }
+      }
+      break;
+
+    default:
+      break;
+  }
+
+  month = months[monthIndex];
+
+  if (selectedDay > 31) {
+    selectedDay = 1;
+    month = months[monthIndex + 1];
+  }
+
+  let day = weekday[date.getDay() + 1];
 
   return day + ", " + month + " " + selectedDay + ", " + year;
 }
@@ -195,8 +248,8 @@ router.get("/edit-game/:gameID", (req, res, next) => {
 
           console.log({ data: data });
 
-          res.render("game/create-game", data);
-          // res.redirect("/game/edit-game-details", data);
+          // res.render("game/create-game", data);
+          res.render("game/edit-game-details", data);
         })
         .catch((err) => {
           console.log(err);
@@ -222,6 +275,14 @@ router.post("/edit-game/:gameID", (req, res, next) => {
   Game.findByIdAndUpdate(originalGame, updatedGame).then((updatedGameFrom) => {
     // res.send(updatedGameFrom);
     res.redirect(`/game/game-details/${updatedGameFrom.id}`);
+  });
+});
+
+router.post("/delete-game/:gameID", (req, res, next) => {
+  Game.findByIdAndDelete(req.params.gameID).then((game) => {
+    // res.send(updatedGameFrom);
+    req.flash("success", `Deleted ${game}`);
+    res.redirect(`/`);
   });
 });
 
@@ -254,10 +315,10 @@ router.get("/create-game", (req, res, next) => {
   let currentlyLoggedInUser = req.session.user;
   // ==================================== this in all get Roues ==================================== //
   // const originalGame = req.params.gameID;
-  // ==================================== this in all get Roues ==================================== //
   Team.find()
     .then((teamsFromDB) => {
       teamsFromDbResults = teamsFromDB;
+      // ==================================== this in all get Roues ==================================== //
       data = {
         // game: gameForViewReady,
         teamsFromDB: teamsFromDbResults,
@@ -280,6 +341,105 @@ router.get("/create-game", (req, res, next) => {
       console.log(err);
     });
   // ==================================== this in all get Roues ==================================== //
+});
+
+router.get("/all-games", (req, res, next) => {
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+  Game.find()
+    .populate("awayTeam")
+    .populate("homeTeam")
+    .then((allGames) => {
+      // console.log(allGames);
+      allGames.forEach((game) => {
+        // console.log({ games: game.division });
+      });
+      // group games by date
+      let uniqueDates = [];
+      let groupedSeason = [];
+
+      // get unique dates
+      allGames.forEach((game) => {
+        if (!uniqueDates.includes(game.date)) {
+          uniqueDates.push(game.date);
+        }
+      });
+
+      console.log(uniqueDates.length);
+
+      uniqueDates.forEach((date) => {
+        let gameDay = {
+          gameday: date,
+          games: [],
+        };
+
+        allGames.forEach((game) => {
+          if (game.date === date) {
+            gameDay.games.push(game);
+          }
+        });
+
+        groupedSeason.push(gameDay);
+      });
+
+      groupedSeason.forEach((gameday) => {
+        gameday.games.forEach((game) => {
+          let gameDay = game.date.split(", ")[0].substring(0, 3);
+          let gameMonth = game.date
+            .split(", ")[1]
+            .split(" ")[0]
+            .substring(0, 3);
+          let gameDayNumber = game.date.split(", ")[1].split(" ")[1];
+
+          game.date = `${gameDay}, ${gameMonth} ${gameDayNumber}`;
+
+          if (game.homeTeam.teamName.length > 17) {
+            game.homeTeam.teamName =
+              game.homeTeam.teamName.substring(0, 16) + "...";
+          }
+
+          if (game.awayTeam.teamName.length > 17) {
+            game.awayTeam.teamName =
+              game.awayTeam.teamName.substring(0, 16) + "...";
+          }
+        });
+      });
+
+      // allGames.forEach((game) => {
+      //   groupedSeason[game.date].push(game);
+      // });
+
+      // console.log(groupedSeason);
+
+      gamesFromDbResults = groupedSeason;
+
+      data = {
+        // game: gameForViewReady,
+        teamsFromDB: teamsFromDbResults,
+        playersFromDB: playersFromDbResults,
+        gamesFromDB: gamesFromDbResults,
+        usersFromDB: usersFromDbResults,
+        currentlyLoggedInUser: currentlyLoggedInUser,
+      };
+
+      data = { data };
+
+      // const data = {
+      //   allGames: allGames,
+      //   season: groupedSeason,
+      // };
+
+      res.render("game/all-games", data);
+      // res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 module.exports = router;

@@ -15,7 +15,11 @@
         <span>Bench Buddy</span>
       </a>
       <nav>
+        <div id="menu-button">=</div>
         <ul>
+          <li><a href="/">Home</a></li>
+
+          <li><a href="/game/all-games">All Games</a></li>
           {{#if theUser}}
             {{!-- <li><a href="/auth/your-teams/{{theUser._id}}">Your Teams</a></li> --}}
             <li><a href="/auth/profile">Profile</a></li>
@@ -77,6 +81,28 @@
     {{/if}}
 
     {{{body}}}
+    <div class="overlay">
+
+    </div>
+    <div id="side-menu">
+      <ul>
+        <p id="close-side-menu">X</p>
+        <hr />
+        <br />
+        <li><a href="/">Home</a></li>
+        <li><a href="/game/all-games">All Games</a></li>
+        {{#if theUser}}
+          {{!-- <li><a href="/auth/your-teams/{{theUser._id}}">Your Teams</a></li> --}}
+          <li><a href="/auth/profile">Profile</a></li>
+          <li><a href="/auth/logout">Log Out</a></li>
+
+        {{else}}
+          <li><a href="/auth/signup">Sign Up</a></li>
+          <li><a href="/auth/login">Log In</a></li>
+        {{/if}}
+        <br />
+      </ul>
+    </div>
     {{#if theUser.admin}}
       <a href="#" id="admin-routes-button">Admin Routes</a>
     {{/if}}

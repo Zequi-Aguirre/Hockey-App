@@ -47,7 +47,54 @@ ul {
     font-style: italic;
 }
 
-@media (max-width: 445px) {
+.logo:hover {
+    color: white;
+}
+
+@media (max-width: 600px) {
+
+    #playerData {
+        width: 90%;
+        margin-left: 0;
+    }
+
+    #playerDataCard {
+        flex-direction: column;
+        width: 80%;
+        margin: 0;
+        min-width: 260px
+    }
+
+    .homebody {
+        padding: 20px 0;
+    }
+
+    .homebody div {
+        height: 300px;
+        width: 300px;
+        margin: 0 20px;
+    }
+
+    .homebody .app-description h1 {
+        font-size: 2rem;
+    }
+
+    .homebody .app-description p {
+        font-size: 1.2rem;
+    }
+
+
+
+    .homebody .signup-form h1 {
+        font-size: 1rem;
+    }
+
+    .homebody .signup-form p {
+        font-size: 1rem;
+    }
+
+
+
 
     #search {
         font-size: 20px;
@@ -195,13 +242,24 @@ ul {
 
 @media (min-width: 770px) {
 
+    .homebody {
+        height: 820px;
+    }
+
     .allPlayers {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
     }
 
-    .allPlayers div {
-        width: 50%;
+    .allPlayers .playersFullTimeDiv {
+        width: 30%;
+    }
+
+    #playerDataCard {
+        width: 60%;
+
+
     }
 
     .allPlayers>div:first-of-type {
@@ -271,6 +329,13 @@ ul {
     }
 
 
+}
+
+@media (min-width: 1205px) {
+
+    .homebody {
+        height: 600px;
+    }
 }
 
 
@@ -384,6 +449,8 @@ ul {
     background-color: rgba(11, 47, 227, 1);
 
 }
+
+
 
 .playerTeamDetailsView,
 .home-players li,

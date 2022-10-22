@@ -259,30 +259,25 @@ router.post("/delete-player/:playerID", (req, res) => {
   let player = req.params.playerID;
   Player.findByIdAndDelete(req.params.playerID)
     .then((player) => {
-      Team.find({
-        $or: [
-          {
-            playersFullTime: player.id,
-            // division: "C1",
-          },
-          {
-            playersPartTime: player.id,
-            // division: "C2 Silver",
-          },
-        ],
-      }).then((teamsFromDB) => {
+      Team.find(
+        // hkadbvkjaljncalknlkva
+
+        {
+          $or: [{ playersFullTime: player.id }, { playersPartTime: player.id }],
+        }
+
+        // hkadbvkjaljncalknlkva
+      ).then((teamsFromDB) => {
         console.log({ teamsFromDB });
-        Team.updateMany(teamsFromDB[0], {
-          $pull: [
-            {
-              playersFullTime: player,
-              playersPartTime: player,
-            },
-          ],
+        Team.updateMany(teamsFromDB, {
+          $pull: {
+            playersFullTime: player.id,
+            playersPartTime: player.id,
+          },
 
           // cool: "cool",
-        }).then(() => {
-          // console.log(teamsFromDB[0]);
+        }).then((updatedTeamsFromDB) => {
+          console.log({ updatedTeamsFromDB: updatedTeamsFromDB });
           res.redirect("/admin/all-players");
         });
       });
