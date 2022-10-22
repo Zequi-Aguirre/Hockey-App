@@ -398,14 +398,18 @@ router.get("/all-games", (req, res, next) => {
 
           game.date = `${gameDay}, ${gameMonth} ${gameDayNumber}`;
 
-          if (game.homeTeam.teamName.length > 17) {
-            game.homeTeam.teamName =
-              game.homeTeam.teamName.substring(0, 16) + "...";
+          if (game.homeTeam) {
+            if (game.homeTeam.teamName.length > 17) {
+              game.homeTeam.teamName =
+                game.homeTeam.teamName.substring(0, 16) + "...";
+            }
           }
 
-          if (game.awayTeam.teamName.length > 17) {
-            game.awayTeam.teamName =
-              game.awayTeam.teamName.substring(0, 16) + "...";
+          if (game.awayTeam) {
+            if (game.awayTeam.teamName.length > 17) {
+              game.awayTeam.teamName =
+                game.awayTeam.teamName.substring(0, 16) + "...";
+            }
           }
         });
       });
@@ -440,6 +444,12 @@ router.get("/all-games", (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+});
+
+router.post("/delete-all", (req, res) => {
+  Game.deleteMany().then(() => {
+    res.redirect("/admin/all-games");
+  });
 });
 
 module.exports = router;

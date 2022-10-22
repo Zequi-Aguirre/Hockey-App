@@ -1,5 +1,12 @@
 <h1>Create Season</h1>
 
+{{#if data.currentlyLoggedInUser.master}}
+
+  <form class="admin" action="/season/delete-all" method="POST">
+    <button type="submit">DELETE ALL</button>
+  </form>
+{{/if}}
+
 <form
   action="/season/create-season"
   method="post"

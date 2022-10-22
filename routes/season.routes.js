@@ -16,7 +16,27 @@ const uploadFile = multer({ dest: "public/xlsx" });
 
 /* GET home page */
 router.get("/create-season", (req, res, next) => {
-  res.render("season/create-season");
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+
+  data = {
+    // game: gameForViewReady,
+    teamsFromDB: teamsFromDbResults,
+    playersFromDB: playersFromDbResults,
+    gamesFromDB: gamesFromDbResults,
+    usersFromDB: usersFromDbResults,
+    currentlyLoggedInUser: currentlyLoggedInUser,
+  };
+
+  data = { data };
+
+  // res.send(playerFromDB);
+  res.render("season/create-season", data);
 });
 
 router.post(
@@ -308,5 +328,11 @@ router.post(
       });
   }
 );
+
+router.post("/delete-all", (req, res) => {
+  Season.deleteMany().then(() => {
+    res.redirect("/season/create-season");
+  });
+});
 
 module.exports = router;

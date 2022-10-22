@@ -1,5 +1,13 @@
 <h1>All Teams</h1>
 
+{{#if data.currentlyLoggedInUser.master}}
+
+  <form class="admin" action="/team/delete-all" method="POST">
+    <button type="submit">DELETE ALL</button>
+  </form>
+
+{{/if}}
+
 {{#if data.currentlyLoggedInUser.admin}}
   <a class="admin" href="/team/create-team">Create Team</a>
 {{/if}}

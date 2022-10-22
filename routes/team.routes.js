@@ -304,6 +304,12 @@ router.post("/delete-team/:teamID", (req, res) => {
     });
 });
 
+router.post("/delete-all", (req, res) => {
+  Team.deleteMany().then(() => {
+    res.redirect("/admin/all-teams");
+  });
+});
+
 router.post("/invite-player/:teamID", (req, res) => {});
 
 module.exports = router;

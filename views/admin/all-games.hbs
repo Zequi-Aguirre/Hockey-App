@@ -3,6 +3,18 @@
   <a class="admin" href="/game/create-game">Create Game</a>
 {{/if}}
 
+{{#if data.currentlyLoggedInUser.master}}
+
+  <form class="admin" action="/game/delete-all" method="POST">
+    <button type="submit">DELETE ALL</button>
+  </form>
+{{/if}}
+
+{{#if data.currentlyLoggedInUser.admin}}
+
+  <a href="/admin/update-user/{{user._id}}">Edit User Data</a>
+{{/if}}
+
 {{!-- {{theUser._id}} --}}
 {{! <p>Welcome Ironhacker!</p> }}
 

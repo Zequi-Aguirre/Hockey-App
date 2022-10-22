@@ -407,4 +407,10 @@ router.post("/edit-player/:playerID", (req, res) => {
     });
 });
 
+router.post("/delete-all", (req, res) => {
+  Player.deleteMany().then(() => {
+    res.redirect("/admin/all-players");
+  });
+});
+
 module.exports = router;

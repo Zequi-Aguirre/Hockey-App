@@ -1,5 +1,12 @@
 <h1>All Players</h1>
 
+{{#if currentlyLoggedInUser.master}}
+
+  <form class="admin" action="/player/delete-all" method="POST">
+    <button type="submit">DELETE ALL</button>
+  </form>
+{{/if}}
+
 {{!-- {{theUser._id}} --}}
 <div class="all-results">
 

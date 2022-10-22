@@ -202,7 +202,7 @@ router.get("/all-teams", (req, res) => {
 
       data = { data };
 
-      console.log({ data: data });
+      // console.log({ data: data });
 
       res.render("admin/all-teams", data);
 
@@ -226,6 +226,15 @@ router.get("/all-players", (req, res) => {
   if (!req.session.user.admin) {
     res.redirect(`/auth/profile`);
   }
+
+  // ==================================== this in all get Roues ==================================== //
+  let teamsFromDbResults = [];
+  let playersFromDbResults = [];
+  let gamesFromDbResults = [];
+  let usersFromDbResults = [];
+  let currentlyLoggedInUser = req.session.user;
+  // ==================================== this in all get Roues ==================================== //
+
   Player.find()
     .populate("joinedTeams")
     // .populate("ownedTeams")
@@ -244,6 +253,7 @@ router.get("/all-players", (req, res) => {
       // console.log(userFromDB);
       data = {
         results: allResults,
+        currentlyLoggedInUser: currentlyLoggedInUser,
       };
 
       res.render("admin/all-players", data);
@@ -347,14 +357,18 @@ router.get("/all-games", (req, res) => {
 
           game.date = `${gameDay}, ${gameMonth} ${gameDayNumber}`;
 
-          if (game.homeTeam.teamName.length > 17) {
-            game.homeTeam.teamName =
-              game.homeTeam.teamName.substring(0, 16) + "...";
+          if (game.homeTeam) {
+            if (game.homeTeam.teamName.length > 17) {
+              game.homeTeam.teamName =
+                game.homeTeam.teamName.substring(0, 16) + "...";
+            }
           }
 
-          if (game.awayTeam.teamName.length > 17) {
-            game.awayTeam.teamName =
-              game.awayTeam.teamName.substring(0, 16) + "...";
+          if (game.awayTeam) {
+            if (game.awayTeam.teamName.length > 17) {
+              game.awayTeam.teamName =
+                game.awayTeam.teamName.substring(0, 16) + "...";
+            }
           }
         });
       });
@@ -426,5 +440,6 @@ router.get("/all-users", (req, res) => {
 });
 
 // ================================= ADMIN ROUTES ================================= //
+// ================================= DELETE ALL ROUTES ================================= //
 
 module.exports = router;
