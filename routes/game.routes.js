@@ -124,7 +124,7 @@ function formatDateFuctionOnWrite(gameDate) {
 
   let monthIndex = date.getMonth();
   year = date.getFullYear();
-  let selectedDay = date.getDate() + 1;
+  let selectedDay = date.getDate();
 
   switch (monthIndex) {
     case 0:
@@ -177,7 +177,7 @@ function formatDateFuctionOnWrite(gameDate) {
     month = months[monthIndex + 1];
   }
 
-  let day = weekday[date.getDay() + 1];
+  let day = weekday[date.getDay()];
 
   return day + ", " + month + " " + selectedDay + ", " + year;
 }
