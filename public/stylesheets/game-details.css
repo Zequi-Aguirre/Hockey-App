@@ -40,12 +40,7 @@ ul {
     margin: 50px 0 20px 0;
 }
 
-.logo {
-    text-decoration: none;
-    color: black;
-    font-weight: 600;
-    font-style: italic;
-}
+
 
 .logo:hover {
     color: white;
@@ -114,8 +109,8 @@ ul {
         padding: 10px 15px;
     }
 
-    .logo {
-        font-size: 24px;
+    .logo img {
+        height: 40px;
     }
 
     .game-container-link {

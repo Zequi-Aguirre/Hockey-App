@@ -590,6 +590,11 @@ input {
 
 }
 
+.logo img {
+  height: 55px;
+  margin: 5px;
+}
+
 #profile-picture {
   width: 250px;
   height: 250px;
