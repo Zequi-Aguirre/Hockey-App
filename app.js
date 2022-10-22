@@ -42,7 +42,9 @@ app.use(
       maxAge: 60000,
     }, // ADDED code below !!!
     store: MongoStore.create({
-      mongoUrl: `mongodb://localhost/${projectName}`,
+      // mongoUrl: `mongodb://localhost/${projectName}`,
+      mongoUrl:
+        proccess.env.MONGODB_URI || `mongodb://localhost/${projectName}`,
     }),
   })
 );
