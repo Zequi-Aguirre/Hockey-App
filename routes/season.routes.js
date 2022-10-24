@@ -133,13 +133,13 @@ router.post(
         -2209075200000 + (game.date - (game.date < 61 ? 0 : 1)) * 86400000
       );
       const days = [
+        "Sunday",
         "Monday",
         "Tuesday",
         "Wednesday",
         "Thursday",
         "Friday",
         "Saturday",
-        "Sunday",
       ];
       const months = [
         "January",
