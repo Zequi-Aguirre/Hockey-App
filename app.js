@@ -59,6 +59,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+// =================== SESSION ==================================
+
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");
 app.use("/", index);
